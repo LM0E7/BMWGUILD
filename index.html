@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lords Mobile Screenshot Comparison Tool</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Tesseract.js for OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>⚔️ Lords Mobile Guild Comparison Tool</h1>
+            <p class="subtitle">Compare guild screenshots to track player progress and changes</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="upload">📸 Upload & Extract</button>
+            <button class="tab-btn" data-tab="compare">📊 Compare</button>
+            <button class="tab-btn" data-tab="history">📜 History</button>
+            <button class="tab-btn" data-tab="settings">⚙️ Settings</button>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="tab-content">
+            <!-- Upload & Extract Tab -->
+            <section id="upload" class="tab-pane active">
+                <div class="section-title">Upload Guild Screenshots</div>
+                
+                <!-- Drag and Drop Area -->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📁</div>
+                    <p>Drag and drop screenshots here or click to select</p>
+                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                        Select Images
+                    </button>
+                </div>
+
+                <!-- Progress Indicator -->
+                <div id="progressContainer" class="progress-container" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="progressText">Processing: 0%</p>
+                </div>
+
+                <!-- Extracted Data Display -->
+                <div id="extractedDataContainer" class="extracted-data-container" style="display: none;">
+                    <div class="section-title">Extracted Player Data</div>
+                    
+                    <!-- Screenshot Selector -->
+                    <div class="screenshot-selector">
+                        <label>Select Screenshot:</label>
+                        <select id="screenshotSelect">
+                            <option value="">-- Choose a screenshot --</option>
+                        </select>
+                    </div>
+
+                    <!-- Player Table -->
+                    <div class="table-wrapper">
+                        <table class="player-table" id="playerTable">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Player Name</th>
+                                    <th>Might</th>
+                                    <th>Kills</th>
+                                    <th>Deaths</th>
+                                    <th>Confidence</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="playerTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Manual Correction Modal -->
+                    <div id="correctionModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeCorrectionModal()">&times;</span>
+                            <h3>Correct Player Data</h3>
+                            <form id="correctionForm">
+                                <div class="form-group">
+                                    <label>Player Name:</label>
+                                    <input type="text" id="correctionName" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Might:</label>
+                                    <input type="number" id="correctionMight" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Kills:</label>
+                                    <input type="number" id="correctionKills" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Deaths:</label>
+                                    <input type="number" id="correctionDeaths" class="form-input">
+                                </div>
+                                <button type="button" class="btn btn-success" onclick="saveCorrection()">Save</button>
+                                <button type="button" class="btn btn-secondary" onclick="closeCorrectionModal()">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="saveExtraction()">💾 Save This Extraction</button>
+                        <button class="btn btn-info" onclick="exportToCSV()">📥 Export to CSV</button>
+                        <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Compare Tab -->
+            <section id="compare" class="tab-pane">
+                <div class="section-title">Compare Two Screenshots</div>
+                
+                <div class="compare-selector">
+                    <div class="compare-column">
+                        <label>First Screenshot:</label>
+                        <select id="compareScreenshot1">
+                            <option value="">-- Select first screenshot --</option>
+                        </select>
+                    </div>
+                    <div class="compare-column">
+                        <label>Second Screenshot:</label>
+                        <select id="compareScreenshot2">
+                            <option value="">-- Select second screenshot --</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="performComparison()">🔍 Compare</button>
+                </div>
+
+                <!-- Comparison Results -->
+                <div id="comparisonResults" class="comparison-results" style="display: none;">
+                    <!-- Summary Stats -->
+                    <div class="summary-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Might Change</div>
+                            <div class="stat-value" id="totalMightChange">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Kills Change</div>
+                            <div class="stat-value" id="totalKillsChange">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">New Players</div>
+                            <div class="stat-value" id="newPlayersCount">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Players Left</div>
+                            <div class="stat-value" id="playersLeftCount">0</div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Comparison Table -->
+                    <div class="section-title">Player Changes</div>
+                    <div class="table-wrapper">
+                        <table class="comparison-table" id="comparisonTable">
+                            <thead>
+                                <tr>
+                                    <th>Player Name</th>
+                                    <th>Rank Change</th>
+                                    <th>Might Change</th>
+                                    <th>Kills Change</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparisonTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- New Players Section -->
+                    <div id="newPlayersSection" style="display: none;">
+                        <div class="section-title">New Players Joined</div>
+                        <div class="table-wrapper">
+                            <table class="player-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Player Name</th>
+                                        <th>Might</th>
+                                        <th>Kills</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="newPlayersBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Players Left Section -->
+                    <div id="playersLeftSection" style="display: none;">
+                        <div class="section-title">Players Who Left</div>
+                        <div class="table-wrapper">
+                            <table class="player-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Player Name</th>
+                                        <th>Might</th>
+                                        <th>Kills</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="playersLeftBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="saveComparison()">💾 Save Comparison</button>
+                        <button class="btn btn-info" onclick="exportComparisonToCSV()">📥 Export Comparison</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Tab -->
+            <section id="history" class="tab-pane">
+                <div class="section-title">Saved Comparisons & Extractions</div>
+                
+                <div class="history-container" id="historyContainer">
+                    <p class="empty-state">No saved data yet. Extract and compare screenshots to save them here.</p>
+                </div>
+            </section>
+
+            <!-- Settings Tab -->
+            <section id="settings" class="tab-pane">
+                <div class="section-title">Settings & Information</div>
+                
+                <div class="settings-content">
+                    <div class="setting-item">
+                        <h3>Storage Information</h3>
+                        <p>Used Storage: <span id="storageUsed">0</span> MB</p>
+                        <p>Max Storage: ~50 MB (IndexedDB limit)</p>
+                        <button class="btn btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
+                    </div>
+
+                    <div class="setting-item">
+                        <h3>OCR Settings</h3>
+                        <label>
+                            <input type="checkbox" id="autoCorrectOCR" checked>
+                            Auto-correct obvious OCR errors
+                        </label>
+                        <label>
+                            <input type="checkbox" id="showConfidence" checked>
+                            Show OCR confidence scores
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <h3>About</h3>
+                        <p>Lords Mobile Screenshot Comparison Tool v1.0</p>
+                        <p>100% offline. No data is sent to any server.</p>
+                        <p>Uses Tesseract.js for local OCR processing.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
