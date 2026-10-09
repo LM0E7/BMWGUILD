@@ -83,7 +83,7 @@ input[type=checkbox]{flex:none;width:auto;padding:0;margin:0 8px 0 0;vertical-al
 .toast.on{opacity:1;transform:translateX(-50%)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 body:not(.cmdview) #commands{display:none}
-body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #calculator,body.cmdview #order,body.cmdview .fab{display:none}
+body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #calculator,body.cmdview #gem-prediction,body.cmdview #order,body.cmdview .fab{display:none}
 #commands{padding-top:44px}
 .rs{font-size:.88rem;color:var(--mut)}
 .rs b{color:var(--ink)}
@@ -105,6 +105,32 @@ body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #
 #calculator .speedup-caption{margin:6px 0 12px;color:var(--mut);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
 #calculator .speedup-totals{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 22px;color:var(--mut)}
 #calculator .speedup-totals strong{color:var(--ink)}
+#gem-prediction .gem-intro{max-width:62ch;margin:0 auto 20px;text-align:center;color:var(--mut)}
+#gem-prediction .gem-card{max-width:760px;margin:0 auto;padding:clamp(14px,4vw,24px);background:linear-gradient(180deg,#10121a,#0b0c12);border:1px solid var(--line);border-radius:18px}
+#gem-prediction .gem-field{margin-bottom:13px}
+#gem-prediction .gem-field label{display:block;margin:0 0 5px;color:var(--mut);font-size:.86rem}
+#gem-prediction .gem-input{display:block;width:100%;margin:0;padding:12px 15px;border:1px solid var(--line);border-radius:14px;background:#0b0c12;color:var(--ink);font:500 1rem Inter,system-ui,sans-serif}
+#gem-prediction .gem-input::placeholder{color:#697084}
+#gem-prediction .gem-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(226,185,79,.12)}
+#gem-prediction .gem-help,#gem-prediction .gem-advanced{display:none;margin:10px 0 14px;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:#080a12;color:var(--mut);font-size:.9rem;line-height:1.5}
+#gem-prediction .gem-help.show,#gem-prediction .gem-advanced.show{display:block}
+#gem-prediction .gem-advanced{border-style:dashed;padding-bottom:2px}
+#gem-prediction .gem-advanced h3{margin:0 0 12px;color:var(--gold);font:700 .72rem Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+#gem-prediction .gem-disclosure{display:block;margin:-3px 0 12px;padding:6px 0;border:0;background:none;color:var(--gold);font:700 .82rem Inter,system-ui,sans-serif;text-align:left;cursor:pointer}
+#gem-prediction .gem-disclosure:hover{text-decoration:underline}
+#gem-prediction .gem-actions{display:grid;gap:10px;margin-top:17px}
+#gem-prediction .gem-btn{width:100%;padding:13px 20px;border:0;border-radius:999px;background:linear-gradient(180deg,var(--g1),var(--g2));color:#1a1204;font:800 1rem Inter,system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 18px rgba(201,151,43,.22)}
+#gem-prediction .gem-btn.secondary{border:1px solid var(--line);background:transparent;color:var(--ink);box-shadow:none}
+#gem-prediction .gem-btn:focus-visible,#gem-prediction .gem-disclosure:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+#gem-result-overlay{display:none;position:fixed;inset:0;z-index:1000;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.78);backdrop-filter:blur(6px)}
+#gem-result-overlay.show{display:flex}
+#gem-result-overlay .gem-result-box{position:relative;width:min(100%,400px);padding:24px 20px;background:linear-gradient(180deg,#10121a,#0b0c12);border:1px solid rgba(226,185,79,.55);border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+#gem-result-overlay h3{margin:0;color:var(--gold);font:700 1rem Cinzel,Georgia,serif;letter-spacing:.1em;text-transform:uppercase}
+#gem-result-close{position:absolute;right:13px;top:8px;width:38px;height:38px;border:0;background:none;color:var(--gold);font-size:1.8rem;cursor:pointer}
+#gem-result-overlay .gem-result-grid{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:18px;color:var(--mut)}
+#gem-result-overlay .gem-result-grid strong{color:var(--ink);font-weight:700}
+#gem-result-overlay .gem-total-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line);color:var(--gold);font-weight:800;letter-spacing:.08em}
+#gem-result-overlay .gem-total-row strong{color:var(--g1);font:700 1.5rem Cinzel,Georgia,serif}
 @media (max-width:640px){
 .wrap{padding:0 12px}
 header .wrap{flex-wrap:wrap;gap:6px 10px;padding-top:8px;padding-bottom:8px}
@@ -215,7 +241,7 @@ html{overflow-anchor:none}
 <g fill="none" stroke="#07080c" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="3.800"/><path d="M44 35C36 40 35 44 34 32M57 36C64 41 58 33 47 29" stroke-width="5.600"/></g>
 <g fill="none" stroke="url(#gg)" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="1.700"/><path d="M44 35C36 40 35 44 34 32" stroke-width="3.400"/><path d="M57 36C64 41 58 33 47 29" stroke-width="3.400"/></g></symbol></svg>
 <header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="LORD RAMA"><svg><use href="#lg"/></svg></a><a class="brand" href="#top">LORD RAMA</a>
-<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
+<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
 
 <main id="top">
 <div class="wrap hero">
@@ -226,6 +252,7 @@ html{overflow-anchor:none}
 <a class="btn wa" href="https://wa.me/917533895827" target="_blank" rel="noopener">Order on WhatsApp</a>
 <a class="btn o" href="#resources">See prices</a>
 <a class="btn o" href="#calculator">Speedup calculator</a>
+<a class="btn o" href="#gem-prediction">Gem prediction</a>
 <a class="btn o" href="#commands">Guild bank commands</a>
 </div>
 
@@ -243,6 +270,35 @@ html{overflow-anchor:none}
 </div>
 </div>
 </div></section>
+<section id="gem-prediction"><div class="wrap">
+<h2>Gem Prediction</h2>
+<p class="gem-intro">Estimate gems from your regular sources and get a 30-day forecast. Calculations run in your browser; your entries are not sent anywhere.</p>
+<div class="gem-card">
+<button class="gem-disclosure" id="gem-guide-toggle" type="button" aria-expanded="false" aria-controls="gem-guide">How to use this forecast</button>
+<div id="gem-guide" class="gem-help">Enter the gems you usually receive from each source. Event estimates are weekly; the forecast applies the multipliers shown. Trove interest is added using the two percentage fields.</div>
+<div class="gem-field"><label for="gem-colo">Colosseum gems per claim (every 3 hours)</label><input class="gem-input" id="gem-colo" type="text" inputmode="numeric" maxlength="12" placeholder="e.g. 100" autocomplete="off"></div>
+<div class="gem-field"><label for="gem-guild">Daily Guild Gifts</label><input class="gem-input" id="gem-guild" type="text" inputmode="numeric" maxlength="12" placeholder="e.g. 50" autocomplete="off"></div>
+<div class="gem-field"><label for="gem-monster">Daily Monster Hunt</label><input class="gem-input" id="gem-monster" type="text" inputmode="numeric" maxlength="12" placeholder="e.g. 20" autocomplete="off"></div>
+<div class="gem-field"><label for="gem-event-base">Base weekly events</label><input class="gem-input" id="gem-event-base" type="text" inputmode="numeric" maxlength="12" placeholder="Weekly event gems before details" autocomplete="off"></div>
+<button class="gem-disclosure" id="gem-events-toggle" type="button" aria-expanded="false" aria-controls="gem-events-advanced">＋ Add detailed event estimates</button>
+<div class="gem-advanced" id="gem-events-advanced"><h3>Detailed events — forecast multipliers apply</h3>
+<div class="gem-field"><label for="gem-paragon">Kingdom Paragon</label><input class="gem-input" id="gem-paragon" type="text" inputmode="numeric" maxlength="12" placeholder="e.g. 100" autocomplete="off"></div>
+<div class="gem-field"><label for="gem-hell">Hell Events</label><input class="gem-input" id="gem-hell" type="text" inputmode="numeric" maxlength="12" placeholder="e.g. 50" autocomplete="off"></div>
+<div class="gem-field"><label for="gem-duel">Guild Duel</label><input class="gem-input" id="gem-duel" type="text" inputmode="numeric" maxlength="12" placeholder="e.g. 75" autocomplete="off"></div>
+<div class="gem-field"><label for="gem-other-events">Other event gems</label><input class="gem-input" id="gem-other-events" type="text" inputmode="numeric" maxlength="12" placeholder="e.g. 100" autocomplete="off"></div>
+</div>
+<div class="gem-field"><label for="gem-trove">Treasure Trove deposit</label><input class="gem-input" id="gem-trove" type="text" inputmode="numeric" maxlength="12" placeholder="Deposit amount in gems" autocomplete="off"></div>
+<button class="gem-disclosure" id="gem-trove-toggle" type="button" aria-expanded="false" aria-controls="gem-trove-advanced">＋ Add Trove interest rates</button>
+<div class="gem-advanced" id="gem-trove-advanced"><h3>Trove interest rates</h3>
+<div class="gem-field"><label for="gem-basic-rate">Basic interest (%)</label><input class="gem-input" id="gem-basic-rate" type="text" inputmode="numeric" maxlength="5" placeholder="e.g. 10" autocomplete="off"></div>
+<div class="gem-field"><label for="gem-bonus-rate">Bonus interest (%)</label><input class="gem-input" id="gem-bonus-rate" type="text" inputmode="numeric" maxlength="5" placeholder="e.g. 5" autocomplete="off"></div>
+</div>
+<div class="gem-actions"><button class="gem-btn" id="gem-predict" type="button">Predict 30 Days</button><button class="gem-btn secondary" id="gem-clear" type="button">Clear All</button></div>
+</div></div></section>
+<div id="gem-result-overlay" role="dialog" aria-modal="true" aria-labelledby="gem-result-title" aria-hidden="true">
+<div class="gem-result-box"><button id="gem-result-close" type="button" aria-label="Close forecast">×</button><h3 id="gem-result-title">30-Day Forecast</h3>
+<div class="gem-result-grid"><div>Colosseum</div><strong id="gem-result-colosseum">0</strong><div>Guild</div><strong id="gem-result-guild">0</strong><div>Monster</div><strong id="gem-result-monster">0</strong><div>Events</div><strong id="gem-result-events">0</strong><div>Treasure Trove</div><strong id="gem-result-trove">0</strong></div>
+<div class="gem-total-row"><span>Total gems</span><strong id="gem-result-total">0</strong></div></div></div>
 <section id="attacks"><div class="wrap">
 <p class="sub">Let the bank bot do the attacking while you play.</p>
 <div class="g2">
@@ -536,6 +592,65 @@ function calculateSpeedups(){
 $('#speedup-calculate').onclick=calculateSpeedups;
 $('#speedup-reset').onclick=()=>{document.querySelectorAll('#speedup-items .speedup-input').forEach(input=>input.value='0');calculateSpeedups()};
 $('#speedup-items').addEventListener('input',calculateSpeedups);
+function gemToggle(buttonId,panelId){
+  const button=document.getElementById(buttonId),panel=document.getElementById(panelId);
+  const open=!panel.classList.contains('show');
+  panel.classList.toggle('show',open);button.setAttribute('aria-expanded',String(open));
+}
+function gemParseInput(id){
+  const input=document.getElementById('gem-'+id);
+  if(!input)return 0;
+  const value=Number(input.value.replace(/,/g,''));
+  return Number.isFinite(value)?Math.max(0,value):0;
+}
+function gemFormatInput(input){
+  const digits=input.value.replace(/[^0-9]/g,'');
+  input.value=digits===''?'':Number(digits).toLocaleString();
+}
+function gemCloseResult(){
+  const overlay=document.getElementById('gem-result-overlay');
+  overlay.classList.remove('show');overlay.setAttribute('aria-hidden','true');
+}
+function gemCalculate(){
+  const colo=gemParseInput('colo'),guild=gemParseInput('guild'),monster=gemParseInput('monster');
+  const eventBase=gemParseInput('event-base')*4;
+  const paragon=gemParseInput('paragon')*3;
+  const hell=gemParseInput('hell')*10;
+  const duel=gemParseInput('duel')*2;
+  const otherEvents=gemParseInput('other-events');
+  const treasure=gemParseInput('trove'),basic=gemParseInput('basic-rate'),bonus=gemParseInput('bonus-rate');
+  const totals={
+    colosseum:Math.floor(colo*8*30),
+    guild:Math.floor(guild*30),
+    monster:Math.floor(monster*15),
+    events:eventBase+paragon+hell+duel+otherEvents,
+    trove:Math.floor(treasure*(100+basic+bonus)/100)
+  };
+  const total=Object.values(totals).reduce((sum,value)=>sum+value,0);
+  for(const [key,value] of Object.entries(totals))document.getElementById('gem-result-'+key).textContent=value.toLocaleString();
+  document.getElementById('gem-result-total').textContent=total.toLocaleString();
+  const overlay=document.getElementById('gem-result-overlay');
+  overlay.classList.add('show');overlay.setAttribute('aria-hidden','false');
+  document.getElementById('gem-result-close').focus();
+}
+function gemClear(){
+  document.querySelectorAll('#gem-prediction .gem-input').forEach(input=>input.value='');
+  for(const id of ['gem-events-advanced','gem-trove-advanced']){
+    document.getElementById(id).classList.remove('show');
+  }
+  document.getElementById('gem-events-toggle').setAttribute('aria-expanded','false');
+  document.getElementById('gem-trove-toggle').setAttribute('aria-expanded','false');
+  gemCloseResult();
+}
+document.querySelectorAll('#gem-prediction .gem-input').forEach(input=>input.addEventListener('input',()=>gemFormatInput(input)));
+document.getElementById('gem-guide-toggle').addEventListener('click',()=>gemToggle('gem-guide-toggle','gem-guide'));
+document.getElementById('gem-events-toggle').addEventListener('click',()=>gemToggle('gem-events-toggle','gem-events-advanced'));
+document.getElementById('gem-trove-toggle').addEventListener('click',()=>gemToggle('gem-trove-toggle','gem-trove-advanced'));
+document.getElementById('gem-predict').addEventListener('click',gemCalculate);
+document.getElementById('gem-clear').addEventListener('click',gemClear);
+document.getElementById('gem-result-close').addEventListener('click',gemCloseResult);
+document.getElementById('gem-result-overlay').addEventListener('click',event=>{if(event.target.id==='gem-result-overlay')gemCloseResult()});
+document.addEventListener('keydown',event=>{if(event.key==='Escape')gemCloseResult()});
 function route(){const h=location.hash;if(h=='#commands')cv=true;else if(h!='#contact')cv=false;document.body.classList.toggle('cmdview',cv);let t=null;try{t=h&&h!='#commands'?document.querySelector(h):null}catch(_){}t?t.scrollIntoView():scrollTo({top:0,behavior:'instant'})}
 addEventListener('hashchange',route);route();
 const ic=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
@@ -544,6 +659,8 @@ document.querySelectorAll('[data-ic]').forEach(e=>e.innerHTML=ic(I[e.dataset.ic]
 const M=[['#top','Home','home'],['#services','Bank bot subscription','grid'],['#resources','Resource price list','coin'],['#order','Order builder','cart'],['#commands','Guild bank commands','term'],['#contact','Contact','chat']];
 I.calc='<rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/>';
 M.splice(3,0,['#calculator','Speedup calculator','calc']);
+I.gem='<path d="M6 3h12l4 6-10 12L2 9zM2 9h20M9 3l3 6 3-6M12 21 9 9m3 12 3-12"/>';
+M.splice(4,0,['#gem-prediction','Gem prediction','gem']);
 $('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
 const dr=o=>{$('#drw').classList.toggle('on',o);$('#bd').classList.toggle('on',o);$('#drw').setAttribute('aria-hidden',!o)};
 $('#mb').onclick=()=>dr(true);
