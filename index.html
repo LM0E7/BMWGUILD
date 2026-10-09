@@ -83,7 +83,7 @@ input[type=checkbox]{flex:none;width:auto;padding:0;margin:0 8px 0 0;vertical-al
 .toast.on{opacity:1;transform:translateX(-50%)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 body:not(.cmdview) #commands{display:none}
-body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #calculator,body.cmdview #gem-prediction,body.cmdview #order,body.cmdview .fab{display:none}
+body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #calculator,body.cmdview #gem-prediction,body.cmdview #training,body.cmdview #order,body.cmdview .fab{display:none}
 #commands{padding-top:44px}
 .rs{font-size:.88rem;color:var(--mut)}
 .rs b{color:var(--ink)}
@@ -241,7 +241,7 @@ html{overflow-anchor:none}
 <g fill="none" stroke="#07080c" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="3.800"/><path d="M44 35C36 40 35 44 34 32M57 36C64 41 58 33 47 29" stroke-width="5.600"/></g>
 <g fill="none" stroke="url(#gg)" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="1.700"/><path d="M44 35C36 40 35 44 34 32" stroke-width="3.400"/><path d="M57 36C64 41 58 33 47 29" stroke-width="3.400"/></g></symbol></svg>
 <header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="LORD RAMA"><svg><use href="#lg"/></svg></a><a class="brand" href="#top">LORD RAMA</a>
-<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
+<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
 
 <main id="top">
 <div class="wrap hero">
@@ -253,6 +253,7 @@ html{overflow-anchor:none}
 <a class="btn o" href="#resources">See prices</a>
 <a class="btn o" href="#calculator">Speedup calculator</a>
 <a class="btn o" href="#gem-prediction">Gem prediction</a>
+<a class="btn o" href="#training">Troop training</a>
 <a class="btn o" href="#commands">Guild bank commands</a>
 </div>
 
@@ -299,6 +300,11 @@ html{overflow-anchor:none}
 <div class="gem-result-box"><button id="gem-result-close" type="button" aria-label="Close forecast">×</button><h3 id="gem-result-title">30-Day Forecast</h3>
 <div class="gem-result-grid"><div>Colosseum</div><strong id="gem-result-colosseum">0</strong><div>Guild</div><strong id="gem-result-guild">0</strong><div>Monster</div><strong id="gem-result-monster">0</strong><div>Events</div><strong id="gem-result-events">0</strong><div>Treasure Trove</div><strong id="gem-result-trove">0</strong></div>
 <div class="gem-total-row"><span>Total gems</span><strong id="gem-result-total">0</strong></div></div></div>
+<section id="training"><div class="wrap"><div class="card" style="max-width:760px;margin:0 auto;text-align:center">
+<h2>Troop Training Calculator</h2>
+<p class="sub">Choose troop tiers and quantities, then estimate training time, might, resource costs, and a gem-efficient speedup plan.</p>
+<a class="btn" href="training.html">Open Training Calculator</a>
+</div></div></section>
 <section id="attacks"><div class="wrap">
 <p class="sub">Let the bank bot do the attacking while you play.</p>
 <div class="g2">
@@ -661,6 +667,8 @@ I.calc='<rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8 6h8M8 10h
 M.splice(3,0,['#calculator','Speedup calculator','calc']);
 I.gem='<path d="M6 3h12l4 6-10 12L2 9zM2 9h20M9 3l3 6 3-6M12 21 9 9m3 12 3-12"/>';
 M.splice(4,0,['#gem-prediction','Gem prediction','gem']);
+I.train='<path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>';
+M.splice(5,0,['#training','Troop training calculator','train']);
 $('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
 const dr=o=>{$('#drw').classList.toggle('on',o);$('#bd').classList.toggle('on',o);$('#drw').setAttribute('aria-hidden',!o)};
 $('#mb').onclick=()=>dr(true);

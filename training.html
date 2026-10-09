@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070a10">
+<title>Troop Training Calculator | LORD RAMA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root{
+  --bg:#070a10;
+  --bg-2:#0a0d14;
+  --card:#0d111a;
+  --card-2:#111623;
+  --line:#1b2130;
+  --gold-line:rgba(201,151,58,.35);
+  --gold-1:#f4d684;
+  --gold-2:#d4a843;
+  --gold-3:#b8862b;
+  --gold-grad:linear-gradient(180deg,#f6dc8f 0%,#d4a843 55%,#b8862b 100%);
+  --text:#f2f3f6;
+  --muted:#9aa0ad;
+  --dim:#6b7280;
+  --green:#1faf5d;
+  --serif:'Noto Serif',Georgia,serif;
+  --sans:'Roboto',system-ui,sans-serif;
+  --scale:1;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;font-size:calc(clamp(13px,3.3vw,16px) * var(--scale,1))}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--sans);line-height:1.5;
+  padding-bottom:6.875rem;
+  background-image:radial-gradient(120% 60% at 50% 0%,rgba(212,168,67,.09) 0%,rgba(7,10,16,0) 60%);
+  background-repeat:no-repeat;
+}
+button{font-family:inherit}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(7,10,16,.96);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--gold-line);
+  padding:0.875rem 1rem 0.75rem;
+}
+.header-row{display:flex;align-items:center;gap:0.875rem;max-width:68.75rem;margin:0 auto}
+.icon-btn{
+  width:3rem;height:3rem;border:0;background:transparent;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.burger{display:flex;flex-direction:column;gap:0.4375rem}
+.burger span{display:block;width:1.875rem;height:0.25rem;border-radius:3px;background:var(--gold-grad)}
+.brand{display:flex;align-items:center;gap:0.875rem;flex:1;min-width:0}
+.brand svg{width:2.75rem;height:2.75rem;flex-shrink:0}
+.brand-name{
+  font-family:var(--serif);font-weight:700;font-size:1.3rem;
+  color:var(--gold-2);letter-spacing:.04em;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.cart-btn{
+  width:3.25rem;height:3.25rem;border:0;border-radius:1rem;cursor:pointer;
+  background:var(--gold-grad);color:#1a1205;font-size:1.45rem;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 0 1.375rem rgba(212,168,67,.35);
+}
+.tagline{
+  max-width:68.75rem;margin:0.375rem auto 0;
+  font-size:.78rem;letter-spacing:.34em;color:var(--muted);text-transform:uppercase;
+}
+
+/* ---------- Layout ---------- */
+.container{max-width:68.75rem;margin:0 auto;padding:0 1rem}
+.hero{text-align:center;padding:2.375rem 0 1.625rem}
+.hero h1{
+  margin:0 0 0.75rem;font-family:var(--serif);font-weight:700;
+  font-size:1.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-2);
+}
+.hero p{margin:0 auto;max-width:32.5rem;color:var(--muted);font-size:1.05rem}
+.divider{height:1px;background:var(--gold-line);margin:0 0 1.625rem}
+
+.calc-grid{display:grid;grid-template-columns:1fr;gap:1.375rem}
+@media(min-width:960px){
+  .calc-grid{grid-template-columns:1fr 23.75rem;align-items:start}
+  .results-card{position:sticky;top:8.125rem}
+}
+
+/* ---------- Cards ---------- */
+.card{
+  background:linear-gradient(160deg,var(--card-2) 0%,var(--card) 60%);
+  border:1px solid var(--line);border-radius:1.625rem;padding:1.5rem;
+}
+.card-title{
+  font-family:var(--serif);font-weight:700;color:var(--gold-2);
+  font-size:1.35rem;margin:0 0 0.25rem;
+}
+.card-sub{color:var(--muted);margin:0 0 1.125rem;font-size:.95rem}
+
+/* settings */
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.375rem}
+@media(max-width:420px){.settings{grid-template-columns:1fr}}
+.field{
+  background:var(--bg-2);border:1px solid var(--line);border-radius:1.125rem;
+  padding:0.75rem 1rem;display:flex;align-items:center;gap:0.75rem;
+  transition:border-color .2s,box-shadow .2s;
+}
+.field:focus-within{border-color:var(--gold-2);box-shadow:0 0 0 3px rgba(212,168,67,.12)}
+.field i{color:var(--gold-2);font-size:1.15rem;width:1.375rem;text-align:center}
+.field label{display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.field .row{display:flex;align-items:baseline;gap:0.375rem}
+.field input{
+  width:100%;min-width:0;background:transparent;border:0;outline:0;
+  color:var(--text);font-family:var(--serif);font-weight:700;font-size:1.5rem;padding:0;
+}
+.field .unit{color:var(--dim);font-weight:500}
+input[type=number]{-moz-appearance:textfield}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+/* tabs */
+.tabs{display:flex;gap:0.625rem;margin-bottom:1.25rem}
+.tab{
+  flex:1;padding:0.75rem 0;border-radius:62.44rem;cursor:pointer;
+  background:transparent;border:1px solid var(--gold-line);
+  color:var(--text);font-weight:700;font-size:1rem;transition:all .2s;
+}
+.tab.active{background:var(--gold-grad);color:#1a1205;border-color:transparent;box-shadow:0 0.375rem 1.25rem rgba(212,168,67,.25)}
+
+.tier-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.tier-head h2{margin:0;font-family:var(--serif);font-weight:700;font-size:1.3rem;color:var(--gold-2)}
+.reset-all{
+  background:transparent;border:1px solid var(--line);color:var(--muted);
+  border-radius:62.44rem;padding:0.5rem 0.875rem;cursor:pointer;font-weight:500;font-size:.85rem;
+}
+.reset-all:hover{border-color:#e5484d;color:#e5484d}
+
+/* troop cards */
+.troop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;
+  background:var(--bg-2);border:1px solid var(--line);border-radius:1.2rem;padding:.7rem}
+.troop{
+  background:var(--card);border:1px solid var(--line);border-radius:1rem;overflow:hidden;
+  display:flex;flex-direction:column;min-width:0;transition:border-color .2s,box-shadow .2s;
+}
+.troop:hover{border-color:var(--gold-2);box-shadow:0 .25rem 1.2rem rgba(0,0,0,.45)}
+.troop-img{position:relative;width:100%;aspect-ratio:4/3;background:linear-gradient(160deg,#1b2130,#0d111a);overflow:hidden}
+.troop-img .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--gold-3);font-size:2.2rem;opacity:.55}
+.troop-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.troop-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.75) 100%);pointer-events:none}
+.troop-type{
+  position:absolute;top:.4rem;left:.4rem;z-index:2;
+  background:rgba(0,0,0,.72);color:#fff;border:1px solid var(--gold-line);
+  padding:.15rem .45rem;border-radius:.35rem;
+  font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+}
+.troop-name{
+  position:absolute;left:.5rem;right:.4rem;bottom:.4rem;z-index:2;
+  font-family:var(--serif);font-weight:700;color:var(--gold-1);
+  font-size:.95rem;line-height:1.15;text-shadow:0 .1rem .3rem rgba(0,0,0,.9);
+}
+.troop-body{padding:.6rem;display:flex;flex-direction:column;gap:.5rem}
+.stepper{display:flex;align-items:center;gap:.35rem}
+.step-btn{
+  width:2rem;height:2.4rem;border-radius:.6rem;border:1px solid var(--gold-line);
+  background:transparent;color:var(--gold-1);font-size:1.1rem;cursor:pointer;flex-shrink:0;padding:0;
+  transition:all .15s;
+}
+.step-btn:active,.step-btn:hover{background:var(--gold-grad);color:#1a1205;border-color:transparent}
+.qty{
+  flex:1;min-width:0;width:100%;text-align:center;background:var(--bg-2);
+  border:1px solid var(--line);border-radius:.6rem;height:2.4rem;padding:0;
+  color:var(--text);font-family:var(--serif);font-weight:700;font-size:1rem;outline:0;
+}
+.qty:focus{border-color:var(--gold-2)}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem}
+.q-btn{
+  padding:.4rem 0;border-radius:.5rem;border:1px solid var(--gold-line);
+  background:transparent;color:#d6d8de;font-weight:700;font-size:.62rem;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.q-btn:hover{background:var(--gold-grad);color:#1a1205;border-color:transparent}
+.q-btn.clear{color:#ff6b6b;border-color:rgba(255,107,107,.35)}
+.q-btn.clear:hover{background:#ff6b6b;color:#fff}
+
+/* results */
+.results-head{
+  font-family:var(--serif);font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold-2);text-align:center;font-size:1.1rem;margin:0 0 1.125rem;
+}
+.gem-box{
+  text-align:center;border:1px solid var(--gold-line);border-radius:1.375rem;
+  padding:1.25rem;margin-bottom:1.25rem;background:rgba(212,168,67,.06);
+}
+.gem-pill{
+  display:inline-flex;align-items:center;gap:0.75rem;
+  background:var(--gold-grad);color:#1a1205;
+  font-family:var(--serif);font-weight:700;font-size:2.1rem;
+  padding:0.375rem 1.625rem;border-radius:1.25rem;box-shadow:0 0 1.375rem rgba(212,168,67,.3);
+}
+.gem-pill i{font-size:1.5rem}
+.gem-cap{margin-top:0.625rem;font-size:.72rem;letter-spacing:.28em;color:var(--muted);text-transform:uppercase}
+.res-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.6875rem 0;border-bottom:1px solid var(--line);font-size:1rem;
+}
+.res-row:last-child{border-bottom:0}
+.res-label{color:var(--muted);display:flex;align-items:center;gap:0.625rem}
+.res-label i{color:var(--gold-2);width:1.125rem;text-align:center}
+.res-val{font-weight:700}
+.res-val.gold{color:var(--gold-1);font-family:var(--serif)}
+.section-label{
+  margin:1.375rem 0 0.5rem;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold-2);font-weight:500;padding-bottom:0.5rem;border-bottom:1px solid var(--gold-line);
+}
+.speedup{
+  display:flex;align-items:center;gap:0.75rem;padding:0.75rem 0.875rem;margin-bottom:0.5rem;
+  background:var(--bg-2);border:1px solid var(--line);border-radius:1rem;
+}
+.speedup .ico{
+  width:2.25rem;height:2.25rem;border-radius:0.75rem;background:rgba(212,168,67,.14);
+  color:var(--gold-1);display:flex;align-items:center;justify-content:center;
+}
+.speedup .lbl{flex:1;font-weight:500}
+.speedup .lbl b{color:var(--gold-1)}
+.speedup .gems{font-family:var(--serif);font-weight:700;color:var(--gold-1)}
+.empty{text-align:center;padding:2.25rem 0.625rem;color:var(--muted)}
+.empty i{font-size:2.6rem;color:var(--gold-3);opacity:.5;margin-bottom:0.875rem}
+
+/* ---------- Bottom nav ---------- */
+.bottom-nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:rgba(7,10,16,.97);backdrop-filter:blur(8px);
+  border-top:1px solid var(--gold-line);
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+  padding:0.625rem 0.25rem calc(0.625rem + env(safe-area-inset-bottom));
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:0.375rem;
+  text-decoration:none;color:var(--muted);font-size:.85rem;font-weight:500;
+}
+.nav-item i{font-size:1.7rem}
+.nav-item.active{color:var(--gold-2)}
+.nav-center{position:relative;display:flex;justify-content:center}
+.fab{
+  position:absolute;top:-2.75rem;width:5.5rem;height:5.5rem;border-radius:50%;
+  background:var(--gold-grad);border:0.4375rem solid var(--bg);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  color:#1a1205;font-size:2.1rem;box-shadow:0 0 0 1px var(--gold-line),0 0 1.625rem rgba(212,168,67,.3);
+}
+.fab-badge{
+  position:absolute;top:-0.25rem;right:-0.25rem;min-width:2.125rem;height:2.125rem;padding:0 0.375rem;border-radius:1.062rem;
+  background:var(--bg);border:2px solid var(--gold-3);color:var(--gold-1);
+  font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;
+}
+.nav-center .nav-item{padding-top:3.25rem}
+
+/* ---------- Drawer ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:80;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.overlay.show{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;bottom:0;left:0;width:min(86vw,23.75rem);z-index:90;
+  background:var(--card);border-right:1px solid var(--gold-line);
+  transform:translateX(-100%);transition:transform .28s ease;
+  display:flex;flex-direction:column;
+}
+.drawer.show{transform:none}
+.drawer-head{display:flex;align-items:center;gap:0.875rem;padding:1.25rem 1.125rem;border-bottom:1px solid var(--gold-line)}
+.drawer-head svg{width:3.5rem;height:3.5rem;flex-shrink:0}
+.drawer-head .t{flex:1;min-width:0}
+.drawer-head .n{font-family:var(--serif);font-weight:700;color:var(--gold-2);font-size:1.25rem}
+.drawer-head .s{font-size:.72rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.close-btn{
+  width:3.25rem;height:3.25rem;border-radius:50%;border:1px solid var(--line);
+  background:transparent;color:var(--text);font-size:1.2rem;cursor:pointer;flex-shrink:0;
+}
+.drawer-list{flex:1;overflow-y:auto;padding:0.875rem 1.125rem}
+.d-item{
+  display:flex;align-items:center;gap:1.125rem;padding:0.875rem 0;
+  border-bottom:1px solid var(--line);text-decoration:none;color:var(--text);font-size:1.1rem;
+}
+.d-ico{
+  width:3.5rem;height:3.5rem;border-radius:1rem;border:1px solid var(--line);background:var(--bg-2);
+  display:flex;align-items:center;justify-content:center;color:var(--gold-2);font-size:1.35rem;flex-shrink:0;
+}
+.d-item span.l{flex:1}
+.d-item .chev{color:var(--dim);font-size:.9rem}
+.d-item.active .l{color:var(--gold-2);font-weight:700}
+.drawer-foot{
+  display:flex;align-items:center;gap:0.875rem;padding:1.125rem;border-top:1px solid var(--gold-line);
+}
+.round{
+  width:3.25rem;height:3.25rem;border-radius:50%;border:1px solid var(--line);background:var(--bg-2);
+  color:var(--text);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;
+}
+.foot-note{font-family:var(--serif);font-weight:700;font-size:.75rem;letter-spacing:.14em;color:var(--gold-2);text-transform:uppercase}
+
+footer.site-foot{text-align:center;color:var(--dim);font-size:.82rem;padding:2.125rem 1rem 0.625rem}
+
+/* ---------- Size control ---------- */
+.size-ctl{
+  display:flex;align-items:center;gap:.6rem;margin-bottom:1.3rem;
+  background:var(--bg-2);border:1px solid var(--line);border-radius:1.1rem;padding:.6rem .9rem;
+}
+.size-ctl .sl{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap}
+.size-ctl button{
+  width:2.2rem;height:2.2rem;border-radius:.7rem;border:1px solid var(--gold-line);
+  background:transparent;color:var(--gold-1);font-weight:700;cursor:pointer;flex-shrink:0;font-size:.85rem;
+}
+.size-ctl button:hover{background:var(--gold-grad);color:#1a1205;border-color:transparent}
+.size-ctl input[type=range]{flex:1;min-width:3rem;accent-color:#d4a843;height:1.5rem}
+.size-ctl .sv{min-width:2.8rem;text-align:right;font-family:var(--serif);font-weight:700;color:var(--gold-1);font-size:.85rem}
+@media(max-width:600px){.card{padding:1rem;border-radius:1.2rem}.troop-grid{gap:.5rem;padding:.5rem}.hero{padding:1.8rem 0 1.2rem}}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-row">
+    <button class="icon-btn" aria-label="Menu" onclick="toggleDrawer(true)">
+      <span class="burger"><span></span><span></span><span></span></span>
+    </button>
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6dc8f"/><stop offset=".6" stop-color="#d4a843"/><stop offset="1" stop-color="#b8862b"/></linearGradient></defs>
+        <g fill="url(#g1)">
+          <path d="M32 6l3 9-3 3-3-3z"/>
+          <path d="M20 14l7 8-2 3-8-7zM44 14l-7 8 2 3 8-7z"/>
+          <path d="M32 22c6 8 9 18 9 28H23c0-10 3-20 9-28z"/>
+          <path d="M8 40c0-8 10-9 14-3-5-1-9 1-9 5 0 6 8 10 19 10v3C16 55 8 49 8 40zM56 40c0 9-8 15-26 15v-3c11 0 19-4 19-10 0-4-4-6-9-5 4-6 16-5 16 3z"/>
+          <path d="M28 54h8l-4 6z"/>
+        </g>
+      </svg>
+      <div class="brand-name">LORD RAMA</div>
+    </div>
+    <button class="cart-btn" aria-label="Results" onclick="goResults()"><i class="fas fa-calculator"></i></button>
+  </div>
+  <div class="tagline">Your trust, our service</div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h1>Troops Calculator</h1>
+    <p>Enter the troops you want to train to see the resource cost, training time and the recommended speedup plan.</p>
+  </section>
+  <div class="divider"></div>
+
+  <div class="calc-grid">
+    <!-- Left: calculator -->
+    <section class="card">
+      <h2 class="card-title">Training setup</h2>
+      <p class="card-sub">Set your bonuses, then pick a tier.</p>
+
+      <div class="settings">
+        <div class="field">
+          <i class="fas fa-bolt"></i>
+          <div style="flex:1;min-width:0">
+            <label for="trainingSpeed">Training speed</label>
+            <div class="row"><input type="number" id="trainingSpeed" value="360" inputmode="decimal" oninput="calculate()"><span class="unit">%</span></div>
+          </div>
+        </div>
+        <div class="field">
+          <i class="fas fa-percent"></i>
+          <div style="flex:1;min-width:0">
+            <label for="subsidy">Subsidy</label>
+            <div class="row"><input type="number" id="subsidy" value="0" inputmode="decimal" oninput="calculate()"><span class="unit">%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="size-ctl">
+        <span class="sl">Size</span>
+        <button onclick="stepScale(-0.05)" aria-label="Smaller">A−</button>
+        <input type="range" id="scaleRange" min="0.7" max="1.5" step="0.05" value="1" oninput="applyScale(this.value)" aria-label="Page size">
+        <button onclick="stepScale(0.05)" aria-label="Larger">A+</button>
+        <span class="sv" id="scaleVal">100%</span>
+        <button onclick="applyScale(1)" aria-label="Reset size" title="Reset"><i class="fas fa-rotate-left"></i></button>
+      </div>
+
+      <div class="tabs" id="tabs">
+        <button class="tab active" onclick="switchTier(1)">T1</button>
+        <button class="tab" onclick="switchTier(2)">T2</button>
+        <button class="tab" onclick="switchTier(3)">T3</button>
+        <button class="tab" onclick="switchTier(4)">T4</button>
+      </div>
+
+      <div class="tier-head">
+        <h2 id="tierTitle">T1 Troops</h2>
+        <button class="reset-all" onclick="resetAll()"><i class="fas fa-trash"></i> Reset all</button>
+      </div>
+
+      <div class="troop-grid" id="troopGrid"></div>
+    </section>
+
+    <!-- Right: results -->
+    <aside class="card results-card" id="results">
+      <h2 class="results-head">Calculation results</h2>
+      <div id="resultsContent"></div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-foot">LORD RAMA · Your trust, our service</footer>
+
+<!-- Bottom nav: links to tools already available on LORD RAMA -->
+<nav class="bottom-nav" aria-label="Primary navigation">
+  <a class="nav-item" href="index.html#top"><i class="far fa-house"></i><span>Home</span></a>
+  <a class="nav-item" href="index.html#calculator"><i class="fas fa-bolt"></i><span>Speedup</span></a>
+  <div class="nav-center">
+    <button class="fab" aria-label="Scroll to training results" onclick="goResults()"><i class="fas fa-calculator"></i><span class="fab-badge" id="badge">0</span></button>
+    <a class="nav-item active" href="training.html" aria-current="page"><span>Train</span></a>
+  </div>
+  <a class="nav-item" href="index.html#gem-prediction"><i class="fas fa-gem"></i><span>Gems</span></a>
+  <a class="nav-item" href="index.html#contact"><i class="far fa-comment"></i><span>Contact</span></a>
+</nav>
+
+<!-- Drawer -->
+<div class="overlay" id="overlay" onclick="toggleDrawer(false)"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="url(#g1)">
+      <path d="M32 6l3 9-3 3-3-3z"/><path d="M20 14l7 8-2 3-8-7zM44 14l-7 8 2 3 8-7z"/>
+      <path d="M32 22c6 8 9 18 9 28H23c0-10 3-20 9-28z"/>
+      <path d="M8 40c0-8 10-9 14-3-5-1-9 1-9 5 0 6 8 10 19 10v3C16 55 8 49 8 40zM56 40c0 9-8 15-26 15v-3c11 0 19-4 19-10 0-4-4-6-9-5 4-6 16-5 16 3z"/>
+      <path d="M28 54h8l-4 6z"/></g></svg>
+    <div class="t"><div class="n">LORD RAMA</div><div class="s">Your trust, our service</div></div>
+    <button class="close-btn" onclick="toggleDrawer(false)" aria-label="Close"><i class="fas fa-xmark"></i></button>
+  </div>
+  <div class="drawer-list">
+    <a class="d-item" href="index.html#top"><span class="d-ico"><i class="far fa-house"></i></span><span class="l">Home</span><i class="fas fa-chevron-right chev"></i></a>
+    <a class="d-item" href="index.html#calculator"><span class="d-ico"><i class="fas fa-bolt"></i></span><span class="l">Speedup Calculator</span><i class="fas fa-chevron-right chev"></i></a>
+    <a class="d-item" href="index.html#gem-prediction"><span class="d-ico"><i class="fas fa-gem"></i></span><span class="l">Gem Prediction</span><i class="fas fa-chevron-right chev"></i></a>
+    <a class="d-item active" href="training.html" aria-current="page"><span class="d-ico"><i class="fas fa-helmet-safety"></i></span><span class="l">Troop Training Calculator</span><i class="fas fa-chevron-right chev"></i></a>
+    <a class="d-item" href="index.html#order"><span class="d-ico"><i class="fas fa-cart-shopping"></i></span><span class="l">Order Builder</span><i class="fas fa-chevron-right chev"></i></a>
+    <a class="d-item" href="index.html#commands"><span class="d-ico"><i class="fas fa-terminal"></i></span><span class="l">Guild Bank Commands</span><i class="fas fa-chevron-right chev"></i></a>
+    <a class="d-item" href="index.html#contact"><span class="d-ico"><i class="far fa-comment"></i></span><span class="l">Contact</span><i class="fas fa-chevron-right chev"></i></a>
+  </div>
+  <div class="drawer-foot">
+    <span class="round"><i class="far fa-comment"></i></span>
+    <span class="round"><i class="fas fa-phone"></i></span>
+    <span class="foot-note">Accurate plans · Fewer gems</span>
+  </div>
+</aside>
+
+<script>
+const troopData = {
+  1:{names:{inf:'Grunt',rng:'Archer',cav:'Cataphract',siege:'Ballista'},might:2,time:10,base:50,gold:0},
+  2:{names:{inf:'Gladiator',rng:'Sharpshooter',cav:'Reptilian Rider',siege:'Catapult'},might:8,time:20,base:100,gold:5},
+  3:{names:{inf:'Royal Guard',rng:'Stealth Sniper',cav:'Royal Cavalry',siege:'Fire Trebuchet'},might:24,time:45,base:150,gold:10},
+  4:{names:{inf:'Heroic Fighter',rng:'Heroic Cannoneer',cav:'Ancient Drake Rider',siege:'Destroyer'},might:36,time:120,base:1000,gold:500}
+};
+// which resources each troop type uses
+const usesRes = {
+  inf:{food:1,wood:1,stone:0,ore:1},
+  rng:{food:1,wood:1,stone:1,ore:0},
+  cav:{food:1,wood:0,stone:1,ore:1},
+  siege:{food:1,wood:1,stone:1,ore:1}
+};
+const types = [
+  {id:'inf',label:'Infantry',icon:'fa-shield-halved'},
+  {id:'rng',label:'Ranged',icon:'fa-bullseye'},
+  {id:'cav',label:'Cavalry',icon:'fa-horse'},
+  {id:'siege',label:'Siege',icon:'fa-chess-rook'}
+];
+const speedups = [
+  {seconds:259200,cost:4400,label:'3 Days'},
+  {seconds:86400,cost:1500,label:'24 Hours'},
+  {seconds:54000,cost:1000,label:'15 Hours'},
+  {seconds:28800,cost:650,label:'8 Hours'},
+  {seconds:10800,cost:300,label:'3 Hours'},
+  {seconds:3600,cost:130,label:'60 Minutes'}
+];
+
+let currentTier = 1;
+const inputs = {};
+function initInputs(){
+  for(let t=1;t<=4;t++) types.forEach(ty=>inputs[`t${t}-${ty.id}`]=0);
+}
+
+function toggleDrawer(open){
+  document.getElementById('drawer').classList.toggle('show',open);
+  document.getElementById('overlay').classList.toggle('show',open);
+}
+function goResults(){
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function switchTier(t){
+  currentTier = t;
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',i+1===t));
+  document.getElementById('tierTitle').textContent = `T${t} Troops`;
+  renderGrid();
+}
+
+function renderGrid(){
+  document.getElementById('troopGrid').innerHTML = types.map(ty=>{
+    const id = `t${currentTier}-${ty.id}`;
+    const name = troopData[currentTier].names[ty.id];
+    return `
+    <div class="troop">
+      <div class="troop-img">
+        <div class="ph"><i class="fas ${ty.icon}"></i></div>
+        <div class="troop-type">${ty.label}</div>
+        <div class="troop-name">${name}</div>
+      </div>
+      <div class="troop-body">
+        <div class="stepper">
+          <button class="step-btn" onclick="adjust('${id}',-1000)">−</button>
+          <input type="number" class="qty" id="inp-${id}" value="${inputs[id]}" inputmode="numeric" oninput="setVal('${id}',this.value)">
+          <button class="step-btn" onclick="adjust('${id}',1000)">+</button>
+        </div>
+        <div class="quick">
+          <button class="q-btn" onclick="adjust('${id}',100000)">+100K</button>
+          <button class="q-btn" onclick="adjust('${id}',500000)">+500K</button>
+          <button class="q-btn" onclick="adjust('${id}',1000000)">+1M</button>
+          <button class="q-btn clear" onclick="setTo('${id}',0)">✕</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setVal(id,v){ inputs[id] = Math.max(0,parseInt(v)||0); calculate(); }
+function adjust(id,a){ setTo(id,Math.max(0,(inputs[id]||0)+a)); }
+function setTo(id,v){
+  inputs[id]=v;
+  const el=document.getElementById('inp-'+id); if(el) el.value=v;
+  calculate();
+}
+function resetAll(){ initInputs(); renderGrid(); calculate(); }
+
+function fmt(n){
+  if(n>=1e6) return (n/1e6).toFixed(1)+'M';
+  if(n>=1e3) return (n/1e3).toFixed(1)+'K';
+  return n.toLocaleString();
+}
+function fmtTime(s){
+  if(s<=0) return '0s';
+  const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),sec=Math.floor(s%60);
+  let r='';
+  if(d)r+=d+'d '; if(h)r+=h+'h '; if(m)r+=m+'m ';
+  if(sec||!r)r+=sec+'s';
+  return r.trim();
+}
+
+function speedupPlan(total){
+  let rem=Math.ceil(total),gems=0;const plan=[];
+  speedups.forEach(sp=>{
+    if(rem>=sp.seconds){
+      const c=Math.floor(rem/sp.seconds);
+      plan.push({...sp,count:c}); gems+=c*sp.cost; rem%=sp.seconds;
+    }
+  });
+  if(rem>0) gems+=Math.ceil(rem/60)*5;
+  return {plan,gems};
+}
+
+function emptyState(){
+  return `<div class="empty"><i class="fas fa-helmet-safety"></i><p>Enter troop quantities to see the plan.</p></div>`;
+}
+
+function calculate(){
+  const speed=parseFloat(document.getElementById('trainingSpeed').value)||0;
+  const subsidy=parseFloat(document.getElementById('subsidy').value)||0;
+  const mult=1-subsidy/100;
+  let food=0,wood=0,stone=0,ore=0,gold=0,time=0,troops=0,might=0;
+
+  for(let t=1;t<=4;t++){
+    const d=troopData[t];
+    types.forEach(ty=>{
+      const n=inputs[`t${t}-${ty.id}`]||0;
+      if(!n) return;
+      const u=usesRes[ty.id];
+      troops+=n; might+=n*d.might; time+=n*d.time;
+      food +=n*d.base*u.food*mult;
+      wood +=n*d.base*u.wood*mult;
+      stone+=n*d.base*u.stone*mult;
+      ore  +=n*d.base*u.ore*mult;
+      gold +=n*d.gold*mult;
+    });
+  }
+
+  document.getElementById('badge').textContent = troops>0 ? (troops>=1e6?(troops/1e6).toFixed(1)+'M':troops>=1e3?Math.round(troops/1e3)+'K':troops) : '0';
+
+  const box=document.getElementById('resultsContent');
+  if(!troops){ box.innerHTML=emptyState(); return; }
+
+  const secs=time/(1+speed/100);
+  const {plan,gems}=speedupPlan(secs);
+
+  const plans = plan.length ? plan.map(p=>`
+    <div class="speedup">
+      <div class="ico"><i class="fas fa-hourglass-half"></i></div>
+      <div class="lbl"><b>${p.label}</b> × ${p.count}</div>
+      <div class="gems">${(p.count*p.cost).toLocaleString()} <i class="fas fa-gem"></i></div>
+    </div>`).join('') : `<div class="res-label" style="padding:6px 0">No large speedups needed</div>`;
+
+  box.innerHTML = `
+    <div class="gem-box">
+      <div class="gem-pill"><i class="fas fa-gem"></i>${gems.toLocaleString()}</div>
+      <div class="gem-cap">Gems required</div>
+    </div>
+    <div class="res-row"><span class="res-label"><i class="fas fa-clock"></i>Training time</span><span class="res-val gold">${fmtTime(secs)}</span></div>
+    <div class="res-row"><span class="res-label"><i class="fas fa-users"></i>Total troops</span><span class="res-val">${troops.toLocaleString()}</span></div>
+    <div class="res-row"><span class="res-label"><i class="fas fa-shield"></i>Total might</span><span class="res-val">${might.toLocaleString()}</span></div>
+
+    <div class="section-label">Speedup plan</div>
+    ${plans}
+
+    <div class="section-label">Resources required</div>
+    <div class="res-row"><span class="res-label"><i class="fas fa-leaf"></i>Food</span><span class="res-val">${fmt(Math.ceil(food))}</span></div>
+    <div class="res-row"><span class="res-label"><i class="fas fa-tree"></i>Wood</span><span class="res-val">${fmt(Math.ceil(wood))}</span></div>
+    <div class="res-row"><span class="res-label"><i class="fas fa-mountain"></i>Stone</span><span class="res-val">${fmt(Math.ceil(stone))}</span></div>
+    <div class="res-row"><span class="res-label"><i class="fas fa-gem"></i>Ore</span><span class="res-val">${fmt(Math.ceil(ore))}</span></div>
+    <div class="res-row"><span class="res-label"><i class="fas fa-coins"></i>Gold</span><span class="res-val">${fmt(Math.ceil(gold))}</span></div>`;
+}
+
+function applyScale(v){
+  v = Math.min(1.5, Math.max(0.7, parseFloat(v) || 1));
+  v = Math.round(v*100)/100;
+  document.documentElement.style.setProperty('--scale', v);
+  document.getElementById('scaleRange').value = v;
+  document.getElementById('scaleVal').textContent = Math.round(v*100) + '%';
+  try{ localStorage.setItem('uiScale', v); }catch(e){}
+}
+function stepScale(d){
+  applyScale((parseFloat(document.getElementById('scaleRange').value)||1) + d);
+}
+(function(){
+  let v = 1;
+  try{ v = parseFloat(localStorage.getItem('uiScale')) || 1; }catch(e){}
+  applyScale(v);
+})();
+
+initInputs();
+renderGrid();
+calculate();
+</script>
+</body>
+</html>
