@@ -1,274 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lords Mobile Screenshot Comparison Tool</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Tesseract.js for OCR -->
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307080c'/%3E%3Cellipse cx='32' cy='28' rx='12' ry='17' fill='none' stroke='%23e2b94f' stroke-width='3'/%3E%3Cellipse cx='32' cy='28' rx='5' ry='8' fill='%23e2b94f'/%3E%3Cpath d='M32 46v14' stroke='%23e2b94f' stroke-width='3'/%3E%3C/svg%3E">
+<title>Radhe LM Shop – Lords Mobile Bank Bot Subscription & Resources</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500..900&family=Inter:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#0b1220;--bg2:#1b2d4d;--card:#101a2e;--ink:#f3f1ea;--mut:#9fb0c6;--line:#5a4a22;--gold:#f4c542;--red:#8e2a22;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f7f2e7;--bg2:#ecdfc0;--card:#fff;--ink:#16202e;--mut:#55627a;--line:#d8c48f;--gold:#9a6b00;color-scheme:light}}
+:root[data-theme="light"]{--bg:#f7f2e7;--bg2:#ecdfc0;--card:#fff;--ink:#16202e;--mut:#55627a;--line:#d8c48f;--gold:#9a6b00;color-scheme:light}
+:root[data-theme="dark"]{--bg:#0b1220;--bg2:#1b2d4d;--card:#101a2e;--ink:#f3f1ea;--mut:#9fb0c6;--line:#5a4a22;--gold:#f4c542;--red:#8e2a22;color-scheme:dark}
+*{box-sizing:border-box}
+html{font-size:clamp(13px,3.9vw,16px);scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.55 Inter,system-ui,sans-serif;background-image:radial-gradient(900px 500px at 12% -8%,var(--bg2),transparent),radial-gradient(700px 420px at 100% 35%,rgba(201,151,43,.14),transparent);background-repeat:no-repeat}
+h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif;margin:0}
+.wrap{max-width:1040px;margin:auto;padding:0 18px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:10px;padding-bottom:10px}
+.brand{font:900 1.15rem 'Playfair Display',Georgia,serif;color:var(--gold);text-decoration:none;white-space:nowrap}
+nav{display:flex;gap:16px;overflow-x:auto;font-size:.9rem}
+nav a{color:var(--ink);text-decoration:none;white-space:nowrap}
+nav a:hover,a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.hero{text-align:center;padding:64px 0 40px}
+.hero h1{font-size:clamp(2.6rem,10vw,5rem);font-weight:900;color:var(--gold);line-height:1.05;text-shadow:0 3px 0 rgba(0,0,0,.35)}
+.hero p{color:var(--mut);margin:14px auto 26px;max-width:46ch}
+.crown{font-size:2.6rem}
+.btn{display:inline-block;padding:12px 24px;border-radius:999px;font-weight:700;text-decoration:none;background:var(--gold);color:#2a1a05;margin:4px;border:1px solid var(--gold);font-family:inherit;font-size:1rem}
+.btn.o{background:none;color:var(--gold)}
+section{padding:36px 0}
+h2{font-size:clamp(1.7rem,5vw,2.4rem);color:var(--gold);margin-bottom:6px}
+.sub{color:var(--mut);margin:0 0 22px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.card h3{font-size:1.25rem;color:var(--gold)}
+.big{font:900 2.6rem 'Playfair Display',Georgia,serif}
+.price{display:inline-block;background:var(--red);color:#fff;border:1px solid var(--gold);border-radius:10px;padding:6px 20px;font:800 1.8rem Inter,sans-serif;margin-top:10px}
+.promo{margin:16px 0;padding:20px;border-radius:16px;border:1px solid var(--line);text-align:center;background:linear-gradient(90deg,#6e1d1b,#1f2340);color:#fff}
+.promo b{display:block;font:900 clamp(1.5rem,5vw,2.2rem) 'Playfair Display',Georgia,serif;color:#f4c542}
+.stats{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+.stats div{min-width:110px}
+.stats small{display:block;color:var(--mut)}
+.sc{overflow-x:auto;border-radius:12px}
+table{width:100%;border-collapse:collapse;min-width:0}
+th{background:var(--red);color:#fff}
+td,th{padding:12px 10px;text-align:center;border:1px solid var(--line)}
+td.p{color:var(--gold);font-weight:800;font-size:1.1rem}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+.badges .card{text-align:center;padding:16px;font-weight:600}
+.badges .mm{font:900 1.8rem 'Playfair Display',Georgia,serif;color:var(--gold)}
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:20px}
+.tips div{border-left:3px solid var(--gold);padding:4px 12px;color:var(--mut);font-size:.92rem}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+input{flex:1 1 240px;padding:12px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tabs button{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--ink);font:inherit;cursor:pointer}
+.tabs button.on{background:var(--gold);color:#2a1a05;border-color:var(--gold);font-weight:700}
+#cnt{color:var(--mut);font-size:.9rem;margin:0 0 12px}
+.cmds{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.cmd{padding:16px;display:flex;flex-direction:column;gap:6px}
+.cmd small{color:var(--mut)}
+.cmd code{color:var(--gold);font:700 1rem ui-monospace,Menlo,monospace;word-break:break-word}
+.cmd p{margin:0;font-size:.93rem;flex:1}
+.cp{text-align:left;padding:8px 12px;border-radius:8px;border:1px dashed var(--line);background:rgba(127,127,127,.1);color:var(--ink);font:.85rem ui-monospace,Menlo,monospace;cursor:pointer;word-break:break-word}
+.cp:hover{border-color:var(--gold)}
+.contact{text-align:center}
+.contact .tel{font:900 clamp(1.8rem,7vw,3rem) 'Playfair Display',Georgia,serif;color:var(--gold);text-decoration:none;display:block;margin:8px 0 16px}
+footer{text-align:center;color:var(--mut);font-size:.85rem;padding:24px 0 40px}
+.f label{display:block;margin-bottom:12px;color:var(--mut);font-size:.9rem}
+.f input,.f select{width:100%;margin-top:4px;padding:12px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+input[type=checkbox]{flex:none;width:auto;padding:0;margin:0 8px 0 0;vertical-align:middle;accent-color:var(--gold)}
+.chk{display:block;margin:14px 0;font-size:.9rem;color:var(--mut)}
+.ci{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.ci button,.add{border:1px solid var(--gold);background:none;color:var(--gold);border-radius:8px;min-width:30px;height:30px;cursor:pointer;font:inherit}
+.add{margin-left:8px;border-radius:50%;width:28px;min-width:0;height:28px;line-height:1;padding:0}
+.qc{display:inline-flex;gap:8px;align-items:center}
+.tot{display:flex;justify-content:space-between;font-size:1.3rem;margin:12px 0}
+.tot b{color:var(--gold)}
+.th{background:none;border:1px solid var(--line);border-radius:50%;width:36px;height:36px;cursor:pointer;color:var(--ink);flex:none}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:10;background:var(--gold);color:#2a1a05;padding:12px 18px;border-radius:999px;font-weight:800;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(16px);opacity:0;transition:.25s;background:var(--gold);color:#2a1a05;padding:8px 16px;border-radius:999px;font-weight:600;pointer-events:none;z-index:20}
+.toast.on{opacity:1;transform:translateX(-50%)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+body:not(.cmdview) #commands{display:none}
+body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #order,body.cmdview .fab{display:none}
+#commands{padding-top:44px}
+.rs{font-size:.88rem;color:var(--mut)}
+.rs b{color:var(--ink)}
+@media (max-width:640px){
+.wrap{padding:0 12px}
+header .wrap{flex-wrap:wrap;gap:6px 10px;padding-top:8px;padding-bottom:8px}
+.brand{margin-right:auto}
+nav{order:3;flex:1 0 100%;gap:16px;font-size:.85rem;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 92px)}
+.hero{padding:36px 0 24px}
+section{padding:24px 0}
+.g2,.cmds,.badges{grid-template-columns:1fr!important;gap:10px}
+.card{padding:14px;border-radius:14px}
+.btn{padding:10px 18px}
+.price{padding:4px 14px}
+td,th{padding:9px 4px;font-size:.82rem}
+th{font-size:.72rem}
+td.p{font-size:.95rem}
+.add{display:block;margin:4px auto 0;width:24px;height:24px}
+.th{width:32px;height:32px}
+.fab{padding:9px 14px}
+.ci{gap:6px;font-size:.85rem}
+}
+:root:root:root{--bg:#07080c;--bg2:#181408;--card:#0d0f15;--ink:#f1efe8;--mut:#9aa0ad;--line:#2d2a22;--gold:#e2b94f;--g1:#f6dd8e;--g2:#bd8a2d;--red:#15120a;color-scheme:dark}
+#th{display:none}
+body{background-image:radial-gradient(520px 520px at 100% 60%,rgba(201,151,43,.16),transparent),radial-gradient(700px 380px at 0 0,rgba(60,46,14,.45),transparent)}
+h1,h2,h3,.serif,.brand,.big,.promo b,.badges .mm,.contact .tel{font-family:Cinzel,Georgia,serif}
+h2{text-align:center;text-transform:uppercase;letter-spacing:.05em;font-size:clamp(1.3rem,5.6vw,2rem)}
+.sub{text-align:center}
+section{border-top:1px solid #3a2f14}
+.hero h1{background:linear-gradient(180deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;letter-spacing:.03em;font-size:clamp(1.8rem,7.6vw,4.2rem)}
+.card{background:linear-gradient(180deg,#10121a,#0b0c12);border:1px solid var(--line);border-radius:18px}
+.btn{background:linear-gradient(180deg,var(--g1),#c9973b 65%,var(--g2));color:#1a1204;border:0;border-radius:14px;box-shadow:0 6px 22px rgba(201,151,43,.25);font-weight:800}
+.btn.o{background:none;color:var(--ink);border:1.5px solid #e9e4d6;box-shadow:none}
+.btn.wa{background:#1fae5b;color:#fff;box-shadow:none}
+.price{background:linear-gradient(180deg,var(--g1),var(--g2));color:#1a1204;border:0;border-radius:12px}
+.promo{background:linear-gradient(90deg,#2b1f08,#111018);border-color:#4a3a16;color:var(--ink)}
+th{background:#16130b;color:var(--gold)}
+td,th{border-color:var(--line)}
+.sc{border-radius:16px}
+input:not([type=checkbox]),.f select{border-radius:14px;background:#0b0c12}
+.tabs button{border-radius:12px}
+.tabs button.on{background:linear-gradient(180deg,var(--g1),var(--g2))}
+footer{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+header{background:rgba(9,10,14,.94);border-bottom:1px solid #3a2f14}
+header .wrap{flex-wrap:wrap;gap:6px 10px;padding-top:10px;padding-bottom:8px}
+header nav{display:none}
+.brand{flex:1;font-size:1.3rem;letter-spacing:.04em;font-weight:800;background:linear-gradient(180deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.tg,.dh small{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mut)}
+.tg{flex:1 0 100%}
+.hb{background:none;border:0;color:var(--gold);width:40px;height:40px;padding:0;cursor:pointer;flex:none}
+.hb svg{width:26px;height:26px}
+.gb{flex:none;width:44px;height:44px;border-radius:14px;background:linear-gradient(180deg,var(--g1),var(--g2));color:#1a1204;display:grid;place-items:center;box-shadow:0 4px 16px rgba(201,151,43,.3)}
+.gb svg{width:22px;height:22px}
+.ic{width:42px;height:42px;flex:none;border-radius:50%;border:1px solid var(--line);background:#0d0f15;color:var(--ink);display:grid;place-items:center;text-decoration:none;cursor:pointer;padding:0}
+.ic svg{width:20px;height:20px}
+.bd{position:fixed;inset:0;background:rgba(0,0,0,.65);opacity:0;pointer-events:none;transition:opacity .25s;z-index:30}
+.bd.on{opacity:1;pointer-events:auto}
+.drw{position:fixed;top:0;bottom:0;left:0;width:min(86vw,360px);transform:translateX(-102%);transition:transform .28s;background:linear-gradient(180deg,#10111a,#08090d);border-right:1px solid #4a3a16;z-index:31;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.drw.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--line)}
+.dh .brand{flex:none;font-size:1.4rem;display:inline-block}
+.dh small{display:block;margin-top:4px}
+#dm{flex:1;overflow-y:auto;padding:10px 16px}
+.mi{display:flex;align-items:center;gap:16px;padding:8px 0;color:var(--ink);text-decoration:none;font-size:1.05rem;border-bottom:1px solid #17171c}
+.mi i{flex:none;width:50px;height:50px;border-radius:14px;border:1px solid var(--line);background:#0d0f15;color:var(--gold);display:grid;place-items:center}
+.mi i svg{width:24px;height:24px}
+.mi em{margin-left:auto;color:var(--mut);font-style:normal;font-size:1.4rem}
+.df{display:flex;align-items:center;gap:12px;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+.df span{font:600 .6rem Cinzel,serif;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.nb{display:none;position:fixed;left:0;right:0;bottom:0;z-index:20;align-items:flex-end;background:rgba(8,9,13,.96);backdrop-filter:blur(10px);border-top:1px solid #3a2f14;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.nb a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--mut);text-decoration:none;font-size:.7rem;padding:4px 0}
+.nb a.on{color:var(--gold)}
+.nb em{display:block;width:24px;height:24px}
+.nb svg,.sup svg{width:100%;height:100%}
+.cb{position:relative;width:58px;height:58px;margin-top:-30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,var(--g1),var(--g2));color:#1a1204;border:4px solid var(--bg);box-shadow:0 6px 18px rgba(201,151,43,.35)}
+.cb em{width:26px;height:26px}
+.cb i{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;padding:0 5px;border-radius:11px;background:#1a1204;color:var(--gold);border:1px solid var(--gold);font:700 .7rem/20px Inter,sans-serif;font-style:normal;text-align:center}
+.sup{position:fixed;right:16px;bottom:calc(104px + env(safe-area-inset-bottom,0px));z-index:19;width:58px;height:58px;padding:15px;border-radius:50%;background:linear-gradient(180deg,var(--g1),var(--g2));color:#1a1204;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+@media (max-width:720px){.nb{display:flex}body{padding-bottom:92px}.toast{bottom:calc(110px + env(safe-area-inset-bottom,0px))}}
+@media (min-width:721px){header nav{display:flex;margin-left:auto;margin-right:12px}.hb,.tg{display:none}.brand{flex:none}.sup{bottom:24px}}
+.lg{flex:none;display:block;width:40px;height:40px}
+.lg svg{width:100%;height:100%}
+.lgs{width:52px;height:52px;flex:none}
+.dl{display:flex;align-items:center;gap:10px}
+.lgh{display:block;width:130px;height:130px;margin:0 auto 10px;filter:drop-shadow(0 4px 18px rgba(201,151,43,.35))}
+.brand{font-size:clamp(1rem,4.6vw,1.3rem)}
+.hb{width:36px}
+.dh .brand{font-size:1.15rem}
+.lgs{width:46px;height:46px}
+.dl{min-width:0;flex:1}
+.dh small{letter-spacing:.18em;font-size:.56rem}
+.df span{letter-spacing:.12em;font-size:.55rem;line-height:1.5}
+html{overflow-anchor:none}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1>⚔️ Lords Mobile Guild Comparison Tool</h1>
-            <p class="subtitle">Compare guild screenshots to track player progress and changes</p>
-        </header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="gg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100"><stop offset="0" stop-color="#f6dd8e"/><stop offset="1" stop-color="#bd8a2d"/></linearGradient></defs><symbol id="lg" viewBox="0 0 100 100"><g fill="none" stroke="url(#gg)" stroke-linecap="round"><path d="M35.9 31.1L26.0 34.7M35.4 29.4L29.1 30.8M35.1 27.6L24.6 28.7M35.0 25.7L28.5 25.6M35.1 23.9L24.7 22.5M35.5 22.1L29.2 20.4M36.1 20.4L26.4 16.4M36.9 18.7L31.2 15.6M37.9 17.2L29.4 11.0M39.0 15.8L34.3 11.3M40.4 14.5L33.6 6.5M41.8 13.4L38.3 8.0M43.4 12.5L38.8 3.1M45.1 11.8L43.0 5.7M46.9 11.3L44.7 1.1M48.7 11.1L48.1 4.6M50.5 11.0L50.9 0.5M52.3 11.2L53.4 4.8M54.1 11.6L57.0 1.5M55.9 12.2L58.4 6.2M57.5 13.0L62.8 3.9M59.0 14.0L62.9 8.8M60.4 15.2L67.7 7.7M61.7 16.6L66.7 12.5M62.7 18.1L71.6 12.5M63.6 19.7L69.5 16.9M64.3 21.4L74.3 18.1M64.7 23.1L71.1 21.9M65.0 25.0L75.4 24.2M65.0 26.8L71.5 27.1M64.8 28.6L75.1 30.4M64.3 30.4L70.6 32.3" stroke-width=".9" opacity=".9"/><circle cx="50" cy="26" r="12.500" stroke-width=".8" opacity=".8"/>
+<path d="M45 95C30 99 13 92 11 77C10 69 17 63 24 66C29 69 27 76 21 75" stroke-width="2.2"/><path d="M45 95C30 99 13 92 11 77" stroke-width="0"/><path d="M45 95C30 99 13 92 11 77C10 69 17 63 24 66C29 69 27 76 21 75" stroke-width="2.2" transform="translate(100 0) scale(-1 1)"/>
+<path d="M15 84C20 90 28 92 36 91M85 84C80 90 72 92 64 91" stroke-width="1.2" opacity=".8"/></g>
+<g fill="url(#gg)"><path d="M50 98C45.500 94 45.500 90.500 50 86.500C54.500 90.500 54.500 94 50 98Z"/><path d="M50 98C45.500 94 45.500 90.500 50 86.500C54.500 90.500 54.500 94 50 98Z" transform="rotate(-40 50 98)"/><path d="M50 98C45.500 94 45.500 90.500 50 86.500C54.500 90.500 54.500 94 50 98Z" transform="rotate(40 50 98)"/>
+<path d="M51 18C54 9 58 4 65 1C66 9 61 15 54 20Z"/>
+<circle cx="49" cy="19" r="3.200"/><ellipse cx="50" cy="26.500" rx="5.500" ry="6.500" transform="rotate(-12 50 26.500)"/>
+<path d="M47 32L53 32C58 34 61 36 60 39C59 45 57 49 55 53L46 53C44 49 43 43 42.500 38C43 35 45 33 47 32Z"/>
+<path d="M46 50C44 62 41 72 37 84C44 87 56 87 63 84C60 74 58 62 55 50Z"/>
+<path d="M55 55C68 58 75 68 68 78C66 71 61 65 56 63Z"/>
+</g>
+<ellipse cx="63.500" cy="4.500" rx="1.700" ry="2.600" fill="#07080c" transform="rotate(30 63.500 4.500)"/><circle cx="63.500" cy="4.500" r=".8" fill="url(#gg)"/>
+<path d="M46.500 58C48 66 47 74 44 84M52 56C53 66 52 74 54 84" stroke="#07080c" stroke-width=".7" fill="none" opacity=".55"/>
+<g fill="none" stroke="#07080c" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="3.800"/><path d="M44 35C36 40 35 44 34 32M57 36C64 41 58 33 47 29" stroke-width="5.600"/></g>
+<g fill="none" stroke="url(#gg)" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="1.700"/><path d="M44 35C36 40 35 44 34 32" stroke-width="3.400"/><path d="M57 36C64 41 58 33 47 29" stroke-width="3.400"/></g></symbol></svg>
+<header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="Radhe LM Shop"><svg><use href="#lg"/></svg></a><a class="brand" href="#top">Radhe LM Shop</a>
+<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
 
-        <!-- Navigation Tabs -->
-        <nav class="tabs">
-            <button class="tab-btn active" data-tab="upload">📸 Upload & Extract</button>
-            <button class="tab-btn" data-tab="compare">📊 Compare</button>
-            <button class="tab-btn" data-tab="history">📜 History</button>
-            <button class="tab-btn" data-tab="settings">⚙️ Settings</button>
-        </nav>
+<main id="top">
+<div class="wrap hero">
 
-        <!-- Tab Content -->
-        <main class="tab-content">
-            <!-- Upload & Extract Tab -->
-            <section id="upload" class="tab-pane active">
-                <div class="section-title">Upload Guild Screenshots</div>
-                
-                <!-- Drag and Drop Area -->
-                <div class="upload-area" id="uploadArea">
-                    <div class="upload-icon">📁</div>
-                    <p>Drag and drop screenshots here or click to select</p>
-                    <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
-                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
-                        Select Images
-                    </button>
-                </div>
+<svg class="lgh" role="img" aria-label="Radhe LM Shop logo"><use href="#lg"/></svg>
+<h1>Radhe LM Shop</h1>
+<p>Your trust, our service. Bank bot subscription and resource bundles for Lords Mobile, direct from the seller.</p>
+<a class="btn wa" href="https://wa.me/917533895827" target="_blank" rel="noopener">Order on WhatsApp</a>
+<a class="btn o" href="#resources">See prices</a>
+<a class="btn o" href="#commands">Guild bank commands</a>
+</div>
 
-                <!-- Progress Indicator -->
-                <div id="progressContainer" class="progress-container" style="display: none;">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <p id="progressText">Processing: 0%</p>
-                </div>
+<section id="attacks"><div class="wrap">
+<p class="sub">Let the bank bot do the attacking while you play.</p>
+<div class="g2">
+<div class="card"><h3>Leader attack</h3><div class="big">30</div><div>Leader attacks by bank bot</div><span class="price">$3.5</span><br><button class="btn" style="margin-top:14px" data-c="Bank bot attacks" data-i="0">Add to order</button></div>
+<div class="card"><h3>Customer attack</h3><div class="big">🎯</div><div>Customer attacks by bank bot</div><span class="price">$2</span><br><button class="btn" style="margin-top:14px" data-c="Bank bot attacks" data-i="1">Add to order</button></div>
+</div>
+<div class="promo">45% off if you take it again<b>After 3 days</b></div>
+<div class="card stats">
+<div><span class="big">📦 44444</span><small>1–5 min to start</small></div>
+<div><span class="big" style="color:var(--gold)">$0.5</span><small>90 min to complete</small></div>
+</div>
 
-                <!-- Extracted Data Display -->
-                <div id="extractedDataContainer" class="extracted-data-container" style="display: none;">
-                    <div class="section-title">Extracted Player Data</div>
-                    
-                    <!-- Screenshot Selector -->
-                    <div class="screenshot-selector">
-                        <label>Select Screenshot:</label>
-                        <select id="screenshotSelect">
-                            <option value="">-- Choose a screenshot --</option>
-                        </select>
-                    </div>
+<h2 id="services" style="margin-top:40px">Bank bot subscription</h2><p class="sub">2 different companies, 99% same function.</p>
+<div class="g2" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+<div class="sc card" style="padding:0"><table><thead><tr><th>Duration</th><th>Company 1</th><th>Company 2</th></tr></thead><tbody id="bots"></tbody></table></div>
+<div class="card" style="text-align:center"><h3>Extra benefit</h3><p>If you buy a bank bot from me:</p><div style="font-size:2.6rem">🎁</div><p><b>All the limited-time redeem codes are claimed in your accounts.</b></p></div>
+</div>
+</div></section>
 
-                    <!-- Player Table -->
-                    <div class="table-wrapper">
-                        <table class="player-table" id="playerTable">
-                            <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Player Name</th>
-                                    <th>Might</th>
-                                    <th>Kills</th>
-                                    <th>Deaths</th>
-                                    <th>Confidence</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="playerTableBody">
-                            </tbody>
-                        </table>
-                    </div>
+<section id="resources"><div class="wrap">
+<h2>Resource price list</h2><p class="sub">Trusted supply, best prices. Each bundle is a clear breakdown of what you get.</p>
+<div class="sc card" style="padding:0"><table><thead><tr><th>Bundle</th><th>🌾 Food</th><th>🪨 Stone</th><th>🪵 Wood</th><th>💎 Ore</th><th>🪙 Gold</th><th>Price</th></tr></thead><tbody id="res"></tbody></table></div>
+<div class="badges">
+<div class="card"><span class="mm">Direct supply, no MM</span><br><small style="color:var(--mut)">No middleman between you and the seller</small></div>
+<div class="card">🛡️ 100% safe &amp; secure</div>
+<div class="card">⚡ Fast &amp; reliable supply</div>
+</div>
+</div></section>
 
-                    <!-- Manual Correction Modal -->
-                    <div id="correctionModal" class="modal" style="display: none;">
-                        <div class="modal-content">
-                            <span class="close" onclick="closeCorrectionModal()">&times;</span>
-                            <h3>Correct Player Data</h3>
-                            <form id="correctionForm">
-                                <div class="form-group">
-                                    <label>Player Name:</label>
-                                    <input type="text" id="correctionName" class="form-input">
-                                </div>
-                                <div class="form-group">
-                                    <label>Might:</label>
-                                    <input type="number" id="correctionMight" class="form-input">
-                                </div>
-                                <div class="form-group">
-                                    <label>Kills:</label>
-                                    <input type="number" id="correctionKills" class="form-input">
-                                </div>
-                                <div class="form-group">
-                                    <label>Deaths:</label>
-                                    <input type="number" id="correctionDeaths" class="form-input">
-                                </div>
-                                <button type="button" class="btn btn-success" onclick="saveCorrection()">Save</button>
-                                <button type="button" class="btn btn-secondary" onclick="closeCorrectionModal()">Cancel</button>
-                            </form>
-                        </div>
-                    </div>
+<section id="order"><div class="wrap">
+<h2>Order builder</h2><p class="sub">Pick what you need, check the total, then send the whole order on WhatsApp. You can also tap + in the price tables.</p>
+<div class="g2" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+<div class="card f"><h3 style="margin-bottom:14px">Add an item</h3>
+<label>Category<select id="oc"></select></label>
+<label>Item<select id="oi"></select></label>
+<label>Quantity<input id="oq" type="number" min="1" value="1"></label>
+<button class="btn" id="oadd">Add to order</button></div>
+<div class="card"><h3>Your order</h3><div id="cart"></div>
+<label class="chk"><input type="checkbox" id="rep">Repeat order after 3 days (45% off bank bot attacks)</label>
+<div class="tot"><span>Total</span><b id="tot">$0.00</b></div>
+<a class="btn wa" id="owa" href="#order" target="_blank" rel="noopener">Send order on WhatsApp</a>
+<button class="btn o" id="ocopy">Copy order</button><button class="btn o" id="oclr">Clear</button></div>
+</div></div></section>
 
-                    <!-- Action Buttons -->
-                    <div class="action-buttons">
-                        <button class="btn btn-success" onclick="saveExtraction()">💾 Save This Extraction</button>
-                        <button class="btn btn-info" onclick="exportToCSV()">📥 Export to CSV</button>
-                        <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All</button>
-                    </div>
-                </div>
-            </section>
+<section id="commands"><div class="wrap">
+<a class="btn o" href="#top" style="margin:0 0 18px">← Back to shop</a>
+<h2>Guild Bank Command Center</h2><p class="sub">A field guide to the 67 commands that keep your guild bank running. Each one shows what it does, an example and the result. Tap an example to copy it.</p>
+<div class="tips">
+<div>Player name with a space? Use an underscore or quotes: <code>!setacc Player_1</code> or <code>!setacc "Player 1"</code></div>
+<div>Authorized users have non-deductible balances by default. They are administrators and cannot use Donate.</div>
+<div>R4+ users have similar access by default. Match your minimum rank settings to the permissions you intend.</div>
+<div>The bank pauses during long tasks like hero stages. Use a custom chapter, 3-star unlocks, Sweep and X10.</div>
+</div>
+<div class="bar"><input id="q" type="search" placeholder="Search commands, e.g. shield, relocate, balance" aria-label="Search commands"><div class="tabs" id="tabs"></div></div>
+<p id="cnt"></p>
+<div class="cmds" id="grid"></div>
+</div></section>
 
-            <!-- Compare Tab -->
-            <section id="compare" class="tab-pane">
-                <div class="section-title">Compare Two Screenshots</div>
-                
-                <div class="compare-selector">
-                    <div class="compare-column">
-                        <label>First Screenshot:</label>
-                        <select id="compareScreenshot1">
-                            <option value="">-- Select first screenshot --</option>
-                        </select>
-                    </div>
-                    <div class="compare-column">
-                        <label>Second Screenshot:</label>
-                        <select id="compareScreenshot2">
-                            <option value="">-- Select second screenshot --</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" onclick="performComparison()">🔍 Compare</button>
-                </div>
+<section id="contact"><div class="wrap"><div class="card contact">
+<h2>Contact now</h2>
+<a class="tel" href="tel:+917533895827">+91 75338 95827</a>
+<a class="btn wa" href="https://wa.me/917533895827" target="_blank" rel="noopener">Message on WhatsApp</a>
+<a class="btn o" href="tel:+917533895827">Call</a>
+</div></div></section>
+</main>
+<div id="bd" class="bd"></div>
+<aside id="drw" class="drw" aria-hidden="true"><div class="dh"><div class="dl"><svg class="lgs" aria-hidden="true"><use href="#lg"/></svg><div><a class="brand" href="#top">Radhe LM Shop</a><small>Your trust, our service</small></div></div><button class="ic" id="mx" aria-label="Close menu">&#10005;</button></div><div id="dm"></div><div class="df"><a class="ic" href="https://wa.me/917533895827" target="_blank" rel="noopener" aria-label="WhatsApp" data-ic="wa"></a><a class="ic" href="tel:+917533895827" aria-label="Call" data-ic="tel"></a><span>Trusted supply · Best prices</span></div></aside>
+<div class="nb"><a href="#top"><em data-ic="home"></em>Home</a><a href="#services"><em data-ic="grid"></em>Subscription</a><a href="#order"><b class="cb"><em data-ic="cart"></em><i id="cc">0</i></b>Order</a><a href="#commands"><em data-ic="term"></em>Commands</a><a href="#contact"><em data-ic="chat"></em>Contact</a></div>
+<a class="sup" href="https://wa.me/917533895827" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" data-ic="wa"></a><div id="toast" class="toast" role="status"></div>
+<footer>Radhe LM Shop · Your trust, our service</footer>
 
-                <!-- Comparison Results -->
-                <div id="comparisonResults" class="comparison-results" style="display: none;">
-                    <!-- Summary Stats -->
-                    <div class="summary-stats">
-                        <div class="stat-card">
-                            <div class="stat-label">Total Might Change</div>
-                            <div class="stat-value" id="totalMightChange">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Total Kills Change</div>
-                            <div class="stat-value" id="totalKillsChange">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">New Players</div>
-                            <div class="stat-value" id="newPlayersCount">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Players Left</div>
-                            <div class="stat-value" id="playersLeftCount">0</div>
-                        </div>
-                    </div>
+<script>
+const $=s=>document.querySelector(s);
+const bots=[['1 month','0.65','1.10'],['3 months','1.80','3.00'],['6 months','3.30','5.50'],['12 months','6.00','10.00']];
+$('#bots').innerHTML=bots.map(r=>`<tr><td>${r[0]}</td><td class=p>$${r[1]}</td><td class=p>$${r[2]}</td></tr>`).join('');
+const res=[['44444','4B','4B','4B','4B','4B','0.50'],['44442','4B','4B','4B','4B','2B','0.40'],['44440','4B','4B','4B','4B','0','0.28'],['40000','4B','0','0','0','0','0.17'],['22222','2B','2B','2B','2B','2B','0.30']];
+$('#res').innerHTML=res.map(r=>`<tr><td><b>${r[0]}</b></td>${r.slice(1,6).map(v=>`<td>${v}</td>`).join('')}<td class=p>$${r[6]}</td></tr>`).join('');
 
-                    <!-- Detailed Comparison Table -->
-                    <div class="section-title">Player Changes</div>
-                    <div class="table-wrapper">
-                        <table class="comparison-table" id="comparisonTable">
-                            <thead>
-                                <tr>
-                                    <th>Player Name</th>
-                                    <th>Rank Change</th>
-                                    <th>Might Change</th>
-                                    <th>Kills Change</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="comparisonTableBody">
-                            </tbody>
-                        </table>
-                    </div>
+const D={General:`!payransom|Pays any outstanding ransom for the account leader.
+!clearboard|Clears all quests from the Guild Fest board.
+!ess|Mails you the transmutation lab status.
+!stats|Mails your purchase and monster gift statistics.
+!stats all|Mails a summary of guild purchases and monsters.
+!pstats [Player_Name]|Gift statistics for a specific player since the last reset.|!pstats Simon_Cat
+!gryphon|Uses the Gryphon familiar skill.
+!reguser|Binds a Discord or Telegram profile to a castle so commands can be used.|!reguser 423423958239
+!unreguser|Unbinds a Discord or Telegram profile from a castle.|!unreguser 423423958239
+!pos|Sends the current guild bank location.
+!shield|Checks the current shield duration.
+!shield deploy|Deploys a shield on the guild bank.
+!relocate [X] [Y]|Relocates the bank to a map coordinate.|!relocate 243 209
+!relocate rand|Relocates the bank to a random position.
+!relocatekvk [K]|Randomly relocates the bank into a target KVK kingdom.|!relocatekvk 60
+!migrate [K] [X] [Y]|Migrates the bank into a target kingdom and coordinate.|!migrate 60 200 900
+!recall|Recalls all troops except marching troops.
+!buildspam [amount] [delay]|Spams helps for Guild Fest or Guild Coins.|!buildspam 120 5
+!buildspam stop|Cancels an active buildspam command.
+!hunt [X] [Y]|Hunts the monster at a coordinate.|!hunt 150 166
+!hunt [on/off]|Enables or disables hunting for the account.|!hunt on
+!addtitle [player] [title]|Gives a title when the bank is regent.|!addtitle Shark chief
+!deltitle [title]|Removes a title from its current holder.|!deltitle chief
+!whitelist [player] [rank]|Accepts a player into the guild and sets their rank.|!whitelist Shark R4
+!blacklist [player]|Rejects a player applying to the guild.|!blacklist Shark
+!unlistwhite [player]|Removes a player from the whitelist.|!unlistwhite Shark
+!unlistblack [player]|Removes a player from the blacklist.|!unlistblack Shark
+!purge|Clears the Guild Chat.
+!abort|Aborts all RSS shipments.
+!yell [msg]|Writes a message to the guild chat.|!yell hello
+!quest|Mails the requesting player the bank's Guild Fest status.
+!guild [tag]|Leaves the current guild and joins a new one.|!guild 123
+!camp [X] [Y]|Sends a one-troop camp to a coordinate. Also works as !campleader.|!camp 100 100
+!setgather [on/off]|Enables or disables gathering for the account.|!setgather off
+!snowbeast|Activates the Snowbeast familiar ability.
+!stop [time]|Stops the bank for a number of seconds.|!stop 60
+!reloadacc|Forcefully resets the current account.
+!members|Refreshes the guild member list.
+!busrank|Promotes members who completed hunting from rank 1 to rank 2.
+!joingvg|Joins Guild Expedition.
+!leavegvg|Leaves Guild Expedition.
+!joinca [arena]|Joins the Chaos Arena event.|!joinca 1
+!leaveca|Leaves the Chaos Arena event.
+!joinda|Joins Dragon Arena for the guild.
+!leaveda|Leaves Dragon Arena.
+!resetstats|Resets gift stats for the current period.`,
+Search:`!findtile [type] [level]|Finds tiles around the bank castle; results come by mail.|!findtile food 4
+!findtile any [level]|Finds any resource tile at a level.|!findtile any 4
+!findtilelocal [type] [level]|Finds tiles around the castle that sent the command.|!findtilelocal food 4
+!findmonster [name] [level]|Finds a monster around the bank castle.|!findmonster hardrox 2
+!findmonster any [level]|Finds any monster around the bank.|!findmonster any 2
+!findmonsterlocal [name] [level]|Finds a monster around the requesting castle.|!findmonsterlocal hardrox 2
+!findnest [level]|Finds a darknest around the bank.|!findnest 3
+!findnestlocal [level]|Finds a darknest around the requesting castle.|!findnestlocal 3`,
+Balance:`!bal|Checks your resource balance: the RSS you sent to the bank.
+!adminbal [player]|Checks the balance of another player.|!adminbal Shark
+!adminbal|Checks the RSS balance of the bank.
+!adminbag|Checks the RSS stored in the bank's bags.
+!setbal [player] [type] [amount]|Manually sets an account's RSS balance.|!setbal Shark food 100M
+!setacc [player]|Credits all bank deposits to another account.|!setacc Shark
+!transfer [player] [type] [amount]|Transfers a balance to another player.|!transfer Shark gold 50M
+!setrsslimit [type] [amount]|Sets a reserve the bank will not go below.|!setrsslimit gold 100M`,
+Resource:`![type] [amount]|Sends one specific RSS type.|!food 5M
+!rss [F] [S] [W] [O] [G]|Sends all resource types in one request.|!rss 5M 5M 5M 5M 0
+!donate[type] [player] [amount]|Sends RSS to a specific player.|!donatefood Shark 5M
+!admin[type] [player] [amount]|Admin-sends RSS to a specific player.|!adminfood Shark 5M
+!adminrss [F] [S] [W] [O] [G] [player]|Admin-sends all resource types to a player.|!adminrss 0 5M 5M 5M 5M Shark`};
+const all=[];
+for(const k in D)D[k].split('\n').forEach(l=>{const f=l.split('|');all.push({k,c:f[0],d:f[1],e:f[2]||f[0]})});
+let cat='All',q='';
+$('#tabs').innerHTML=['All',...Object.keys(D)].map(k=>`<button data-k="${k}" class="${k=='All'?'on':''}">${k}</button>`).join('');
+function draw(){
+  const L=all.filter(x=>(cat=='All'||x.k==cat)&&(x.c+' '+x.d).toLowerCase().includes(q));
+  $('#cnt').textContent=L.length+' of '+all.length+' commands';
+  $('#grid').innerHTML=L.map(x=>`<div class="card cmd"><small>${x.k}</small><code>${x.c}</code><p>${x.d}</p>${x.r?`<p class="rs"><b>Result:</b> ${x.r}</p>`:''}<button class="cp" data-e="${x.e}" title="Copy example">${x.e}</button></div>`).join('')||'<p>No commands match. Try a shorter search.</p>';
+}
+$('#tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;cat=b.dataset.k;document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x==b));draw()};
+$('#q').oninput=e=>{q=e.target.value.trim().toLowerCase();draw()};
+$('#grid').onclick=async e=>{
+  const b=e.target.closest('.cp');if(!b)return;
+  const t=b.dataset.e;
+  try{await navigator.clipboard.writeText(t)}catch(_){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(_){}a.remove()}
+  b.textContent='Copied';setTimeout(()=>b.textContent=t,1200);
+};
+draw();
 
-                    <!-- New Players Section -->
-                    <div id="newPlayersSection" style="display: none;">
-                        <div class="section-title">New Players Joined</div>
-                        <div class="table-wrapper">
-                            <table class="player-table">
-                                <thead>
-                                    <tr>
-                                        <th>Rank</th>
-                                        <th>Player Name</th>
-                                        <th>Might</th>
-                                        <th>Kills</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="newPlayersBody">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+const WA='917533895827',money=n=>'$'+n.toFixed(2);
+const CAT={
+ 'Bank bot attacks':[['Leader attack x30 (bank bot)',3.5,1],['Customer attack (bank bot)',2,1]],
+ 'Bank bot subscription':bots.flatMap(r=>[[r[0]+' bank bot, Company 1',+r[1]],[r[0]+' bank bot, Company 2',+r[2]]]),
+ 'Resource bundles':res.map(r=>['Bundle '+r[0]+' (Food '+r[1]+', Stone '+r[2]+', Wood '+r[3]+', Ore '+r[4]+', Gold '+r[5]+')',+r[6]])
+};
+let cart=[];try{cart=JSON.parse(localStorage.getItem('rls-cart'))||[]}catch(_){}
+const save=()=>{try{localStorage.setItem('rls-cart',JSON.stringify(cart))}catch(_){}};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),1700)}
+function lines(){const r=$('#rep').checked;return cart.map(x=>({...x,u:x.a&&r?x.p*.55:x.p}))}
+function orderText(){return 'Hello Radhe LM Shop, I want to order:\n'+lines().map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+'\nTotal: '+$('#tot').textContent+($('#rep').checked?'\n(Repeat order after 3 days, 45% off bank bot attacks)':'')}
+function renderCart(){
+ const L=lines();
+ $('#cart').innerHTML=L.length?L.map((x,i)=>`<div class="ci"><span>${x.n}</span><span class="qc"><button data-i="${i}" data-d="-1" aria-label="Less">−</button>${x.q}<button data-i="${i}" data-d="1" aria-label="More">+</button></span><b>${money(x.u*x.q)}</b><button data-i="${i}" data-d="0" aria-label="Remove">×</button></div>`).join(''):'<p class="sub">Your order is empty. Add an item with the form or the + buttons in the price tables.</p>';
+ $('#tot').textContent=money(L.reduce((s,x)=>s+x.u*x.q,0));
+ $('#owa').href=L.length?'https://wa.me/'+WA+'?text='+encodeURIComponent(orderText()):'#order';
+ $('#cc').textContent=cart.reduce((s,x)=>s+x.q,0);
+}
+function add(n,p,a,q=1){const i=cart.find(x=>x.n==n);i?i.q+=q:cart.push({n,p,a,q});save();renderCart();toast('Added: '+n)}
+$('#oc').innerHTML=Object.keys(CAT).map(k=>`<option>${k}</option>`).join('');
+const fill=()=>{$('#oi').innerHTML=CAT[$('#oc').value].map((x,i)=>`<option value="${i}">${x[0]} - ${money(x[1])}</option>`).join('')};
+$('#oc').onchange=fill;fill();
+$('#oadd').onclick=()=>{const x=CAT[$('#oc').value][$('#oi').value];add(x[0],x[1],x[2]||0,Math.max(1,parseInt($('#oq').value)||1))};
+$('#cart').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i,d=+b.dataset.d;if(d==0)cart.splice(i,1);else{cart[i].q+=d;if(cart[i].q<1)cart.splice(i,1)}save();renderCart()};
+$('#rep').onchange=renderCart;
+$('#oclr').onclick=()=>{cart=[];save();renderCart()};
+$('#ocopy').onclick=async()=>{if(!cart.length)return toast('Add an item first');try{await navigator.clipboard.writeText(orderText());toast('Order copied')}catch(_){toast('Copy not available here')}};
+$('#owa').onclick=e=>{if(!cart.length){e.preventDefault();toast('Add an item first')}};
+document.querySelectorAll('#bots tr').forEach((tr,j)=>[1,2].forEach(c=>tr.cells[c].insertAdjacentHTML('beforeend',`<button class="add" data-c="Bank bot subscription" data-i="${2*j+c-1}" aria-label="Add to order">+</button>`)));
+document.querySelectorAll('#res tr').forEach((tr,j)=>tr.cells[6].insertAdjacentHTML('beforeend',`<button class="add" data-c="Resource bundles" data-i="${j}" aria-label="Add to order">+</button>`));
+document.addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(!b)return;const x=CAT[b.dataset.c][b.dataset.i];add(x[0],x[1],x[2]||0)});
+renderCart();
 
-                    <!-- Players Left Section -->
-                    <div id="playersLeftSection" style="display: none;">
-                        <div class="section-title">Players Who Left</div>
-                        <div class="table-wrapper">
-                            <table class="player-table">
-                                <thead>
-                                    <tr>
-                                        <th>Rank</th>
-                                        <th>Player Name</th>
-                                        <th>Might</th>
-                                        <th>Kills</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="playersLeftBody">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="action-buttons">
-                        <button class="btn btn-success" onclick="saveComparison()">💾 Save Comparison</button>
-                        <button class="btn btn-info" onclick="exportComparisonToCSV()">📥 Export Comparison</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- History Tab -->
-            <section id="history" class="tab-pane">
-                <div class="section-title">Saved Comparisons & Extractions</div>
-                
-                <div class="history-container" id="historyContainer">
-                    <p class="empty-state">No saved data yet. Extract and compare screenshots to save them here.</p>
-                </div>
-            </section>
-
-            <!-- Settings Tab -->
-            <section id="settings" class="tab-pane">
-                <div class="section-title">Settings & Information</div>
-                
-                <div class="settings-content">
-                    <div class="setting-item">
-                        <h3>Storage Information</h3>
-                        <p>Used Storage: <span id="storageUsed">0</span> MB</p>
-                        <p>Max Storage: ~50 MB (IndexedDB limit)</p>
-                        <button class="btn btn-danger" onclick="clearAllData()">🗑️ Clear All Data</button>
-                    </div>
-
-                    <div class="setting-item">
-                        <h3>OCR Settings</h3>
-                        <label>
-                            <input type="checkbox" id="autoCorrectOCR" checked>
-                            Auto-correct obvious OCR errors
-                        </label>
-                        <label>
-                            <input type="checkbox" id="showConfidence" checked>
-                            Show OCR confidence scores
-                        </label>
-                    </div>
-
-                    <div class="setting-item">
-                        <h3>About</h3>
-                        <p>Lords Mobile Screenshot Comparison Tool v1.0</p>
-                        <p>100% offline. No data is sent to any server.</p>
-                        <p>Uses Tesseract.js for local OCR processing.</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="toast"></div>
-
-    <script src="script.js"></script>
+try{const t=localStorage.getItem('rls-th');if(t)document.documentElement.dataset.theme=t}catch(_){}
+$('#th').onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme=='dark':!matchMedia('(prefers-color-scheme:light)').matches;r.dataset.theme=dark?'light':'dark';try{localStorage.setItem('rls-th',r.dataset.theme)}catch(_){}};
+const RS=`The ransom for the account leader is paid.
+All quests are deleted.
+A lab status report is sent to you.
+A report of your guild gifts since the last reset.
+A guild-wide gift summary is sent.
+A report for Simon Cat since the last reset.
+The Gryphon familiar skill is activated.
+The profile is allowed to use commands in chat.
+The profile can no longer use commands in chat.
+The exact location of the bank is reported.
+The time when the bank shield drops.
+A shield is activated on the bank.
+The bank moves to X:243 Y:209.
+The bank moves to a random map position.
+The bank relocates into the target kingdom.
+The bank migrates to K:60 X:200 Y:900.
+All troops return to your castle.
+The bank spams 120 helps with a 5 second delay.
+The bank stops the help spam and cancels the build.
+The bank hunts the monster at X:150 Y:166.
+Hunting is enabled.
+Shark receives the title Chief.
+The Chief title is deleted from its current holder.
+Shark joins the guild at Rank 4.
+Shark cannot join the guild or is kicked.
+Shark is removed from the Whitelist.
+Shark is removed from the Blacklist.
+The Guild Chat is cleared.
+All queued RSS shipments are canceled.
+Hello is written in the guild chat.
+The requesting player receives the Guild Fest status by mail.
+The bank leaves and tries to join guild 123.
+A camp is sent to X:100 Y:100.
+Gathering is disabled.
+The Snowbeast familiar skill is activated.
+The account goes offline for 60 seconds.
+The account is reset.
+Member information is refreshed.
+Eligible members are promoted.
+The bank joins Guild Expedition.
+The bank leaves Guild Expedition.
+The bank joins Chaos Arena 1.
+The bank returns to the normal kingdom.
+The bank joins Dragon Arena.
+The bank leaves Dragon Arena.
+Gift stats start a new period.
+Level 4 food tiles are sent by mail.
+Any level 4 tile is sent by mail.
+Nearby level 4 food tiles are sent by mail.
+Level 2 Hardrox locations are sent by mail.
+Any level 2 monster is sent by mail.
+Nearby Hardrox locations are sent by mail.
+A level 3 darknest result is sent by mail.
+A nearby level 3 darknest is sent by mail.
+A report of the RSS you sent to the bank.
+A report of how much RSS Shark sent.
+A report of the bank's current RSS.
+A report of the RSS stored in bags.
+Shark's Food balance is set to 100M.
+Future deposits are credited to Shark.
+50M Gold is credited to Shark.
+The bank will hold at least 100M Gold.
+The bank sends 5M Food.
+The bank sends 5M of each RSS except Gold.
+The bank sends Shark 5M Food.
+The bank sends Shark 5M Food.
+The bank sends all RSS except Food to Shark.`;
+RS.split('\n').forEach((r,i)=>{if(all[i])all[i].r=r});draw();
+let cv=false;
+function route(){const h=location.hash;if(h=='#commands')cv=true;else if(h!='#contact')cv=false;document.body.classList.toggle('cmdview',cv);let t=null;try{t=h&&h!='#commands'?document.querySelector(h):null}catch(_){}t?t.scrollIntoView():scrollTo({top:0,behavior:'instant'})}
+addEventListener('hashchange',route);route();
+const ic=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const I={menu:'<path d="M3 6h18M3 12h18M3 18h18" stroke-width="2.6"/>',home:'<path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/>',grid:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>',coin:'<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>',cart:'<path d="M3 4h2l2.5 11h10L20 7H6.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/>',term:'<path d="M4 5h16v14H4zM8 10l3 2-3 2M13 15h4"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',wa:'<path d="M4 20l1.3-4.2A8 8 0 1 1 8.2 18.7z"/>',tel:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>'};
+document.querySelectorAll('[data-ic]').forEach(e=>e.innerHTML=ic(I[e.dataset.ic]));
+const M=[['#top','Home','home'],['#services','Bank bot subscription','grid'],['#resources','Resource price list','coin'],['#order','Order builder','cart'],['#commands','Guild bank commands','term'],['#contact','Contact','chat']];
+$('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
+const dr=o=>{$('#drw').classList.toggle('on',o);$('#bd').classList.toggle('on',o);$('#drw').setAttribute('aria-hidden',!o)};
+$('#mb').onclick=()=>dr(true);
+$('#mx').onclick=$('#bd').onclick=()=>dr(false);
+$('#dm').onclick=e=>{if(e.target.closest('a'))dr(false)};
+addEventListener('keydown',e=>{if(e.key=='Escape')dr(false)});
+const act=()=>document.querySelectorAll('.nb a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==(location.hash||'#top')));
+addEventListener('hashchange',act);act();
+let tk=0;['touchstart','wheel','keydown'].forEach(n=>addEventListener(n,()=>tk++,{passive:true}));
+addEventListener('scroll',()=>{if(cv)return;let cur='top';for(const i of ['services','resources','order','contact']){const s=document.getElementById(i);if(s&&s.getBoundingClientRect().top<innerHeight*.4)cur=i}document.querySelectorAll('.nb a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+cur))},{passive:true});
+function go(h){
+ const id=h.slice(1)||'top',was=cv;
+ if(id=='commands')cv=true;else if(id!='contact')cv=false;
+ document.body.classList.toggle('cmdview',cv);
+ requestAnimationFrame(()=>{
+  const t=document.getElementById(id),hd=document.querySelector('header');
+  const y=(!t||id=='top'||id=='commands')?0:t.getBoundingClientRect().top+scrollY-hd.getBoundingClientRect().bottom-4;
+  scrollTo({top:Math.max(0,y),behavior:'instant'});const k=++tk;[120,400,900].forEach(d=>setTimeout(()=>{if(k!=tk)return;const t2=document.getElementById(id),y2=(!t2||id=='top'||id=='commands')?0:t2.getBoundingClientRect().top+scrollY-document.querySelector('header').getBoundingClientRect().bottom-4;if(Math.abs(scrollY-y2)>4)scrollTo({top:Math.max(0,y2),behavior:'instant'})},d));
+ });
+ try{history.replaceState(null,'','#'+id)}catch(_){}
+ document.querySelectorAll('.nb a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+id));
+}
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a||a.getAttribute('href').length<2)return;e.preventDefault();go(a.getAttribute('href'))});
+addEventListener('keydown',e=>{if(e.key=='/'&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();$('#q').focus()}});
+</script>
 </body>
 </html>
