@@ -27,10 +27,9 @@
   --green:#1faf5d;
   --serif:'Noto Serif',Georgia,serif;
   --sans:'Roboto',system-ui,sans-serif;
-  --scale:1;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;font-size:calc(clamp(13px,3.3vw,16px) * var(--scale,1))}
+html{scroll-behavior:smooth;font-size:clamp(13px,3.3vw,16px)}
 body{
   margin:0;background:var(--bg);color:var(--text);
   font-family:var(--sans);line-height:1.5;
@@ -300,19 +299,6 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 
 footer.site-foot{text-align:center;color:var(--dim);font-size:.82rem;padding:2.125rem 1rem 0.625rem}
 
-/* ---------- Size control ---------- */
-.size-ctl{
-  display:flex;align-items:center;gap:.6rem;margin-bottom:1.3rem;
-  background:var(--bg-2);border:1px solid var(--line);border-radius:1.1rem;padding:.6rem .9rem;
-}
-.size-ctl .sl{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap}
-.size-ctl button{
-  width:2.2rem;height:2.2rem;border-radius:.7rem;border:1px solid var(--gold-line);
-  background:transparent;color:var(--gold-1);font-weight:700;cursor:pointer;flex-shrink:0;font-size:.85rem;
-}
-.size-ctl button:hover{background:var(--gold-grad);color:#1a1205;border-color:transparent}
-.size-ctl input[type=range]{flex:1;min-width:3rem;accent-color:#d4a843;height:1.5rem}
-.size-ctl .sv{min-width:2.8rem;text-align:right;font-family:var(--serif);font-weight:700;color:var(--gold-1);font-size:.85rem}
 @media(max-width:600px){.card{padding:1rem;border-radius:1.2rem}.troop-grid{gap:.5rem;padding:.5rem}.hero{padding:1.8rem 0 1.2rem}}
 </style>
 </head>
@@ -370,15 +356,6 @@ footer.site-foot{text-align:center;color:var(--dim);font-size:.82rem;padding:2.1
             <div class="row"><input type="number" id="subsidy" value="0" inputmode="decimal" oninput="calculate()"><span class="unit">%</span></div>
           </div>
         </div>
-      </div>
-
-      <div class="size-ctl">
-        <span class="sl">Size</span>
-        <button onclick="stepScale(-0.05)" aria-label="Smaller">A−</button>
-        <input type="range" id="scaleRange" min="0.7" max="1.5" step="0.05" value="1" oninput="applyScale(this.value)" aria-label="Page size">
-        <button onclick="stepScale(0.05)" aria-label="Larger">A+</button>
-        <span class="sv" id="scaleVal">100%</span>
-        <button onclick="applyScale(1)" aria-label="Reset size" title="Reset"><i class="fas fa-rotate-left"></i></button>
       </div>
 
       <div class="tabs" id="tabs">
@@ -618,23 +595,6 @@ function calculate(){
     <div class="res-row"><span class="res-label"><i class="fas fa-gem"></i>Ore</span><span class="res-val">${fmt(Math.ceil(ore))}</span></div>
     <div class="res-row"><span class="res-label"><i class="fas fa-coins"></i>Gold</span><span class="res-val">${fmt(Math.ceil(gold))}</span></div>`;
 }
-
-function applyScale(v){
-  v = Math.min(1.5, Math.max(0.7, parseFloat(v) || 1));
-  v = Math.round(v*100)/100;
-  document.documentElement.style.setProperty('--scale', v);
-  document.getElementById('scaleRange').value = v;
-  document.getElementById('scaleVal').textContent = Math.round(v*100) + '%';
-  try{ localStorage.setItem('uiScale', v); }catch(e){}
-}
-function stepScale(d){
-  applyScale((parseFloat(document.getElementById('scaleRange').value)||1) + d);
-}
-(function(){
-  let v = 1;
-  try{ v = parseFloat(localStorage.getItem('uiScale')) || 1; }catch(e){}
-  applyScale(v);
-})();
 
 initInputs();
 renderGrid();
