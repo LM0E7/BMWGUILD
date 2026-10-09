@@ -66,6 +66,17 @@ input{flex:1 1 240px;padding:12px 16px;border-radius:999px;border:1px solid var(
 .cp:hover{border-color:var(--gold)}
 .contact{text-align:center}
 .contact .tel{font:900 clamp(1.8rem,7vw,3rem) 'Playfair Display',Georgia,serif;color:var(--gold);text-decoration:none;display:block;margin:8px 0 16px}
+.t1-hero{text-align:center;padding:14px 0 22px}
+.t1-hero .sword{font-size:2.8rem;display:block;margin-bottom:4px}
+.t1-hero p{max-width:44ch;margin:0 auto;color:var(--mut)}
+.t1-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.t1-card{display:flex;flex-direction:column;gap:4px;background:linear-gradient(160deg,#17130b 0%,var(--card) 62%);border-color:#5a4317}
+.t1-card h3{font-size:1.22rem;color:var(--gold)}
+.t1-card .sub{margin:0;text-align:left}
+.t1-card .price{align-self:flex-start;margin-top:8px;background:linear-gradient(180deg,var(--g1),var(--g2));color:#1a1204}
+.t1-card .btn{align-self:flex-start;margin-top:auto}
+.t1-extra{margin-top:16px}
+@media(max-width:760px){.t1-grid{grid-template-columns:1fr}}
 footer{text-align:center;color:var(--mut);font-size:.85rem;padding:24px 0 40px}
 .f label{display:block;margin-bottom:12px;color:var(--mut);font-size:.9rem}
 .f input,.f select{width:100%;margin-top:4px;padding:12px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
@@ -83,7 +94,7 @@ input[type=checkbox]{flex:none;width:auto;padding:0;margin:0 8px 0 0;vertical-al
 .toast.on{opacity:1;transform:translateX(-50%)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 body:not(.cmdview) #commands{display:none}
-body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #calculator,body.cmdview #gem-prediction,body.cmdview #training,body.cmdview #order,body.cmdview .fab{display:none}
+body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #calculator,body.cmdview #gem-prediction,body.cmdview #training,body.cmdview #t1-killing,body.cmdview #order,body.cmdview .fab{display:none}
 #commands{padding-top:44px}
 .rs{font-size:.88rem;color:var(--mut)}
 .rs b{color:var(--ink)}
@@ -326,6 +337,16 @@ html{overflow-anchor:none}
 </div>
 </div></section>
 
+<section id="t1-killing"><div class="wrap">
+<div class="t1-hero"><span class="sword" aria-hidden="true">⚔️</span><h2>T1 Killing Service</h2><p>Fast, trusted T1 kills for Lords Mobile, direct from the seller.</p></div>
+<div class="t1-grid">
+<div class="card t1-card"><h3>Tier 1 · 1–1,800 KD</h3><div class="big">$4</div><p class="sub">per 1B T1 kills</p><span class="price">$4</span><button class="btn" data-c="T1 killing service" data-i="0">Add to order</button></div>
+<div class="card t1-card"><h3>Tier 2 · 1,800–1,970 KD</h3><div class="big">$6</div><p class="sub">per 1B T1 kills</p><span class="price">$6</span><button class="btn" data-c="T1 killing service" data-i="1">Add to order</button></div>
+<div class="card t1-card"><h3>Tier 3 · 1,970+ KD</h3><div class="big">🔥</div><p class="sub">Contact us for a custom price.</p><a class="btn" href="#contact">Get a quote</a></div>
+</div>
+<div class="card t1-extra"><h3>🔥 Other services available</h3><p class="sub" style="margin-bottom:0">✅ KVK Solo Points &nbsp; · &nbsp; ✅ KVK Guild Points</p></div>
+</div></section>
+
 <section id="resources"><div class="wrap">
 <h2>Resource price list</h2><p class="sub">Trusted supply, best prices. Each bundle is a clear breakdown of what you get.</p>
 <div class="sc card" style="padding:0"><table><thead><tr><th>Bundle</th><th>🌾 Food</th><th>🪨 Stone</th><th>🪵 Wood</th><th>💎 Ore</th><th>🪙 Gold</th><th>Price</th></tr></thead><tbody id="res"></tbody></table></div>
@@ -477,7 +498,8 @@ const WA='917533895827',TG='RadheLMShop',money=n=>'$'+n.toFixed(2);
 const CAT={
  'Bank bot attacks':[['Leader attack x30 (bank bot)',3.5,1],['Customer attack (bank bot)',2,1]],
  'Bank bot subscription':bots.flatMap(r=>[[r[0]+' bank bot, Company 1',+r[1]],[r[0]+' bank bot, Company 2',+r[2]]]),
- 'Resource bundles':res.map(r=>['Bundle '+r[0]+' (Food '+r[1]+', Stone '+r[2]+', Wood '+r[3]+', Ore '+r[4]+', Gold '+r[5]+')',+r[6]])
+ 'Resource bundles':res.map(r=>['Bundle '+r[0]+' (Food '+r[1]+', Stone '+r[2]+', Wood '+r[3]+', Ore '+r[4]+', Gold '+r[5]+')',+r[6]]),
+ 'T1 killing service':[['Tier 1 T1 kills · 1–1,800 KD · 1B',4],['Tier 2 T1 kills · 1,800–1,970 KD · 1B',6]]
 };
 let cart=[];try{cart=JSON.parse(localStorage.getItem('rls-cart'))||[]}catch(_){}
 const save=()=>{try{localStorage.setItem('rls-cart',JSON.stringify(cart))}catch(_){}};
@@ -669,11 +691,12 @@ const ic=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 const I={menu:'<path d="M3 6h18M3 12h18M3 18h18" stroke-width="2.6"/>',home:'<path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/>',grid:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>',coin:'<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>',cart:'<path d="M3 4h2l2.5 11h10L20 7H6.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/>',term:'<path d="M4 5h16v14H4zM8 10l3 2-3 2M13 15h4"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',wa:'<path d="M4 20l1.3-4.2A8 8 0 1 1 8.2 18.7z"/>',tel:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>'};
 I.tg='<path d="M21 3 3 10.5l7.2 2.5L12.5 20 21 3z"/><path d="M10.2 13 21 3"/>';
 document.querySelectorAll('[data-ic]').forEach(e=>e.innerHTML=ic(I[e.dataset.ic]));
-const M=[['#top','Home','home'],['#services','Bank bot subscription','grid'],['#resources','Resource price list','coin'],['#order','Order builder','cart'],['#commands','Guild bank commands','term'],['#contact','Contact','chat']];
+const M=[['#top','Home','home'],['#services','Bank bot subscription','grid'],['#t1-killing','T1 killing service','sword'],['#resources','Resource price list','coin'],['#order','Order builder','cart'],['#commands','Guild bank commands','term'],['#contact','Contact','chat']];
 I.calc='<rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/>';
 M.splice(3,0,['#calculator','Speedup calculator','calc']);
 I.gem='<path d="M6 3h12l4 6-10 12L2 9zM2 9h20M9 3l3 6 3-6M12 21 9 9m3 12 3-12"/>';
 M.splice(4,0,['#gem-prediction','Gem prediction','gem']);
+I.sword='<path d="m5 19 5-5M14 10l5-5M7 5l12 12M5 5l2 2m0 0 4-4m-4 4 4 4m8 8-2-2m0 0 4-4m-4 4-4-4"/>';
 I.train='<path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>';
 M.splice(5,0,['#training','Troop training calculator','train']);
 $('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
