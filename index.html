@@ -83,10 +83,28 @@ input[type=checkbox]{flex:none;width:auto;padding:0;margin:0 8px 0 0;vertical-al
 .toast.on{opacity:1;transform:translateX(-50%)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 body:not(.cmdview) #commands{display:none}
-body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #order,body.cmdview .fab{display:none}
+body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #calculator,body.cmdview #order,body.cmdview .fab{display:none}
 #commands{padding-top:44px}
 .rs{font-size:.88rem;color:var(--mut)}
 .rs b{color:var(--ink)}
+#calculator .speedup-intro{max-width:62ch;margin:0 auto 20px;text-align:center;color:var(--mut)}
+#calculator .speedup-card{max-width:760px;margin:0 auto;background:linear-gradient(180deg,#10121a,#0b0c12);border:1px solid var(--line);border-radius:18px;padding:clamp(14px,4vw,24px)}
+#calculator .speedup-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:10px}
+#calculator .speedup-row{display:grid;grid-template-columns:52px minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--line);border-radius:14px;background:#0b0c12}
+#calculator .speedup-row:focus-within{border-color:var(--gold);box-shadow:0 0 0 2px rgba(226,185,79,.12)}
+#calculator .speedup-badge{display:grid;place-items:center;min-height:44px;border-radius:12px;background:linear-gradient(180deg,var(--g1),var(--g2));color:#1a1204;font:800 .84rem Inter,sans-serif}
+#calculator .speedup-field{min-width:0}
+#calculator .speedup-field label{display:block;color:var(--mut);font-size:.76rem}
+#calculator .speedup-field input{width:100%;min-width:0;margin-top:2px;padding:4px 8px;border:0;border-radius:8px;background:transparent;color:var(--ink);font:700 1.2rem Inter,sans-serif}
+#calculator .speedup-cost{white-space:nowrap;color:var(--gold);font-size:.82rem;font-weight:800}
+#calculator .speedup-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:18px}
+#calculator .speedup-actions .btn{cursor:pointer;font:inherit;font-weight:800}
+#calculator .speedup-result{margin-top:18px;padding:16px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#15130d,#0b0c12);text-align:center}
+#calculator .speedup-result h3{margin:0 0 10px;color:var(--gold);font-size:1rem;letter-spacing:.08em;text-transform:uppercase}
+#calculator .speedup-gems{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:999px;background:linear-gradient(180deg,var(--g1),var(--g2));color:#1a1204;font-weight:900;font-size:1.2rem}
+#calculator .speedup-caption{margin:6px 0 12px;color:var(--mut);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+#calculator .speedup-totals{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 22px;color:var(--mut)}
+#calculator .speedup-totals strong{color:var(--ink)}
 @media (max-width:640px){
 .wrap{padding:0 12px}
 header .wrap{flex-wrap:wrap;gap:6px 10px;padding-top:8px;padding-bottom:8px}
@@ -197,7 +215,7 @@ html{overflow-anchor:none}
 <g fill="none" stroke="#07080c" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="3.800"/><path d="M44 35C36 40 35 44 34 32M57 36C64 41 58 33 47 29" stroke-width="5.600"/></g>
 <g fill="none" stroke="url(#gg)" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="1.700"/><path d="M44 35C36 40 35 44 34 32" stroke-width="3.400"/><path d="M57 36C64 41 58 33 47 29" stroke-width="3.400"/></g></symbol></svg>
 <header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="LORD RAMA"><svg><use href="#lg"/></svg></a><a class="brand" href="#top">LORD RAMA</a>
-<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
+<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
 
 <main id="top">
 <div class="wrap hero">
@@ -207,9 +225,24 @@ html{overflow-anchor:none}
 <p>Your trust, our service. Bank bot subscription and resource bundles for Lords Mobile, direct from the seller.</p>
 <a class="btn wa" href="https://wa.me/917533895827" target="_blank" rel="noopener">Order on WhatsApp</a>
 <a class="btn o" href="#resources">See prices</a>
+<a class="btn o" href="#calculator">Speedup calculator</a>
 <a class="btn o" href="#commands">Guild bank commands</a>
 </div>
 
+<section id="calculator"><div class="wrap">
+<h2>Speedup Calculator</h2>
+<p class="speedup-intro">Add the speedups you have to see their combined time and gem value. Your entries stay in this browser and are not sent anywhere.</p>
+<div class="speedup-card">
+<div class="speedup-list" id="speedup-items" aria-label="Speedup quantities"></div>
+<div class="speedup-actions"><button class="btn" id="speedup-calculate" type="button">Calculate</button><button class="btn o" id="speedup-reset" type="button">Reset</button></div>
+<div class="speedup-result" aria-live="polite" aria-atomic="true">
+<h3>Combined value</h3>
+<div class="speedup-gems"><span aria-hidden="true">◆</span><span id="speedup-gem-total">0</span><span>gems</span></div>
+<div class="speedup-caption">Total gems needed</div>
+<div class="speedup-totals"><span><strong id="speedup-minute-total">0</strong> minutes</span><span><strong id="speedup-hour-total">0.00</strong> hours</span><span><strong id="speedup-day-total">0.00</strong> days</span></div>
+</div>
+</div>
+</div></section>
 <section id="attacks"><div class="wrap">
 <p class="sub">Let the bank bot do the attacking while you play.</p>
 <div class="g2">
@@ -478,12 +511,39 @@ The bank sends Shark 5M Food.
 The bank sends all RSS except Food to Shark.`;
 RS.split('\n').forEach((r,i)=>{if(all[i])all[i].r=r});draw();
 let cv=false;
+const speedupOptions=[
+  {label:'1 minute',mins:1,gems:5},{label:'3 minutes',mins:3,gems:15},{label:'5 minutes',mins:5,gems:25},
+  {label:'10 minutes',mins:10,gems:50},{label:'15 minutes',mins:15,gems:70},{label:'30 minutes',mins:30,gems:110},
+  {label:'60 minutes',mins:60,gems:130},{label:'3 hours',mins:180,gems:300},{label:'8 hours',mins:480,gems:650},
+  {label:'15 hours',mins:900,gems:1000},{label:'24 hours',mins:1440,gems:1500},{label:'3 days',mins:4320,gems:4400},
+  {label:'7 days',mins:10080,gems:10000},{label:'30 days',mins:43200,gems:40000}
+];
+const speedupNumber=new Intl.NumberFormat();
+$('#speedup-items').innerHTML=speedupOptions.map((item,i)=>`<div class="speedup-row"><span class="speedup-badge" aria-hidden="true">${item.label.replace(' minutes','m').replace(' minute','m').replace(' hours','h').replace(' hour','h').replace(' days','d').replace(' day','d')}</span><div class="speedup-field"><label for="speedup-qty-${i}">${item.label} speedups</label><input id="speedup-qty-${i}" class="speedup-input" type="number" inputmode="numeric" min="0" step="1" value="0" aria-label="Quantity of ${item.label} speedups"></div><span class="speedup-cost">◆ ${speedupNumber.format(item.gems)} gems</span></div>`).join('');
+function calculateSpeedups(){
+  let totalMinutes=0,totalGems=0;
+  document.querySelectorAll('#speedup-items .speedup-input').forEach((input,i)=>{
+    const quantity=Math.max(0,Math.floor(Number(input.value)||0));
+    input.value=quantity;
+    totalMinutes+=quantity*speedupOptions[i].mins;
+    totalGems+=quantity*speedupOptions[i].gems;
+  });
+  $('#speedup-gem-total').textContent=speedupNumber.format(totalGems);
+  $('#speedup-minute-total').textContent=speedupNumber.format(totalMinutes);
+  $('#speedup-hour-total').textContent=(totalMinutes/60).toFixed(2);
+  $('#speedup-day-total').textContent=(totalMinutes/1440).toFixed(2);
+}
+$('#speedup-calculate').onclick=calculateSpeedups;
+$('#speedup-reset').onclick=()=>{document.querySelectorAll('#speedup-items .speedup-input').forEach(input=>input.value='0');calculateSpeedups()};
+$('#speedup-items').addEventListener('input',calculateSpeedups);
 function route(){const h=location.hash;if(h=='#commands')cv=true;else if(h!='#contact')cv=false;document.body.classList.toggle('cmdview',cv);let t=null;try{t=h&&h!='#commands'?document.querySelector(h):null}catch(_){}t?t.scrollIntoView():scrollTo({top:0,behavior:'instant'})}
 addEventListener('hashchange',route);route();
 const ic=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 const I={menu:'<path d="M3 6h18M3 12h18M3 18h18" stroke-width="2.6"/>',home:'<path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/>',grid:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>',coin:'<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>',cart:'<path d="M3 4h2l2.5 11h10L20 7H6.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/>',term:'<path d="M4 5h16v14H4zM8 10l3 2-3 2M13 15h4"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',wa:'<path d="M4 20l1.3-4.2A8 8 0 1 1 8.2 18.7z"/>',tel:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>'};
 document.querySelectorAll('[data-ic]').forEach(e=>e.innerHTML=ic(I[e.dataset.ic]));
 const M=[['#top','Home','home'],['#services','Bank bot subscription','grid'],['#resources','Resource price list','coin'],['#order','Order builder','cart'],['#commands','Guild bank commands','term'],['#contact','Contact','chat']];
+I.calc='<rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/>';
+M.splice(3,0,['#calculator','Speedup calculator','calc']);
 $('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
 const dr=o=>{$('#drw').classList.toggle('on',o);$('#bd').classList.toggle('on',o);$('#drw').setAttribute('aria-hidden',!o)};
 $('#mb').onclick=()=>dr(true);
