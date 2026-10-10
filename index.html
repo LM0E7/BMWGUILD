@@ -234,7 +234,7 @@ header nav{display:none}
 .cb i{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;padding:0 5px;border-radius:11px;background:#1a1204;color:var(--gold);border:1px solid var(--gold);font:700 .7rem/20px Inter,sans-serif;font-style:normal;text-align:center}
 .sup{position:fixed;right:16px;bottom:calc(104px + env(safe-area-inset-bottom,0px));z-index:19;width:58px;height:58px;padding:15px;border-radius:50%;background:linear-gradient(180deg,var(--g1),var(--g2));color:#1a1204;box-shadow:0 6px 20px rgba(0,0,0,.45)}
 @media (max-width:720px){.nb{display:flex}body{padding-bottom:92px}.toast{bottom:calc(110px + env(safe-area-inset-bottom,0px))}}
-@media (min-width:721px){header nav{display:flex;margin-left:auto;margin-right:12px}.hb,.tg{display:none}.brand{flex:none}.sup{bottom:24px}}
+@media (min-width:721px){header nav{display:flex;margin-left:auto;margin-right:12px;gap:10px;font-size:.82rem}.hb,.tg{display:none}.brand{flex:none}.sup{bottom:24px}}
 .lg{flex:none;display:block;width:40px;height:40px}
 .lg svg{width:100%;height:100%}
 .lgs{width:52px;height:52px;flex:none}
@@ -296,7 +296,7 @@ html{overflow-anchor:none}
 <g fill="none" stroke="#07080c" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="3.800"/><path d="M44 35C36 40 35 44 34 32M57 36C64 41 58 33 47 29" stroke-width="5.600"/></g>
 <g fill="none" stroke="url(#gg)" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="1.700"/><path d="M44 35C36 40 35 44 34 32" stroke-width="3.400"/><path d="M57 36C64 41 58 33 47 29" stroke-width="3.400"/></g></symbol></svg>
 <header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="RADHE LM SHOP"><svg><use href="#lg"/></svg></a><a class="brand" href="#top">RADHE LM SHOP</a>
-<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
+<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
 
 <main id="top">
 <div class="wrap hero">
@@ -310,6 +310,7 @@ html{overflow-anchor:none}
 <a class="btn o" href="#calculator">Speedup calculator</a>
 <a class="btn o" href="#gem-prediction">Gem prediction</a>
 <a class="btn o" href="#training">Troop training</a>
+<a class="btn o" href="#festival">Guild Festival</a>
 <a class="btn o" href="hunting.html">Monster hunting</a>
 <a class="btn o" href="#commands">Guild bank commands</a>
 </div>
@@ -375,6 +376,11 @@ html{overflow-anchor:none}
 <h2>Monster Hunting Lineups</h2>
 <p class="sub">Choose a monster to see its recommended hero lineup, damage types, and hunting images.</p>
 <a class="btn" href="hunting.html">Open Monster Hunting</a>
+</div></div></section>
+<section id="festival"><div class="wrap"><div class="card" style="max-width:760px;margin:0 auto;text-align:center">
+<h2>Guild Festival Planner</h2>
+<p class="sub">Plan Guild Fest missions, compare base and bonus scores, and track your target points and attempts.</p>
+<a class="btn" href="festival.html">Open Guild Festival Planner</a>
 </div></div></section>
 <section id="attacks"><div class="wrap">
 <p class="sub">Let the bank bot do the attacking while you play.</p>
@@ -766,6 +772,7 @@ I.sword='<path d="m5 19 5-5M14 10l5-5M7 5l12 12M5 5l2 2m0 0 4-4m-4 4 4 4m8 8-2-2
 I.train='<path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>';
 M.splice(6,0,['#training','Troop training calculator','train']);
 M.splice(7,0,['hunting.html','Monster hunting','sword']);
+M.splice(8,0,['#festival','Guild Festival','gem']);
 $('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
 const dr=o=>{$('#drw').classList.toggle('on',o);$('#bd').classList.toggle('on',o);$('#drw').setAttribute('aria-hidden',!o)};
 $('#mb').onclick=()=>dr(true);
