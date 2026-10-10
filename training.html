@@ -148,6 +148,10 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appear
 .troop-img .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--gold-3);font-size:2.2rem;opacity:.55}
 .troop-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .troop-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.75) 100%);pointer-events:none}
+.troop-img.has-card-image{aspect-ratio:1/1;background:#070a10}
+.troop-img.has-card-image img{object-fit:contain}
+.troop-img.has-card-image::after,.troop-img.has-card-image .ph{display:none}
+.troop-img.has-card-image .troop-type,.troop-img.has-card-image .troop-name{display:none}
 .troop-type{
   position:absolute;top:.4rem;left:.4rem;z-index:2;
   background:rgba(0,0,0,.72);color:#fff;border:1px solid var(--gold-line);
@@ -430,6 +434,12 @@ const troopData = {
   3:{names:{inf:'Royal Guard',rng:'Stealth Sniper',cav:'Royal Cavalry',siege:'Fire Trebuchet'},might:24,time:45,base:150,gold:10},
   4:{names:{inf:'Heroic Fighter',rng:'Heroic Cannoneer',cav:'Ancient Drake Rider',siege:'Destroyer'},might:36,time:120,base:1000,gold:500}
 };
+const troopImages = {
+  1:{inf:'images/troops/t1-infantry-grunt.png',rng:'images/troops/t1-ranged-archer.png',cav:'images/troops/t1-cavalry-cataphract.png',siege:'images/troops/t1-siege-ballista.png'},
+  2:{inf:'images/troops/t2-infantry-gladiator.png',rng:'images/troops/t2-ranged-sharpshooter.png',cav:'images/troops/t2-cavalry-reptilian-rider.png',siege:'images/troops/t2-siege-catapult.png'},
+  3:{inf:'images/troops/t3-infantry-royal-guard.png',rng:'images/troops/t3-ranged-stealth-sniper.png',cav:'images/troops/t3-cavalry-royal-cavalry.png',siege:'images/troops/t3-siege-fire-trebuchet.png'},
+  4:{inf:'images/troops/t4-infantry-heroic-fighter.png',rng:'images/troops/t4-ranged-heroic-cannoneer.png',cav:'images/troops/t4-cavalry-ancient-drake-rider.png',siege:'images/troops/t4-siege-destroyer.png'}
+};
 // which resources each troop type uses
 const usesRes = {
   inf:{food:1,wood:1,stone:0,ore:1},
@@ -477,10 +487,12 @@ function renderGrid(){
   document.getElementById('troopGrid').innerHTML = types.map(ty=>{
     const id = `t${currentTier}-${ty.id}`;
     const name = troopData[currentTier].names[ty.id];
+    const image = troopImages[currentTier][ty.id];
     return `
     <div class="troop">
-      <div class="troop-img">
+      <div class="troop-img has-card-image">
         <div class="ph"><i class="fas ${ty.icon}"></i></div>
+        <img src="${image}" alt="T${currentTier} ${ty.label}: ${name}" loading="lazy" onerror="this.parentElement.classList.remove('has-card-image');this.remove()">
         <div class="troop-type">${ty.label}</div>
         <div class="troop-name">${name}</div>
       </div>
