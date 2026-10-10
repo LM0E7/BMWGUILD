@@ -249,6 +249,20 @@ header nav{display:none}
 .df span{letter-spacing:.12em;font-size:.55rem;line-height:1.5}
 html{overflow-anchor:none}
 .btn.telegram{background:#229ed9;border-color:#229ed9;color:#fff}
+
+.payment-card{margin-top:16px;background:linear-gradient(160deg,#17130b 0%,var(--card) 62%);border:1px solid #5a4317;border-radius:16px;padding:18px}
+.payment-card h3{margin:0 0 6px;color:var(--gold);font-size:1.25rem}
+.payment-note{margin:0 0 14px;color:var(--mut);font-size:.9rem}
+.payment-id{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:12px 0;color:var(--gold);font-weight:800}
+.payment-copy{border:1px solid var(--gold);border-radius:8px;padding:7px 10px;background:none;color:var(--gold);cursor:pointer;font:inherit;font-size:.82rem}
+.payment-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.payment-actions .btn{cursor:pointer;font:inherit;font-weight:800}
+.qr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.qr-card{margin:0;padding:9px;border-radius:12px;background:#fff;color:#151515;text-align:center}
+.qr-card img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:7px}
+.qr-card figcaption{padding-top:7px;font-size:.78rem;font-weight:800}
+.binance-pay{margin-top:14px;padding:12px;border:1px dashed var(--line);border-radius:12px;text-align:center;color:var(--mut);font-size:.88rem}
+@media(max-width:420px){.qr-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -384,7 +398,14 @@ html{overflow-anchor:none}
 <div class="tot"><span>Total</span><b id="tot">$0.00</b></div>
 <a class="btn wa" id="owa" href="#order" target="_blank" rel="noopener">Send order on WhatsApp</a>
 <a class="btn telegram" id="otg" href="#order" target="_blank" rel="noopener">Send order on Telegram</a>
-<button class="btn o" id="ocopy">Copy order</button><button class="btn o" id="oclr">Clear</button></div>
+<button class="btn o" id="ocopy">Copy order</button><button class="btn o" id="oclr">Clear</button>
+<div class="payment-card" id="payment">
+<h3>Direct payment</h3><p class="payment-note">WhatsApp and Telegram remain separate order channels. Pay directly with UPI, PhonePe, Paytm, or Binance Pay.</p>
+<div class="payment-id">UPI ID: <span id="upiId">7505886158@ptyes</span><button class="payment-copy" id="copyUpi" type="button">Copy UPI ID</button></div>
+<div class="payment-actions"><button class="btn" id="upiPay" type="button">Pay with UPI</button><button class="btn o" id="paidWa" type="button">Paid — WhatsApp</button><button class="btn o" id="paidTg" type="button">Paid — Telegram</button></div>
+<div class="qr-grid"><figure class="qr-card"><img src="paytm-upi-qr.jpg" alt="Paytm UPI QR code"><figcaption>Paytm / UPI QR</figcaption></figure><figure class="qr-card"><img src="phonepe-upi-qr.jpg" alt="PhonePe UPI QR code"><figcaption>PhonePe / UPI QR</figcaption></figure></div>
+<div class="binance-pay"><strong>Binance Pay ID: <span id="binanceId">1228031996</span></strong> <button class="payment-copy" id="copyBinance" type="button">Copy ID</button><br><small>Send the order total in Binance Pay, then use the matching paid-order button above.</small></div>
+</div></div>
 </div></div></section>
 
 <section id="commands"><div class="wrap">
@@ -519,7 +540,7 @@ let cart=[];try{cart=JSON.parse(localStorage.getItem('rls-cart'))||[]}catch(_){}
 const save=()=>{try{localStorage.setItem('rls-cart',JSON.stringify(cart))}catch(_){}};
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),1700)}
 function lines(){const r=$('#rep').checked;return cart.map(x=>({...x,u:x.a&&r?x.p*.55:x.p}))}
-function orderText(){return 'Hello RADHE LM SHOP, I want to order:\n'+lines().map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+'\nTotal: '+$('#tot').textContent+($('#rep').checked?'\n(Repeat order after 3 days, 45% off bank bot attacks)':'')}
+function orderText(note=''){return 'Hello RADHE LM SHOP, I want to order:\n'+lines().map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+'\nTotal: '+$('#tot').textContent+($('#rep').checked?'\n(Repeat order after 3 days, 45% off bank bot attacks)':'')+(note?'\n'+note:'')}
 function renderCart(){
  const L=lines();
  $('#cart').innerHTML=L.length?L.map((x,i)=>`<div class="ci"><span>${x.n}</span><span class="qc"><button data-i="${i}" data-d="-1" aria-label="Less">−</button>${x.q}<button data-i="${i}" data-d="1" aria-label="More">+</button></span><b>${money(x.u*x.q)}</b><button data-i="${i}" data-d="0" aria-label="Remove">×</button></div>`).join(''):'<p class="sub">Your order is empty. Add an item with the form or the + buttons in the price tables.</p>';
@@ -539,6 +560,13 @@ $('#oclr').onclick=()=>{cart=[];save();renderCart()};
 $('#ocopy').onclick=async()=>{if(!cart.length)return toast('Add an item first');try{await navigator.clipboard.writeText(orderText());toast('Order copied')}catch(_){toast('Copy not available here')}};
 $('#owa').onclick=e=>{if(!cart.length){e.preventDefault();toast('Add an item first')}};
 $('#otg').onclick=e=>{if(!cart.length){e.preventDefault();toast('Add an item first')}};
+const UPI='7505886158@ptyes', BINANCE='1228031996';
+async function copyPayment(value,label,button){try{await navigator.clipboard.writeText(value);button.textContent='Copied';setTimeout(()=>button.textContent=label,1400)}catch(_){toast(value)}}
+$('#copyUpi').onclick=()=>copyPayment(UPI,'Copy UPI ID',$('#copyUpi'));
+$('#copyBinance').onclick=()=>copyPayment(BINANCE,'Copy ID',$('#copyBinance'));
+$('#upiPay').onclick=()=>{if(!cart.length)return toast('Add an item first');const p=new URLSearchParams({pa:UPI,pn:'Radhe Verma',am:lines().reduce((s,x)=>s+x.u*x.q,0).toFixed(2),cu:'INR',tn:'Radhe LM Shop order'});location.href='upi://pay?'+p.toString()};
+function paidOrder(channel){if(!cart.length)return toast('Add an item first');const text=orderText('Payment method: UPI / PhonePe / Paytm / Binance Pay (please confirm payment)');const url=channel==='wa'?'https://wa.me/'+WA+'?text=':'https://t.me/'+TG+'?text=';window.open(url+encodeURIComponent(text),'_blank','noopener')}
+$('#paidWa').onclick=()=>paidOrder('wa');$('#paidTg').onclick=()=>paidOrder('tg');
 document.querySelectorAll('#bots tr').forEach((tr,j)=>[1,2].forEach(c=>tr.cells[c].insertAdjacentHTML('beforeend',`<button class="add" data-c="Bank bot subscription" data-i="${2*j+c-1}" aria-label="Add to order">+</button>`)));
 document.querySelectorAll('#res tr').forEach((tr,j)=>tr.cells[6].insertAdjacentHTML('beforeend',`<button class="add" data-c="Resource bundles" data-i="${j}" aria-label="Add to order">+</button>`));
 document.addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(!b)return;const x=CAT[b.dataset.c][b.dataset.i];add(x[0],x[1],x[2]||0)});
