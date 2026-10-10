@@ -263,6 +263,10 @@ html{overflow-anchor:none}
 .qr-card figcaption{padding-top:7px;font-size:.78rem;font-weight:800}
 .binance-pay{margin-top:14px;padding:12px;border:1px dashed var(--line);border-radius:12px;text-align:center;color:var(--mut);font-size:.88rem}
 @media(max-width:420px){.qr-grid{grid-template-columns:1fr}}
+
+.payment-conversion{margin:14px 0;padding:12px;border:1px solid var(--line);border-radius:12px;text-align:center;color:var(--mut);font-size:.9rem}
+.payment-conversion strong{display:block;color:var(--gold);font-size:1.45rem;margin:3px 0}
+.payment-conversion small{font-size:.75rem}
 </style>
 </head>
 <body>
@@ -401,7 +405,7 @@ html{overflow-anchor:none}
 <button class="btn o" id="ocopy">Copy order</button><button class="btn o" id="oclr">Clear</button>
 <div class="payment-card" id="payment">
 <h3>Direct payment</h3><p class="payment-note">Choose your payment app below. WhatsApp and Telegram remain separate order channels for order confirmation.</p>
-<div class="payment-id"><span>UPI ID<br><strong id="upiId">7505886158@ptyes</strong></span><button class="payment-copy" id="copyUpi" type="button">Copy</button></div><p class="payment-note" style="text-align:center;margin-bottom:0">Name: Radhe Verma. Scan a QR and type the amount shown above.</p>
+<div class="payment-conversion"><span>UPI amount in INR</span><strong id="upiAmount">₹—</strong><small id="fxNote">Loading live USD → INR rate…</small></div><div class="payment-id"><span>UPI ID<br><strong id="upiId">7505886158@ptyes</strong></span><button class="payment-copy" id="copyUpi" type="button">Copy</button></div><p class="payment-note" style="text-align:center;margin-bottom:0">Name: Radhe Verma. The UPI amount is converted automatically from the dollar order total.</p>
 <div class="payment-actions"><button class="btn" id="upiPhonePe" type="button">Pay with PhonePe</button><button class="btn" id="upiPaytm" type="button">Pay with Paytm</button><button class="btn" id="upiOther" type="button">Other UPI app</button></div>
 <div class="qr-grid"><figure class="qr-card"><img src="phonepe-upi-qr.jpg" alt="PhonePe UPI QR code"><figcaption>PhonePe</figcaption></figure><figure class="qr-card"><img src="paytm-upi-qr.jpg" alt="Paytm UPI QR code"><figcaption>Paytm</figcaption></figure></div>
 <div class="binance-pay"><strong>Binance Pay ID: <span id="binanceId">1228031996</span></strong> <button class="payment-copy" id="copyBinance" type="button">Copy ID</button><br><small>Send the order total in Binance Pay, then confirm below.</small><div class="payment-actions"><button class="btn o" id="paidWa" type="button">Paid — WhatsApp</button><button class="btn o" id="paidTg" type="button">Paid — Telegram</button></div></div>
@@ -544,7 +548,7 @@ function orderText(note=''){return 'Hello RADHE LM SHOP, I want to order:\n'+lin
 function renderCart(){
  const L=lines();
  $('#cart').innerHTML=L.length?L.map((x,i)=>`<div class="ci"><span>${x.n}</span><span class="qc"><button data-i="${i}" data-d="-1" aria-label="Less">−</button>${x.q}<button data-i="${i}" data-d="1" aria-label="More">+</button></span><b>${money(x.u*x.q)}</b><button data-i="${i}" data-d="0" aria-label="Remove">×</button></div>`).join(''):'<p class="sub">Your order is empty. Add an item with the form or the + buttons in the price tables.</p>';
- $('#tot').textContent=money(L.reduce((s,x)=>s+x.u*x.q,0));
+ const totalUsd=L.reduce((s,x)=>s+x.u*x.q,0);$('#tot').textContent=money(totalUsd);$('#upiAmount').textContent=usdInr===null?'₹—':'₹'+(totalUsd*usdInr).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
  $('#owa').href=L.length?'https://wa.me/'+WA+'?text='+encodeURIComponent(orderText()):'#order';
  $('#otg').href=L.length?'https://t.me/'+TG+'?text='+encodeURIComponent(orderText()):'#order';
  $('#cc').textContent=cart.reduce((s,x)=>s+x.q,0);
@@ -560,12 +564,14 @@ $('#oclr').onclick=()=>{cart=[];save();renderCart()};
 $('#ocopy').onclick=async()=>{if(!cart.length)return toast('Add an item first');try{await navigator.clipboard.writeText(orderText());toast('Order copied')}catch(_){toast('Copy not available here')}};
 $('#owa').onclick=e=>{if(!cart.length){e.preventDefault();toast('Add an item first')}};
 $('#otg').onclick=e=>{if(!cart.length){e.preventDefault();toast('Add an item first')}};
-const UPI='7505886158@ptyes', BINANCE='1228031996';
+const UPI='7505886158@ptyes', BINANCE='1228031996'; let usdInr=null, fxReady=false;
 async function copyPayment(value,label,button){try{await navigator.clipboard.writeText(value);button.textContent='Copied';setTimeout(()=>button.textContent=label,1400)}catch(_){toast(value)}}
 $('#copyUpi').onclick=()=>copyPayment(UPI,'Copy UPI ID',$('#copyUpi'));
 $('#copyBinance').onclick=()=>copyPayment(BINANCE,'Copy ID',$('#copyBinance'));
-function payWithUpi(){if(!cart.length)return toast('Add an item first');const p=new URLSearchParams({pa:UPI,pn:'Radhe Verma',am:lines().reduce((s,x)=>s+x.u*x.q,0).toFixed(2),cu:'INR',tn:'Radhe LM Shop order'});location.href='upi://pay?'+p.toString()}
+function payWithUpi(){if(!cart.length)return toast('Add an item first');if(!fxReady)return toast('INR conversion is still loading — try again in a moment');const amount=lines().reduce((s,x)=>s+x.u*x.q,0)*usdInr;const p=new URLSearchParams({pa:UPI,pn:'Radhe Verma',am:amount.toFixed(2),cu:'INR',tn:'Radhe LM Shop order'});location.href='upi://pay?'+p.toString()}
 $('#upiPhonePe').onclick=payWithUpi;$('#upiPaytm').onclick=payWithUpi;$('#upiOther').onclick=payWithUpi;
+async function loadFx(){try{const r=await fetch('https://api.frankfurter.dev/v1/latest?from=USD&to=INR',{cache:'no-store'});if(!r.ok)throw new Error('rate request failed');const d=await r.json();if(!d.rates||!d.rates.INR)throw new Error('INR rate missing');usdInr=Number(d.rates.INR);fxReady=true;$('#fxNote').textContent='Live rate: $1 = ₹'+usdInr.toFixed(2);renderCart()}catch(_){$('#fxNote').textContent='Live USD → INR rate unavailable. Refresh to try again.';toast('INR conversion unavailable')}}
+loadFx();
 function paidOrder(channel){if(!cart.length)return toast('Add an item first');const text=orderText('Payment method: UPI / PhonePe / Paytm / Binance Pay (please confirm payment)');const url=channel==='wa'?'https://wa.me/'+WA+'?text=':'https://t.me/'+TG+'?text=';window.open(url+encodeURIComponent(text),'_blank','noopener')}
 $('#paidWa').onclick=()=>paidOrder('wa');$('#paidTg').onclick=()=>paidOrder('tg');
 document.querySelectorAll('#bots tr').forEach((tr,j)=>[1,2].forEach(c=>tr.cells[c].insertAdjacentHTML('beforeend',`<button class="add" data-c="Bank bot subscription" data-i="${2*j+c-1}" aria-label="Add to order">+</button>`)));
