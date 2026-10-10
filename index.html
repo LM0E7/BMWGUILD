@@ -261,7 +261,18 @@ html{overflow-anchor:none}
 .qr-card{margin:0;padding:9px;border-radius:12px;background:#fff;color:#151515;text-align:center}
 .qr-card img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:7px}
 .qr-card figcaption{padding-top:7px;font-size:.78rem;font-weight:800}
-.binance-pay{margin-top:14px;padding:12px;border:1px dashed var(--line);border-radius:12px;text-align:center;color:var(--mut);font-size:.88rem}
+.binance-pay-card{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:16px;background:linear-gradient(135deg,#19150a,#101827 72%);border:1px solid rgba(240,185,11,.55);color:var(--ink);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.binance-mark{width:54px;height:54px;display:grid;place-items:center;border-radius:14px;background:rgba(240,185,11,.12);color:#f0b90b}
+.binance-mark svg{width:34px;height:34px;fill:currentColor}
+.binance-info{min-width:0;text-align:left}
+.binance-info figcaption{padding:0;color:#f0b90b;font-size:.9rem;letter-spacing:.04em}
+.binance-id{display:block;margin:3px 0;color:var(--ink);font-size:clamp(1.2rem,5vw,1.65rem);font-weight:900;letter-spacing:.08em;line-height:1.2;overflow-wrap:anywhere}
+.binance-info small{display:block;color:var(--mut);font-size:.76rem}
+.binance-copy{min-height:42px;padding:9px 13px;background:#f0b90b;border-color:#f0b90b;color:#17130b;font-weight:800;white-space:nowrap}
+.binance-confirm{grid-column:1/-1;border-top:1px solid rgba(240,185,11,.2);padding-top:8px}
+.binance-confirm small{display:block;color:var(--mut);text-align:center;font-size:.76rem}
+.binance-confirm .payment-actions{margin-bottom:0}
+@media(max-width:420px){.qr-grid{grid-template-columns:1fr}.binance-pay-card{grid-template-columns:auto minmax(0,1fr);gap:10px}.binance-copy{grid-column:1/-1;width:100%}}
 @media(max-width:420px){.qr-grid{grid-template-columns:1fr}}
 
 .payment-conversion{margin:14px 0;padding:12px;border:1px solid var(--line);border-radius:12px;text-align:center;color:var(--mut);font-size:.9rem}
@@ -413,8 +424,8 @@ html{overflow-anchor:none}
 <h3>Direct payment</h3><p class="payment-note">Choose your payment app below. WhatsApp and Telegram remain separate order channels for order confirmation.</p>
 <div class="payment-conversion"><span>UPI amount in INR</span><strong id="upiAmount">₹—</strong><small id="fxNote">Fixed conversion: $1 = ₹100</small></div><div class="payment-id"><span>UPI ID<br><strong id="upiId">7505886158@ptyes</strong></span><button class="payment-copy" id="copyUpi" type="button">Copy</button></div><p class="payment-note" style="text-align:center;margin-bottom:0">Name: Radhe Verma. The UPI amount is converted automatically from the dollar order total.</p>
 <div class="payment-actions"><button class="btn" id="upiPhonePe" type="button">Pay with PhonePe</button><button class="btn" id="upiPaytm" type="button">Pay with Paytm</button><button class="btn" id="upiOther" type="button">Other UPI app</button></div>
-<div class="qr-grid"><figure class="qr-card"><img src="phonepe-upi-qr.jpg" alt="PhonePe UPI QR code"><figcaption>PhonePe</figcaption></figure><figure class="qr-card"><img src="paytm-upi-qr.jpg" alt="Paytm UPI QR code"><figcaption>Paytm</figcaption></figure></div>
-<div class="binance-pay"><strong>Binance Pay ID: <span id="binanceId">1228031996</span></strong> <button class="payment-copy" id="copyBinance" type="button">Copy ID</button><br><small>Send the order total in Binance Pay, then confirm below.</small><div class="payment-actions"><button class="btn o" id="paidWa" type="button">Paid — WhatsApp</button><button class="btn o" id="paidTg" type="button">Paid — Telegram</button></div></div>
+<div class="qr-grid"><figure class="qr-card"><img src="phonepe-upi-qr.jpg" alt="PhonePe UPI QR code"><figcaption>PhonePe</figcaption></figure><figure class="qr-card"><img src="paytm-upi-qr.jpg" alt="Paytm UPI QR code"><figcaption>Paytm</figcaption></figure>
+<figure class="qr-card binance-pay-card" aria-label="Binance Pay payment details"><div class="binance-mark" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M50 7 66 23 50 39 34 23 50 7Zm-27 27 12 12-12 12L11 46l12-12Zm54 0 12 12-12 12-12-12 12-12ZM50 45l16 16-16 16-16-16 16-16Zm-27 16 12 12-12 12-12-12 12-12Zm54 0 12 12-12 12-12-12 12-12ZM50 73l16 16-16 16-16-16 16-16Z"/></svg></div><div class="binance-info"><figcaption>Binance Pay</figcaption><strong class="binance-id" id="binanceId">1228031996</strong><small>Use this ID to send your payment.</small></div><button class="payment-copy binance-copy" id="copyBinance" type="button">Copy ID</button><div class="binance-confirm"><small>After paying with Binance Pay, confirm your order:</small><div class="payment-actions"><button class="btn o" id="paidWa" type="button">Paid — WhatsApp</button><button class="btn o" id="paidTg" type="button">Paid — Telegram</button></div></div></figure></div>
 </div></div>
 </div></div></section>
 
