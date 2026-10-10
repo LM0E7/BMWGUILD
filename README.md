@@ -362,3 +362,11 @@ For issues or questions:
 **Made with ❤️ for Lords Mobile players**
 
 Enjoy tracking your guild's progress! 🎮⚔️
+
+## Google Sheets control
+
+The homepage price list and Player EXP Calculator read the public CSV export of the linked Google Sheet on page load. Keep the first sheet in three columns: `key`, `value`, and `what it controls`.
+
+Existing price keys include `res_44444_90_price`, `res_44444_40_price`, `res_44444_20_price`, `res_44442_price`, `res_44440_price`, `res_40000_price`, `res_22222_price`, `res_22221_price`, `res_11111_price`, `bank_c1_1m`, `bank_c1_3m`, `bank_c1_6m`, `bank_c1_12m`, `bank_c2_1m`, `bank_c2_3m`, `bank_c2_6m`, `bank_c2_12m`, `leader_attack_price`, `customer_attack_price`, `t1_tier1_price`, and `t1_tier2_price`.
+
+To control the Player EXP Calculator, add rows using these keys: `player_exp_1` through `player_exp_60`, `player_might_1` through `player_might_60`, `player_talent_1` through `player_talent_60`, `monster_exp_1` through `monster_exp_5`, and `troop_exp_1` through `troop_exp_5`. Missing values continue using the built-in defaults.
