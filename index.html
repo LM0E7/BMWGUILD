@@ -103,6 +103,9 @@ body.cmdview .hero,body.cmdview #services,body.cmdview #resources,body.cmdview #
 #resources td:first-child{vertical-align:middle}
 #resources td:first-child b{display:block;line-height:1.15}
 #resources td:first-child small.rs{display:block;margin-top:5px;color:var(--gold);font-size:clamp(.68rem,2.5vw,.82rem);font-weight:700;line-height:1.15;white-space:nowrap}
+#resources thead th{vertical-align:middle;line-height:1.2}
+#resources thead th .resource-icon{display:block;font-size:clamp(1.15rem,5vw,1.65rem);line-height:1;margin-bottom:5px}
+#resources thead th .resource-label{display:block}
 #calculator .speedup-intro{max-width:62ch;margin:0 auto 20px;text-align:center;color:var(--mut)}
 #calculator .speedup-card{max-width:760px;margin:0 auto;background:linear-gradient(180deg,#10121a,#0b0c12);border:1px solid var(--line);border-radius:18px;padding:clamp(14px,4vw,24px)}
 #calculator .speedup-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:10px}
@@ -354,7 +357,7 @@ html{overflow-anchor:none}
 
 <section id="resources"><div class="wrap">
 <div class="resources-head"><h2>Resource price list</h2><p class="sub">Trusted supply, best prices. Each bundle is a clear breakdown of what you get.</p></div>
-<div class="sc card" style="padding:0"><table><thead><tr><th>Bundle</th><th>🌾 Food</th><th>🪨 Stone</th><th>🪵 Wood</th><th>💎 Ore</th><th>🪙 Gold</th><th>Price</th></tr></thead><tbody id="res"></tbody></table></div>
+<div class="sc card" style="padding:0"><table><thead><tr><th><span class="resource-label">Bundle</span></th><th><span class="resource-icon">🌾</span><span class="resource-label">Food</span></th><th><span class="resource-icon">🪨</span><span class="resource-label">Stone</span></th><th><span class="resource-icon">🪵</span><span class="resource-label">Wood</span></th><th><span class="resource-icon">💎</span><span class="resource-label">Ore</span></th><th><span class="resource-icon">🪙</span><span class="resource-label">Gold</span></th><th><span class="resource-label">Price</span></th></tr></thead><tbody id="res"></tbody></table></div>
 <div class="badges">
 <div class="card"><span class="mm">Direct supply, no MM</span><br><small style="color:var(--mut)">No middleman between you and the seller</small></div>
 <div class="card">🛡️ 100% safe &amp; secure</div>
