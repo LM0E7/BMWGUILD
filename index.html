@@ -298,7 +298,7 @@ html{overflow-anchor:none}
 <g fill="none" stroke="#07080c" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="3.800"/><path d="M44 35C36 40 35 44 34 32M57 36C64 41 58 33 47 29" stroke-width="5.600"/></g>
 <g fill="none" stroke="url(#gg)" stroke-linecap="round"><path d="M46 28L14 33" stroke-width="1.700"/><path d="M44 35C36 40 35 44 34 32" stroke-width="3.400"/><path d="M57 36C64 41 58 33 47 29" stroke-width="3.400"/></g></symbol></svg>
 <header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="RADHE LM SHOP"><svg><use href="#lg"/></svg></a><a class="brand" href="#top">RADHE LM SHOP</a>
-<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
+<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#player-exp">Player EXP</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
 
 <main id="top">
 <div class="wrap hero">
@@ -313,6 +313,7 @@ html{overflow-anchor:none}
 <a class="btn o" href="#gem-prediction">Gem prediction</a>
 <a class="btn o" href="#training">Troop training</a>
 <a class="btn o" href="#festival">Guild Festival</a>
+<a class="btn o" href="#player-exp">Player EXP calculator</a>
 <a class="btn o" href="hunting.html">Monster hunting</a>
 <a class="btn o" href="#commands">Guild bank commands</a>
 </div>
@@ -383,6 +384,11 @@ html{overflow-anchor:none}
 <h2>Guild Festival Planner</h2>
 <p class="sub">Plan Guild Fest missions, compare base and bonus scores, and track your target points and attempts.</p>
 <a class="btn" href="festival.html">Open Guild Festival Planner</a>
+</div></div></section>
+<section id="player-exp"><div class="wrap"><div class="card" style="max-width:760px;margin:0 auto;text-align:center;background:linear-gradient(160deg,#17130b 0%,var(--card) 62%);border-color:#5a4317">
+<h2>Player EXP Calculator</h2>
+<p class="sub">Plan your next Lords Mobile level-up with EXP needed, monster hunts, troop kills, Might, and Talent points in one place.</p>
+<a class="btn" href="player-exp-calculator.html">Open Player EXP Calculator</a>
 </div></div></section>
 <section id="attacks"><div class="wrap">
 <p class="sub">Let the bank bot do the attacking while you play.</p>
@@ -775,6 +781,7 @@ I.train='<path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>';
 M.splice(6,0,['#training','Troop training calculator','train']);
 M.splice(7,0,['hunting.html','Monster hunting','sword']);
 M.splice(8,0,['#festival','Guild Festival','gem']);
+M.splice(9,0,['player-exp-calculator.html','Player EXP calculator','calc']);
 $('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
 const dr=o=>{$('#drw').classList.toggle('on',o);$('#bd').classList.toggle('on',o);$('#drw').setAttribute('aria-hidden',!o)};
 $('#mb').onclick=()=>dr(true);
