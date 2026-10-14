@@ -285,7 +285,7 @@ html{overflow-anchor:none}
 <body>
 
 <header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="ZAX LM SHOP"><img src="logo.png" alt="ZAX LM SHOP logo"></a><a class="brand" href="#top">ZAX LM SHOP</a>
-<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#player-exp">Player EXP</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
+<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#player-exp">Player EXP</a><a href="gems-wishlist.html">Gems Wishlist</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
 
 <main id="top">
 <div class="wrap hero">
@@ -301,6 +301,7 @@ html{overflow-anchor:none}
 <a class="btn o" href="#training">Troop training</a>
 <a class="btn o" href="#festival">Guild Festival</a>
 <a class="btn o" href="#player-exp">Player EXP calculator</a>
+<a class="btn o" href="gems-wishlist.html">Gems Wishlist</a>
 <a class="btn o" href="hunting.html">Monster hunting</a>
 <a class="btn o" href="#commands">Guild bank commands</a>
 </div>
@@ -791,6 +792,7 @@ M.splice(6,0,['#training','Troop training calculator','train']);
 M.splice(7,0,['hunting.html','Monster hunting','sword']);
 M.splice(8,0,['#festival','Guild Festival','gem']);
 M.splice(9,0,['player-exp-calculator.html','Player EXP calculator','calc']);
+M.splice(10,0,['gems-wishlist.html','Gems Wishlist','gem']);
 $('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
 const dr=o=>{$('#drw').classList.toggle('on',o);$('#bd').classList.toggle('on',o);$('#drw').setAttribute('aria-hidden',!o)};
 $('#mb').onclick=()=>dr(true);
