@@ -390,9 +390,9 @@ html{overflow-anchor:none}
 <div><span class="big" style="color:var(--gold)">$0.60</span><small>90 min to complete</small></div>
 </div>
 
-<h2 id="services" style="margin-top:40px">Bank bot subscription</h2><p class="sub">2 different companies, 99% same function.</p>
+<h2 id="services" style="margin-top:40px">Bank bot subscription</h2>
 <div class="g2" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-<div class="sc card" style="padding:0"><table><thead><tr><th>Duration</th><th>Company 1</th><th>Company 2</th></tr></thead><tbody id="bots"></tbody></table></div>
+<div class="sc card" style="padding:0"><table><thead><tr><th>Duration</th><th>Company 2</th></tr></thead><tbody id="bots"></tbody></table></div>
 <div class="card" style="text-align:center"><h3>Extra benefit</h3><p>If you buy a bank bot from me:</p><div style="font-size:2.6rem">🎁</div><p><b>All the limited-time redeem codes are claimed in your accounts.</b></p></div>
 </div>
 </div></section>
@@ -465,14 +465,14 @@ const $=s=>document.querySelector(s);
 const SHEET_CSV_URL='https://docs.google.com/spreadsheets/d/1eXIIszAr9hC7v1PzLrcEUYla536ncidP275mTxndqgg/export?format=csv';
 const sheetNumber=(v,fallback)=>{const n=parseFloat(String(v??'').replace(/[$,]/g,''));return Number.isFinite(n)?n:fallback};
 const parseSheetCsv=csv=>Object.fromEntries(csv.trim().split(/\r?\n/).slice(1).map(line=>{const [key,value]=line.split(',');return [key?.trim(),value?.trim()]}).filter(([key])=>key));
-const bots=[['1 month','0.65','1.10'],['3 months','1.80','3.00'],['6 months','3.30','5.50'],['12 months','6.00','10.00']];
-$('#bots').innerHTML=bots.map(r=>`<tr><td>${r[0]}</td><td class=p>$${r[1]}</td><td class=p>$${r[2]}</td></tr>`).join('');
+const bots=[['1 month','1.10'],['3 months','3.00'],['6 months','5.50'],['12 months','10.00']];
+$('#bots').innerHTML=bots.map(r=>`<tr><td>${r[0]}</td><td class=p>$${r[1]}</td></tr>`).join('');
 const res=[['44444','4B','4B','4B','4B','4B','0.60','90 min'],['44444','4B','4B','4B','4B','4B','0.85','40 min'],['44444','4B','4B','4B','4B','4B','1.60','20 min'],['44442','4B','4B','4B','4B','2B','0.45',''],['44440','4B','4B','4B','4B','0','0.35',''],['40000','4B','0','0','0','0','0.22',''],['22222','2B','2B','2B','2B','2B','0.35',''],['22221','2B','2B','2B','2B','1B','0.28',''],['11111','1B','1B','1B','1B','1B','0.20','']];
 $('#res').innerHTML=res.map(r=>`<tr><td><b>${r[0]}</b>${r[7]?`<small class="rs">${r[7]}</small>`:''}</td>${r.slice(1,6).map(v=>`<td>${v}</td>`).join('')}<td class=p>$${r[6]}</td></tr>`).join('');
 function renderSheetControlledPrices(){
-  $('#bots').innerHTML=bots.map(r=>`<tr><td>${r[0]}</td><td class=p>$${r[1]}</td><td class=p>$${r[2]}</td></tr>`).join('');
+  $('#bots').innerHTML=bots.map(r=>`<tr><td>${r[0]}</td><td class=p>$${r[1]}</td></tr>`).join('');
   $('#res').innerHTML=res.map(r=>`<tr><td><b>${r[0]}</b>${r[7]?`<small class="rs">${r[7]}</small>`:''}</td>${r.slice(1,6).map(v=>`<td>${v}</td>`).join('')}<td class=p>$${r[6]}</td></tr>`).join('');
-  document.querySelectorAll('#bots tr').forEach((tr,j)=>[1,2].forEach(c=>tr.cells[c].insertAdjacentHTML('beforeend',`<button class="add" data-c="Bank bot subscription" data-i="${2*j+c-1}" aria-label="Add to order">+</button>`)));
+  document.querySelectorAll('#bots tr').forEach((tr,j)=>tr.cells[1].insertAdjacentHTML('beforeend',`<button class="add" data-c="Bank bot subscription" data-i="${j}" aria-label="Add to order">+</button>`));
   document.querySelectorAll('#res tr').forEach((tr,j)=>tr.cells[6].insertAdjacentHTML('beforeend',`<button class="add" data-c="Resource bundles" data-i="${j}" aria-label="Add to order">+</button>`));
 }
 async function loadSheetPrices(){
@@ -480,8 +480,8 @@ async function loadSheetPrices(){
     const values=parseSheetCsv(await fetch(SHEET_CSV_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('sheet');return r.text()}));
     const resourceKeys=['res_44444_90_price','res_44444_40_price','res_44444_20_price','res_44442_price','res_44440_price','res_40000_price','res_22222_price','res_22221_price','res_11111_price'];
     res.forEach((r,i)=>r[6]=sheetNumber(values[resourceKeys[i]],r[6]));
-    const botKeys=[['bank_c1_1m','bank_c2_1m'],['bank_c1_3m','bank_c2_3m'],['bank_c1_6m','bank_c2_6m'],['bank_c1_12m','bank_c2_12m']];
-    bots.forEach((r,i)=>{r[1]=sheetNumber(values[botKeys[i][0]],r[1]);r[2]=sheetNumber(values[botKeys[i][1]],r[2])});
+    const botKeys=['bank_c2_1m','bank_c2_3m','bank_c2_6m','bank_c2_12m'];
+    bots.forEach((r,i)=>{r[1]=sheetNumber(values[botKeys[i]],r[1])});
     const attack=[sheetNumber(values.leader_attack_price,3.5),sheetNumber(values.customer_attack_price,2),sheetNumber(values.t1_tier1_price,4),sheetNumber(values.t1_tier2_price,6)];
     CAT['Bank bot attacks'][0][1]=attack[0];CAT['Bank bot attacks'][1][1]=attack[1];CAT['T1 killing service'][0][1]=attack[2];CAT['T1 killing service'][1][1]=attack[3];
     renderSheetControlledPrices(); fill(); renderCart();
@@ -579,7 +579,7 @@ draw();
 const WA='918797787737',TG='JASH07X',money=n=>'$'+n.toFixed(2);
 const CAT={
  'Bank bot attacks':[['Leader attack x30 (bank bot)',3.5,1],['Customer attack (bank bot)',2,1]],
- 'Bank bot subscription':bots.flatMap(r=>[[r[0]+' bank bot, Company 1',+r[1]],[r[0]+' bank bot, Company 2',+r[2]]]),
+ 'Bank bot subscription':bots.map(r=>[r[0]+' bank bot, Company 2',+r[1]]),
  'Resource bundles':res.map(r=>['Bundle '+r[0]+(r[7]?' · '+r[7]:'')+' (Food '+r[1]+', Stone '+r[2]+', Wood '+r[3]+', Ore '+r[4]+', Gold '+r[5]+')',+r[6]]),
  'T1 killing service':[['Tier 1 T1 kills · 1–1,800 KD · 1B',4],['Tier 2 T1 kills · 1,800–1,970 KD · 1B',6]]
 };
