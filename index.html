@@ -282,11 +282,12 @@ html{overflow-anchor:none}
 .payment-conversion small{font-size:.75rem}
 </style>
 <meta name="robots" content="noai, noimageai">
+<link rel="stylesheet" href="assistant.css">
 </head>
 <body>
 
 <header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="ZAX LM SHOP"><img src="logo.png" alt="ZAX LM SHOP logo"></a><a class="brand" href="#top">ZAX LM SHOP</a>
-<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#player-exp">Player EXP</a><a href="gems-wishlist.html">Gems Wishlist</a><a href="assistant.html">Shop Assistant</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
+<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#player-exp">Player EXP</a><a href="gems-wishlist.html">Gems Wishlist</a><a href="#assistant">Shop Assistant</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
 
 <main id="top">
 <div class="wrap hero">
@@ -304,9 +305,21 @@ html{overflow-anchor:none}
 <a class="btn o" href="#player-exp">Player EXP calculator</a>
 <a class="btn o" href="gems-wishlist.html">Gems Wishlist</a>
 <a class="btn o" href="hunting.html">Monster hunting</a>
-<a class="btn o" href="assistant.html">Shop assistant</a>
+<a class="btn o" href="#assistant">Shop assistant</a>
 <a class="btn o" href="#commands">Guild bank commands</a>
 </div>
+
+<section id="assistant"><div class="wrap">
+<h2>Shop Assistant</h2><p class="sub">Ask naturally about current prices, subscriptions, services, or your order. It shares the order builder below.</p>
+<div class="app" aria-label="ZAX LM SHOP assistant">
+<div class="topbar"><img class="logo" src="logo.png" alt="ZAX LM SHOP logo"><div class="brand"><strong>ZAX LM SHOP · Assistant</strong><small><span class="status-dot"></span> Ready to help with the shop and your order</small></div><div class="top-actions"><a class="small-link" href="#order">Order builder</a><button type="button" class="iconbtn" id="sa-orderBtn" title="Show your shared shop order">Order <span id="sa-cartCount">0</span></button></div></div>
+<div class="intro"><b>Ask naturally.</b> Get help with current shop prices, services, and your order.<span id="sa-priceStatus" class="price-status" role="status">Loading shop prices…</span></div>
+<div id="sa-log" class="log" aria-live="polite" aria-label="Conversation"></div>
+<label class="repeatbar"><input type="checkbox" id="sa-repeatToggle"><span><strong>Repeat order after 3 days</strong> · apply the shop’s 45% discount to bank bot attacks only. Tick this only if eligible; the seller confirms the order.</span></label>
+<div class="chips-wrap"><div class="chips-label">Try asking</div><nav id="sa-chips" class="chips" aria-label="Suggested questions"></nav></div>
+<form id="sa-f" class="composer" autocomplete="off"><label class="sr-only" for="sa-q">Your message</label><input id="sa-q" placeholder="Ask about prices, services, or your order…" autocomplete="off" enterkeyhint="send"><button class="send" id="sa-send" type="submit">Send</button></form>
+<div class="footnote">Price sheet syncs when online; built-in prices are used offline. Your shared order is saved in this browser.</div>
+</div></div></section>
 
 <section id="resources"><div class="wrap">
 <div class="resources-head"><h2>Resource price list</h2><p class="sub">Trusted supply, best prices. Each bundle is a clear breakdown of what you get.</p></div>
@@ -459,7 +472,7 @@ html{overflow-anchor:none}
 <div id="bd" class="bd"></div>
 <aside id="drw" class="drw" aria-hidden="true"><div class="dh"><div class="dl"><img class="lgs" src="logo.png" alt=""><div><a class="brand" href="#top">ZAX LM SHOP</a><small>Your trust, our service</small></div></div><button class="ic" id="mx" aria-label="Close menu">&#10005;</button></div><div id="dm"></div><div class="df"><a class="ic" href="https://wa.me/918797787737" target="_blank" rel="noopener" aria-label="WhatsApp" data-ic="wa"></a><a class="ic" href="https://t.me/JASH07X" target="_blank" rel="noopener" aria-label="Telegram @JASH07X" data-ic="tg"></a><a class="ic" href="tel:+918797787737" aria-label="Call" data-ic="tel"></a><span>Trusted supply · Best prices</span></div></aside>
 <div class="nb"><a href="#top"><em data-ic="home"></em>Home</a><a href="#services"><em data-ic="grid"></em>Subscription</a><a href="#order"><b class="cb"><em data-ic="cart"></em><i id="cc">0</i></b>Order</a><a href="#commands"><em data-ic="term"></em>Commands</a><a href="#contact"><em data-ic="chat"></em>Contact</a></div>
-<a class="sup" href="https://wa.me/918797787737" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" data-ic="wa"></a><div id="toast" class="toast" role="status"></div>
+<a class="sup" id="assistantLauncher" href="#assistant" aria-label="Open shop assistant" data-ic="chat"></a><div id="toast" class="toast" role="status"></div>
 <footer>ZAX LM SHOP · Your trust, our service<div class="copyright-notice" style="margin:1rem auto 0;padding:1rem 1.25rem;border-top:1px solid rgba(160,160,160,.35);font-size:.78rem;line-height:1.55;text-align:center;opacity:.88;max-width:900px">
 <p style="margin:0 0 .35rem;font-weight:700">© 2026 JASH. All Rights Reserved.</p>
 <p style="margin:.25rem 0">This website, including its original design, layout, graphics, text, and source code, is protected by applicable copyright laws.</p>
@@ -803,7 +816,7 @@ M.splice(7,0,['hunting.html','Monster hunting','sword']);
 M.splice(8,0,['#festival','Guild Festival','gem']);
 M.splice(9,0,['player-exp-calculator.html','Player EXP calculator','calc']);
 M.splice(10,0,['gems-wishlist.html','Gems Wishlist','gem']);
-M.splice(0,0,['assistant.html','Shop assistant','chat']);
+M.splice(0,0,['#assistant','Shop assistant','chat']);
 $('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
 const dr=o=>{$('#drw').classList.toggle('on',o);$('#bd').classList.toggle('on',o);$('#drw').setAttribute('aria-hidden',!o)};
 $('#mb').onclick=()=>dr(true);
@@ -829,5 +842,6 @@ function go(h){
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a||a.getAttribute('href').length<2)return;e.preventDefault();go(a.getAttribute('href'))});
 addEventListener('keydown',e=>{if(e.key=='/'&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();$('#q').focus()}});
 </script>
+<script src="assistant.js" defer></script>
 </body>
 </html>

@@ -26,7 +26,7 @@
   };
   let cart = readCart();
   let pending = null;
-  const $ = id => document.getElementById(id);
+  const $ = id => document.getElementById('sa-' + id);
   const log = $('log'), input = $('q'), chipBox = $('chips');
   const money = n => '$' + (Number(n)||0).toFixed(2);
   const inr = n => '₹' + Math.round((Number(n)||0)*RATE).toLocaleString('en-IN');
@@ -290,6 +290,8 @@
   function ask(text){if(!text)return;bubble(text,'me');const wait=bubble('Checking…','bot');wait.style.opacity='.65';setTimeout(()=>{wait.parentElement?.remove();show(reply(text));},160);}
   $('f').addEventListener('submit',event=>{event.preventDefault();const text=input.value.trim();if(!text)return;input.value='';ask(text);input.focus();});
   $('orderBtn').addEventListener('click',()=>ask('my order'));
+  const launcher=document.getElementById('assistantLauncher');
+  if(launcher)launcher.addEventListener('click',()=>setTimeout(()=>$('q').focus(),450));
   $('repeatToggle').checked=repeatEnabled();
   $('repeatToggle').addEventListener('change',event=>{setRepeat(event.target.checked);window.dispatchEvent(new Event('zax-cart-updated'));});
   window.addEventListener('storage',event=>{
