@@ -26,6 +26,7 @@
   };
   let cart = readCart();
   let pending = null;
+  let lastOptions = [];
   const $ = id => document.getElementById('sa-' + id);
   const log = $('log'), input = $('q'), chipBox = $('chips');
   const money = n => '$' + (Number(n)||0).toFixed(2);
@@ -64,8 +65,12 @@
   }
   const allProducts=()=>products();
   function productById(id){return allProducts().find(x=>x.id===id);}
+  function rememberOptions(list){lastOptions=list.map(p=>p.id);}
+  function recalledOptions(){return lastOptions.map(productById).filter(Boolean);}
   function currentLines(){const rep=repeatEnabled();return cart.map(x=>({...x,u:x.a&&rep?x.p*.55:x.p}));}
+  function subtotal(){return cart.reduce((s,x)=>s+x.p*x.q,0);}
   function total(){return currentLines().reduce((s,x)=>s+x.u*x.q,0);}
+  function discountSavings(){return Math.max(0,subtotal()-total());}
   function updateCount(){ $('cartCount').textContent=cart.reduce((s,x)=>s+x.q,0); }
   function persistAndUpdate(){saveCart();updateCount();}
   function addProduct(product,qty=1){
@@ -83,7 +88,8 @@
   function orderText(){
     const rows=currentLines();
     return 'Hello ZAX LM SHOP, I want to order:\n'+rows.map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+
-      '\nTotal: '+money(total())+' ('+inr(total())+')'+(repeatEnabled()?'\n(Repeat order after 3 days, 45% off bank bot attacks)':'');
+      '\nSubtotal: '+money(subtotal())+(discountSavings()?'\nRepeat savings: -'+money(discountSavings()):'')+
+      '\nTotal: '+money(total())+' ('+inr(total())+')'+(repeatEnabled()?'\n(Repeat order after 3 days, 45% off eligible bank bot attacks)':'');
   }
   function orderReply(){
     if(!cart.length)return result('Your shared shop order is empty. Add an item here or on the shop page, then return to see it here.',{
@@ -93,6 +99,7 @@
     const actions=[];
     rows.forEach(row=>{
       const product=allProducts().find(p=>p.name===row.n);
+      if(product)actions.push({t:'dec-name',name:row.n,label:'− 1 '+shortName({name:row.n})});
       if(product)actions.push({t:'inc',id:product.id,label:'＋ '+shortName(product)});
       actions.push({t:'remove-name',name:row.n,label:'Remove '+shortName({name:row.n})});
     });
@@ -102,8 +109,9 @@
     actions.push({t:'copy',label:'Copy order',text:msg});
     actions.push({t:'say',label:'Clear order',text:'clear order'});
     return result('🧾 Your shared shop order\n'+rows.map(x=>'• '+x.n+' ×'+x.q+' — '+money(x.u*x.q)).join('\n')+
-      '\nTotal: '+money(total())+' ('+inr(total())+')'+(repeatEnabled()?'\nRepeat discount: 45% off bank bot attacks':'')+
-      '\n\nThis cart is shared with the website order builder in this browser. Confirm the final order and payment details with the seller.',
+      '\nSubtotal: '+money(subtotal())+(discountSavings()?'\nRepeat savings: −'+money(discountSavings()):'')+
+      '\nTotal: '+money(total())+' ('+inr(total())+')'+
+      '\n\nUse −1 / + to adjust quantities, or Remove to delete a line. This cart is shared with the website order builder in this browser. Confirm the final order and payment details with the seller.',
       {actions,chips:['Price list','Bank bot subscription','Contact']});
   }
   function shortName(p){return p.name.replace(/ \(Food.*$/,'').replace(' bank bot, Company 2',' sub').replace(' x30 (bank bot)','').replace(' · 1,800 KD · 1B','').replace(' · 1,970 KD · 1B','')}
@@ -153,6 +161,7 @@
     if(!code)return null;
     let list=allProducts().filter(p=>p.kind==='bundle'&&p.code===code);
     const mins=input.match(/\b(90|40|20)\b/);if(mins){const chosen=list.filter(p=>p.mins===mins[1]);if(chosen.length)list=chosen;}
+    rememberOptions(list);
     const text=list.map(p=>'📦 '+p.code+(p.mins?' · '+p.mins+' min':'')+'\n🌾 Food: '+p.food+'\n🪨 Stone: '+p.stone+'\n🪵 Wood: '+p.wood+'\n💎 Ore: '+p.ore+'\n🪙 Gold: '+p.gold+'\n💵 Price: '+formatPrice(p.price,input)).join('\n\n');
     const actions=list.map(p=>({t:'add',id:p.id,label:'＋ Add '+p.code+(p.mins?' · '+p.mins+' min':'')+' · '+formatPrice(p.price,input),primary:true}));
     if(input.startsWith('add ')||input.startsWith('buy ')||input.startsWith('order ')){
@@ -162,20 +171,73 @@
     }
     return result(text,{actions,chips:['Price list','My order','Contact']});
   }
-  function quantityOf(input){const m=input.match(/\bx\s*(\d{1,2})\b|\b(\d{1,2})x\b|\bquantity\s+(\d{1,2})\b|\b(\d{1,2})\s+(?:copies|units)\b/);return m?Math.max(1,+(m[1]||m[2]||m[3]||m[4])):1;}
+  function quantityOf(input){const m=input.match(/\bx\s*(\d{1,2})\b|\b(\d{1,2})x\b|\bquantity\s+(\d{1,2})\b|\b(\d{1,2})\s+(?:copies|units)\b|\bfor\s+(\d{1,2})\s+(?:copies|units)\b/);return m?Math.max(1,+(m[1]||m[2]||m[3]||m[4]||m[5])):1;}
   function listReply(list,title,input){
-    const text=title+'\n'+list.map(p=>'• '+p.name+' — '+formatPrice(p.price,input)).join('\n')+'\n\nYou can add an item by typing “add” plus its name, or use a button below.';
-    return result(text,{actions:list.map(p=>({t:'add',id:p.id,label:'＋ Add '+shortName(p)+' · '+formatPrice(p.price,input)})),chips:['My order','Price list','Contact']});
+    rememberOptions(list);
+    const text=title+'\n'+list.map(p=>'• '+p.name+' — '+formatPrice(p.price,input)).join('\n')+'\n\nAsk for the cheapest option, say “add the second one”, or use a button below.';
+    return result(text,{actions:list.map(p=>({t:'add',id:p.id,label:'＋ Add '+shortName(p)+' · '+formatPrice(p.price,input)})),chips:['Cheapest option','Compare prices','My order']});
+  }
+  function compareReply(input){
+    const all=allProducts();let list=null;
+    if(/\b(bundle|bundles|resource|resources|rss|food|stone|wood|ore|gold)\b/.test(input))list=all.filter(p=>p.kind==='bundle');
+    else if(/\b(subscription|subscriptions|month|months|plan|company 2)\b/.test(input))list=all.filter(p=>p.kind==='subscription');
+    else if(/\b(attack|attacks|leader|customer)\b/.test(input))list=all.filter(p=>p.kind==='attack');
+    else if(/\b(t1|tier|kills?)\b/.test(input))list=all.filter(p=>p.kind==='t1');
+    else if(lastOptions.length)list=recalledOptions();
+    if(!list?.length)return result('What would you like me to compare?',{chips:['Compare bundles','Compare subscriptions','Compare attacks','Compare T1 prices']});
+    list.sort((a,b)=>a.price-b.price||a.name.localeCompare(b.name));
+    return listReply(list,'Price comparison · lowest price first',input);
+  }
+  function cheapestReply(input){
+    const all=allProducts();let list=null;
+    if(/\b(bundle|bundles|resource|resources|rss|food|stone|wood|ore|gold)\b/.test(input))list=all.filter(p=>p.kind==='bundle');
+    else if(/\b(subscription|subscriptions|month|months|plan|company 2)\b/.test(input))list=all.filter(p=>p.kind==='subscription');
+    else if(/\b(attack|attacks|leader|customer)\b/.test(input))list=all.filter(p=>p.kind==='attack');
+    else if(/\b(t1|tier|kills?)\b/.test(input))list=all.filter(p=>p.kind==='t1');
+    else if(lastOptions.length)list=recalledOptions();
+    if(!list?.length)return result('Which category should I check for the lowest price?',{chips:['Cheapest bundle','Cheapest subscription','Cheapest attack','Cheapest T1 service']});
+    const item=list.sort((a,b)=>a.price-b.price||a.name.localeCompare(b.name))[0];
+    return result('Lowest-priced option in these results: '+item.name+' — '+formatPrice(item.price,input)+'. Tap Add if you want it in your order.',{actions:[{t:'add',id:item.id,label:'＋ Add '+shortName(item)+' · '+formatPrice(item.price,input),primary:true}],chips:['Compare prices','My order']});
+  }
+  function optionReply(input){
+    const options=recalledOptions();
+    if(!options.length||/\b(clear|empty|reset|remove|delete|take off|my order|my cart|checkout|order summary|show order|view order)\b/.test(input))return null;
+    if(/\b(price list|all prices|shop prices|prices|rates)\b/.test(input)&&!/\b(first|1st|second|2nd|third|3rd|last|that one|this one|it|option)\b/.test(input))return null;
+    const add=/\b(add|buy|order)\b/.test(input),priceAsk=/\b(how much|price|cost|rate)\b/.test(input);
+    if(add&&/\b(cheaper|cheapest|lowest|least expensive)\b/.test(input)){
+      let pool=options.slice();
+      if(/\b(bundle|resource|rss)\b/.test(input))pool=allProducts().filter(p=>p.kind==='bundle');
+      else if(/\b(subscription|month|months|plan)\b/.test(input))pool=allProducts().filter(p=>p.kind==='subscription');
+      else if(/\b(attack|leader|customer)\b/.test(input))pool=allProducts().filter(p=>p.kind==='attack');
+      else if(/\b(t1|tier|kill)\b/.test(input))pool=allProducts().filter(p=>p.kind==='t1');
+      const cheapest=pool.sort((a,b)=>a.price-b.price)[0];
+      return cheapest?addProduct(cheapest,quantityOf(input)):null;
+    }
+    const ordinal=input.match(/\b(first|1st|second|2nd|third|3rd|last)\b/);
+    const referent=/\b(that one|this one|it|them|those|option)\b/.test(input);
+    if(!priceAsk&&!ordinal&&!referent)return null;
+    let chosen=null;
+    if(ordinal){const token=ordinal[1],index=token==='first'||token==='1st'?0:token==='second'||token==='2nd'?1:token==='third'||token==='3rd'?2:options.length-1;chosen=options[index]||null;}
+    if(!chosen){const term=options.find(p=>p.term&&input.includes(normalize(p.term)));if(term)chosen=term;}
+    if(!chosen){const code=(input.match(/\b(?:44444|44442|44440|40000|22222|22221|11111)\b/)||[])[0];if(code){const matches=options.filter(p=>p.code===code);const mins=input.match(/\b(90|40|20)\b/);chosen=mins?matches.find(p=>p.mins===mins[1]):matches.length===1?matches[0]:null;}}
+    if(!chosen&&options.length===1)chosen=options[0];
+    if(!chosen){
+      return result('Which option did you mean? Choose one below, or say “first”, “second”, or “last”.',{actions:options.slice(0,8).map(p=>({t:'add',id:p.id,label:'＋ '+shortName(p)+' · '+formatPrice(p.price,input)})),chips:['Compare prices','My order']});
+    }
+    if(add)return addProduct(chosen,quantityOf(input));
+    const qty=quantityOf(input),sum=formatPrice(chosen.price*qty,input);
+    return result(chosen.name+' costs '+formatPrice(chosen.price,input)+' each. '+(qty>1?'For '+qty+': '+sum+'. ':'')+'Tap Add when you are ready.',{actions:[{t:'add',id:chosen.id,label:'＋ Add '+shortName(chosen)+(qty>1?' ×'+qty:'')+' · '+sum,primary:true}],chips:['My order','Compare prices']});
   }
   function priceList(input){
     const p=allProducts();
+    rememberOptions(p);
     return result('Shop price list'+(isINR(input)?' (USD prices with approximate INR at $1 = ₹100)':'')+'\n\nRESOURCE BUNDLES\n'+
       p.filter(x=>x.kind==='bundle').map(x=>'• '+x.name.split(' (Food')[0]+' — '+formatPrice(x.price,input)).join('\n')+
       '\n\nBANK BOT SUBSCRIPTION · COMPANY 2\n'+p.filter(x=>x.kind==='subscription').map(x=>'• '+x.term+' — '+formatPrice(x.price,input)).join('\n')+
       '\n\nBANK BOT ATTACKS\n'+p.filter(x=>x.kind==='attack').map(x=>'• '+x.name+' — '+formatPrice(x.price,input)).join('\n')+
       '\n\nT1 KILLING SERVICE · PER 1B\n'+p.filter(x=>x.kind==='t1').map(x=>'• '+x.name+' — '+formatPrice(x.price,input)).join('\n')+
       '\n• Tier 3: 1,970+ KD — custom quote from seller.',
-      {chips:['44444','Bank bot subscription','T1 kills','My order','Contact']});
+      {chips:['44444','Compare bundles','Compare subscriptions','My order']});
   }
   function subscriptionReply(input){
     let list=allProducts().filter(p=>p.kind==='subscription');
@@ -213,9 +275,13 @@
   function reply(raw){
     const input=normalize(raw);if(!input)return result('Try asking about prices, subscriptions, bundles, T1 kills, tools, payment, or your order.',{chips:['Price list','My order','Contact']});
     if(pending&&pending.kind==='bundle'){
-      const choice=pending.list.find(p=>input.includes(p.mins)||input.includes(p.code+' '+p.mins));
+      const ordinal=input.match(/\b(first|1st|second|2nd|third|3rd)\b/);
+      const explicitMinutes=input.match(/\b(90|40|20)\s*(?:min|mins|minute|minutes)\b/)||input.match(/^(90|40|20)$/);
+      const index=ordinal?(ordinal[1]==='first'||ordinal[1]==='1st'?0:ordinal[1]==='second'||ordinal[1]==='2nd'?1:2):-1;
+      const choice=index>=0?pending.list[index]:explicitMinutes?pending.list.find(p=>p.mins===explicitMinutes[1]):null;
       if(choice){const quantity=pending.quantity;pending=null;return addProduct(choice,quantity);}
       if(/cancel|never mind|nevermind/.test(input)){pending=null;return result('No problem — I cancelled that selection.',{chips:['Price list','My order']});}
+      pending=null;
     }
     if(/\b(clear|empty|reset)\b.*\b(order|cart)\b/.test(input)){cart=[];persistAndUpdate();return result('Your shared shop order is cleared.',{chips:['Price list','Bank bot subscription']});}
     if(/\b(remove|delete|take off)\b/.test(input))return removeCommand(input);
@@ -223,6 +289,7 @@
     const adding=/^(add|buy|order)\b/.test(input);
     if(adding){
       const bundled=bundleReply(input);if(bundled)return bundled;
+      const contextual=optionReply(input);if(contextual)return contextual;
       let item=null;
       if(/leader/.test(input))item=productById('leader');
       else if(/customer/.test(input))item=productById('customer');
@@ -235,6 +302,9 @@
       return result('Tell me which item you want, for example “add 44444 90 x2”, “add 3 month subscription”, “add leader attack”, or “add T1 tier 1”.',{chips:['Price list','Bank bot subscription','T1 kills']});
     }
     const bundled=bundleReply(input);if(bundled)return bundled;
+    if(/\bcompare\b/.test(input))return compareReply(input);
+    if(/\b(cheaper|cheapest|lower priced|lowest price|least expensive)\b/.test(input))return cheapestReply(input);
+    const contextual=optionReply(input);if(contextual)return contextual;
     if(/\b(price list|all prices|shop prices|prices|rates)\b/.test(input))return priceList(input);
     const intent=bestIntent(input);
     if(intent==='hi')return result('Hi! I can help with shop prices, bank bot subscriptions and attacks, resources, T1 kills, KVK quotes, site tools, or your order. What do you need?',{chips:['Price list','Bank bot subscription','T1 kills','My order']});
@@ -269,6 +339,11 @@
   }
   function fallbackCopy(text,done){const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();try{if(document.execCommand('copy'))done();}catch(_){}area.remove();}
   function copyText(text,button){const old=button.textContent;const done=()=>{button.textContent='Copied';setTimeout(()=>button.textContent=old,1400);};if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(done,()=>fallbackCopy(text,done));else fallbackCopy(text,done);}
+  function decrementProduct(name){
+    const item=cart.find(x=>x.n===name);if(!item)return result('That item is no longer in your shared order.',{chips:['My order','Price list']});
+    if(item.q<=1)cart=cart.filter(x=>x.n!==name);else item.q--;
+    persistAndUpdate();return result('Removed one unit of '+name+' from your shared order.',{chips:['My order','Price list']});
+  }
   function performRemove(name){cart=cart.filter(x=>x.n!==name);persistAndUpdate();return result('Removed '+name+' from your shared order.',{chips:['My order','Price list']});}
   function show(r){
     const box=bubble(r.text,'bot');
@@ -279,6 +354,7 @@
       else{el.type='button';el.addEventListener('click',()=>{
         if(a.t==='add'){const product=productById(a.id);if(!product)return;const qty=pending?.kind==='bundle'?pending.quantity:1;pending=null;show(addProduct(product,qty));}
         else if(a.t==='inc'){const p=productById(a.id);if(p)show(addProduct(p,1));}
+        else if(a.t==='dec-name')show(decrementProduct(a.name));
         else if(a.t==='remove-name')show(performRemove(a.name));
         else if(a.t==='say')ask(a.text);
         else if(a.t==='copy')copyText(a.text,el);
@@ -307,8 +383,8 @@
   });
   window.addEventListener('zax-cart-updated',()=>{updateCount();});
   updateCount();
-  bubble('Hi! I’m the ZAX LM SHOP assistant. I can help with current prices, subscription plans, game services, and the same order cart used on the main website. Try “bank bot subscription”, “44444”, or “my order”.','bot');
-  setChips(['Price list','Bank bot subscription','T1 kills','My order','Contact']);
+  bubble('Hi! I’m the ZAX LM SHOP assistant. I can compare current prices, explain shop services, and help manage the same order cart used on the main website. Try “compare subscriptions”, “add the second one”, “44444”, or “my order”.','bot');
+  setChips(['Price list','Compare prices','Bank bot subscription','My order','Contact']);
 
   function parseCsv(csv){
     const rows=[];let row=[],cell='',quoted=false;
