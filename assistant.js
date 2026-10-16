@@ -292,6 +292,13 @@
   $('orderBtn').addEventListener('click',()=>ask('my order'));
   const launcher=document.getElementById('assistantLauncher');
   if(launcher)launcher.addEventListener('click',()=>setTimeout(()=>$('q').focus(),450));
+  const assistantSection=document.getElementById('assistant');
+  if(assistantSection&&'IntersectionObserver' in window){
+    const observer=new IntersectionObserver(entries=>{
+      document.body.classList.toggle('assistant-visible',entries.some(entry=>entry.isIntersecting));
+    },{threshold:0.04});
+    observer.observe(assistantSection);
+  }
   $('repeatToggle').checked=repeatEnabled();
   $('repeatToggle').addEventListener('change',event=>{setRepeat(event.target.checked);window.dispatchEvent(new Event('zax-cart-updated'));});
   window.addEventListener('storage',event=>{
