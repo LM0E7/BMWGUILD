@@ -96,6 +96,7 @@
 }
 #assistant .small-link:hover,
 #assistant .iconbtn:hover { border-color: var(--sa-accent); }
+#assistant .closebtn { min-width: 40px; padding: 4px 8px; font-size: 22px; line-height: 1; }
 #assistant .intro {
   padding: 10px 16px;
   background: linear-gradient(110deg, color-mix(in srgb, var(--sa-accent) 11%, transparent), transparent 75%), var(--sa-bg);
@@ -223,6 +224,35 @@
 }
 #assistant .send:hover { filter: brightness(1.08); }
 #assistant .footnote { font-size: 10px; color: var(--sa-muted); text-align: center; padding: 0 8px 8px; background: var(--sa-surface); }
+#assistant .app[hidden],
+#assistant .assistant-reopen[hidden] { display: none !important; }
+#assistant .assistant-reopen {
+  max-width: 920px;
+  margin: 22px auto 0;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px #0003;
+}
+#assistant .assistant-reopen p { margin: 0; color: var(--mut); }
+#assistant .assistant-reopen strong { color: var(--ink); }
+#assistant .assistant-reopen button {
+  min-height: 44px;
+  flex: none;
+  padding: 0 16px;
+  color: #241902;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 11px;
+  font: 750 13px Inter, system-ui, sans-serif;
+  cursor: pointer;
+}
 #assistant .sr-only {
   position: absolute !important;
   width: 1px;
@@ -236,8 +266,9 @@
 }
 #assistant .app button:focus-visible,
 #assistant .app input:focus-visible,
-#assistant .app a:focus-visible { outline: 3px solid color-mix(in srgb, var(--sa-accent) 65%, transparent); outline-offset: 2px; }
-body.assistant-visible .sup { opacity: 0; visibility: hidden; pointer-events: none; transform: scale(.88); }
+#assistant .app a:focus-visible,
+#assistant .assistant-reopen button:focus-visible { outline: 3px solid color-mix(in srgb, var(--gold) 65%, transparent); outline-offset: 2px; }
+body.assistant-visible:not(.assistant-collapsed) .sup { opacity: 0; visibility: hidden; pointer-events: none; transform: scale(.88); }
 .sup { transition: opacity .18s ease, transform .18s ease, visibility .18s; }
 
 @media (min-width: 721px) {
@@ -259,6 +290,7 @@ body.assistant-visible .sup { opacity: 0; visibility: hidden; pointer-events: no
   #assistant .top-actions { grid-area: actions; justify-content: flex-end; }
   #assistant .small-link,
   #assistant .iconbtn { min-height: 40px; padding: 7px 10px; font-size: 12px; }
+  #assistant .closebtn { min-width: 40px; padding: 4px 8px; font-size: 22px; }
 }
 @media (max-width: 600px) {
   #assistant .app {
@@ -280,6 +312,8 @@ body.assistant-visible .sup { opacity: 0; visibility: hidden; pointer-events: no
   #assistant .composer input { font-size: 16px; }
   #assistant .send { min-width: 60px; padding-inline: 12px; }
   #assistant .footnote { font-size: 9px; line-height: 1.35; }
+  #assistant .assistant-reopen { margin-top: 16px; padding: 14px; align-items: stretch; flex-direction: column; }
+  #assistant .assistant-reopen button { width: 100%; }
 }
 @media (max-width: 380px) {
   #assistant .app { min-height: 460px; }
