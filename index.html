@@ -311,15 +311,17 @@ html{overflow-anchor:none}
 
 <section id="assistant"><div class="wrap">
 <h2>Shop Assistant</h2><p class="sub">Compare current prices, ask follow-up questions, adjust item quantities, and manage the order builder below.</p>
-<div class="app" aria-label="ZAX LM SHOP assistant">
-<div class="topbar"><img class="logo" src="logo.png" alt="ZAX LM SHOP logo"><div class="brand"><strong>ZAX LM SHOP · Assistant</strong><small><span class="status-dot"></span> Ready to help with the shop and your order</small></div><div class="top-actions"><a class="small-link" href="#order">Order builder</a><button type="button" class="iconbtn" id="sa-orderBtn" title="Show your shared shop order">Order <span id="sa-cartCount">0</span></button></div></div>
+<div class="app" id="sa-app" aria-label="ZAX LM SHOP assistant">
+<div class="topbar"><img class="logo" src="logo.png" alt="ZAX LM SHOP logo"><div class="brand"><strong>ZAX LM SHOP · Assistant</strong><small><span class="status-dot"></span> Ready to help with the shop and your order</small></div><div class="top-actions"><a class="small-link" href="#order">Order builder</a><button type="button" class="iconbtn" id="sa-orderBtn" title="Show your shared shop order">Order <span id="sa-cartCount">0</span></button><button type="button" class="iconbtn closebtn" id="sa-closeBtn" title="Close shop assistant" aria-label="Close shop assistant" aria-controls="sa-app" aria-expanded="true">×</button></div></div>
 <div class="intro"><b>Ask naturally.</b> Get help with current shop prices, services, and your order.<span id="sa-priceStatus" class="price-status" role="status">Loading shop prices…</span></div>
 <div id="sa-log" class="log" aria-live="polite" aria-label="Conversation"></div>
 <label class="repeatbar"><input type="checkbox" id="sa-repeatToggle"><span><strong>Repeat order after 3 days</strong> · apply the shop’s 45% discount to bank bot attacks only. Tick this only if eligible; the seller confirms the order.</span></label>
 <div class="chips-wrap"><div class="chips-label">Try asking</div><nav id="sa-chips" class="chips" aria-label="Suggested questions"></nav></div>
 <form id="sa-f" class="composer" autocomplete="off"><label class="sr-only" for="sa-q">Your message</label><input id="sa-q" placeholder="Ask about prices, services, or your order…" autocomplete="off" enterkeyhint="send"><button class="send" id="sa-send" type="submit">Send</button></form>
 <div class="footnote">Price sheet syncs when online; built-in prices are used offline. Your shared order is saved in this browser.</div>
-</div></div></section>
+</div>
+<div class="assistant-reopen" id="sa-reopen" hidden role="region" aria-label="Shop assistant minimized"><p><strong>Assistant closed.</strong> Your conversation and shared order remain saved.</p><button type="button" id="sa-reopenBtn" aria-controls="sa-app" aria-expanded="false">Open assistant</button></div>
+</div></section>
 
 <section id="resources"><div class="wrap">
 <div class="resources-head"><h2>Resource price list</h2><p class="sub">Trusted supply, best prices. Each bundle is a clear breakdown of what you get.</p></div>

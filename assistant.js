@@ -366,8 +366,19 @@
   function ask(text){if(!text)return;bubble(text,'me');const wait=bubble('Checking…','bot');wait.style.opacity='.65';setTimeout(()=>{wait.parentElement?.remove();show(reply(text));},160);}
   $('f').addEventListener('submit',event=>{event.preventDefault();const text=input.value.trim();if(!text)return;input.value='';ask(text);input.focus();});
   $('orderBtn').addEventListener('click',()=>ask('my order'));
+  function setAssistantOpen(open){
+    const app=document.getElementById('sa-app'),reopen=document.getElementById('sa-reopen');
+    if(!app||!reopen)return;
+    app.hidden=!open;reopen.hidden=open;
+    document.body.classList.toggle('assistant-collapsed',!open);
+    document.getElementById('sa-closeBtn')?.setAttribute('aria-expanded',String(open));
+    document.getElementById('sa-reopenBtn')?.setAttribute('aria-expanded',String(open));
+    if(open)setTimeout(()=>$('q').focus(),50);else document.getElementById('sa-reopenBtn')?.focus();
+  }
+  document.getElementById('sa-closeBtn')?.addEventListener('click',()=>setAssistantOpen(false));
+  document.getElementById('sa-reopenBtn')?.addEventListener('click',()=>setAssistantOpen(true));
   const launcher=document.getElementById('assistantLauncher');
-  if(launcher)launcher.addEventListener('click',()=>setTimeout(()=>$('q').focus(),450));
+  if(launcher)launcher.addEventListener('click',()=>{if(document.body.classList.contains('assistant-collapsed'))setAssistantOpen(true);setTimeout(()=>$('q').focus(),450);});
   const assistantSection=document.getElementById('assistant');
   if(assistantSection&&'IntersectionObserver' in window){
     const observer=new IntersectionObserver(entries=>{
