@@ -820,7 +820,7 @@ const protectedMenuHrefs=new Set(['#assistant','#resources','#services','#t1-kil
 function renderDrawerMenu(){
  const locked=document.body.classList.contains('sections-locked');
  const available=locked?M.filter(item=>!protectedMenuHrefs.has(item[0])):M;
- const items=locked?[[ '#section-access','Under development','term'],...available]:available;
+ const items=available;
  $('#dm').innerHTML=items.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
 }
 renderDrawerMenu();window.refreshSectionDrawer=renderDrawerMenu;

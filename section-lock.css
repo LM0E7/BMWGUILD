@@ -32,6 +32,10 @@
 [data-protected-nav][hidden],
 [data-locked-nav][hidden],
 #assistantLauncher[hidden] { display: none !important; }
+/* Keep unfinished sections out of the public site. */
+#section-access,
+[data-section-placeholder],
+[data-locked-nav] { display: none !important; }
 body.sections-locked [data-protected-nav] { display: none !important; }
 body:not(.sections-locked) [data-locked-nav] { display: none !important; }
 #assistantLauncher[hidden] { visibility: hidden !important; pointer-events: none !important; }
