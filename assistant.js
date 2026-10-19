@@ -1,4 +1,4 @@
-/* BMW GUILD assistant. Catalog facts are mirrored from index.html; current prices sync from its public shop sheet. */
+/* BMW GUILD ASSISTANT. Catalog facts are mirrored from index.html; current prices sync from its public shop sheet. */
 (() => {
   'use strict';
   const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1eXIIszAr9hC7v1PzLrcEUYla536ncidP275mTxndqgg/export?format=csv';
@@ -87,7 +87,7 @@
   }
   function orderText(){
     const rows=currentLines();
-    return 'Hello BMW GUILD, I want to order:\n'+rows.map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+
+    return 'Hello BMW GUILD LORDS SERVICE, I want to order:\n'+rows.map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+
       '\nSubtotal: '+money(subtotal())+(discountSavings()?'\nRepeat savings: -'+money(discountSavings()):'')+
       '\nTotal: '+money(total())+' ('+inr(total())+')'+(repeatEnabled()?'\n(Repeat order after 3 days, 45% off eligible bank bot attacks)':'');
   }
@@ -394,7 +394,7 @@
   });
   window.addEventListener('zax-cart-updated',()=>{updateCount();});
   updateCount();
-  bubble('Hi! I’m the BMW GUILD assistant. I can compare current prices, explain shop services, and help manage the same order cart used on the main website. Try “compare subscriptions”, “add the second one”, “44444”, or “my order”.','bot');
+  bubble('Hi! I’m the BMW GUILD ASSISTANT. I can compare current prices, explain shop services, and help manage the same order cart used on the main website. Try “compare subscriptions”, “add the second one”, “44444”, or “my order”.','bot');
   setChips(['Price list','Compare prices','Bank bot subscription','My order','Contact']);
 
   function parseCsv(csv){
