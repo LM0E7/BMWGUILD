@@ -323,7 +323,7 @@
     if(intent==='damage')return result('Monster damage types and hero recommendations depend on the monster. Open the Monster Hunting page and choose the monster to see its lineup and damage details.',{actions:[{t:'link',label:'Open Monster Hunting',href:'hunting.html',primary:true}],chips:['Monster lineup','Contact']});
     if(intent==='energy')return result('Hunting uses Energy, which regenerates over time. Match your heroes to the monster’s weaknesses; the site’s Monster Hunting page contains the lineup details.',{actions:[{t:'link',label:'Open Monster Hunting',href:'hunting.html',primary:true}],chips:['Monster lineup']});
     if(intent==='repeat')return result('The website offers 45% off bank bot attacks for a repeat order after 3 days. Use the repeat-order checkbox above to apply it to eligible attacks; the seller confirms eligibility. It does not discount subscriptions, resource bundles or T1 services.',{chips:['My order','Bank bot subscription','Contact']});
-    if(intent==='bye')return result('You’re welcome. Your trust, our service!',{chips:['Price list','My order']});
+    if(intent==='bye')return result('You’re welcome. BMW GUILD ASSISTANT!',{chips:['Price list','My order']});
     return result('I’m not sure I understood that yet. Try asking about “price list”, a bundle code like 44444, “bank bot subscription”, T1 kills, KVK points, payment, or “my order”.',{chips:['Price list','Bank bot subscription','T1 kills','Contact']});
   }
 
