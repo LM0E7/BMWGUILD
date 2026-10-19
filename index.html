@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" type="image/png" href="logo.png">
-<title>ZAX LM SHOP – Lords Mobile Bank Bot Subscription & Resources</title>
+<title>ZAX LM SHOP – Lords Mobile Services</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500..900&family=Inter:wght@400;600;800&display=swap">
 <style>
 :root{--bg:#0b1220;--bg2:#1b2d4d;--card:#101a2e;--ink:#f3f1ea;--mut:#9fb0c6;--line:#5a4a22;--gold:#f4c542;--red:#8e2a22;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -283,21 +283,23 @@ html{overflow-anchor:none}
 </style>
 <meta name="robots" content="noai, noimageai">
 <link rel="stylesheet" href="assistant.css">
+<link rel="stylesheet" href="section-lock.css">
+<script defer src="section-lock.js"></script>
 </head>
-<body>
+<body class="sections-locked">
 
 <header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="ZAX LM SHOP"><img src="logo.png" alt="ZAX LM SHOP logo"></a><a class="brand" href="#top">ZAX LM SHOP</a>
-<nav><a href="#services">Bank bot subscription</a><a href="#resources">Resources</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#player-exp">Player EXP</a><a href="gems-wishlist.html">Gems Wishlist</a><a href="#assistant">Shop Assistant</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
+<nav><a href="#section-access" data-locked-nav>Under development</a><a href="#services" data-protected-nav hidden>Bank bot subscription</a><a href="#resources" data-protected-nav hidden>Resource price list</a><a href="#assistant" data-protected-nav hidden>Shop assistant</a><a href="#t1-killing" data-protected-nav hidden>T1 killing service</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#player-exp">Player EXP</a><a href="gems-wishlist.html">Gems Wishlist</a><a href="#order">Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart"></a><small class="tg">Your trust, our service</small></div></header>
 
 <main id="top">
 <div class="wrap hero">
 
 <img class="lgh" src="logo.png" alt="ZAX LM SHOP logo">
 <h1>ZAX LM SHOP</h1>
-<p>Your trust, our service. Bank bot subscription and resource bundles for Lords Mobile, direct from the seller.</p>
+<p>Your trust, our service. Trusted Lords Mobile support and supply, direct from the seller.</p>
 <a class="btn wa" href="https://wa.me/918797787737" target="_blank" rel="noopener">Order on WhatsApp</a>
 <a class="btn telegram" href="https://t.me/JASH07X?text=Hello%20ZAX%20LM%20SHOP%2C%20I%20want%20to%20place%20an%20order." target="_blank" rel="noopener">Order on Telegram</a>
-<a class="btn o" href="#resources">See prices</a>
+<a class="btn o" href="#section-access" data-locked-nav>Under development</a><a class="btn o" href="#resources" data-protected-nav hidden>Resource price list</a>
 <a class="btn o" href="#calculator">Speedup calculator</a>
 <a class="btn o" href="#gem-prediction">Gem prediction</a>
 <a class="btn o" href="#training">Troop training</a>
@@ -305,11 +307,19 @@ html{overflow-anchor:none}
 <a class="btn o" href="#player-exp">Player EXP calculator</a>
 <a class="btn o" href="gems-wishlist.html">Gems Wishlist</a>
 <a class="btn o" href="hunting.html">Monster hunting</a>
-<a class="btn o" href="#assistant">Shop assistant</a>
+<a class="btn o" href="#assistant" data-protected-nav hidden>Shop assistant</a><a class="btn o" href="#services" data-protected-nav hidden>Bank bot subscription</a><a class="btn o" href="#t1-killing" data-protected-nav hidden>T1 killing service</a>
 <a class="btn o" href="#commands">Guild bank commands</a>
 </div>
 
+<section id="section-access" class="section-access"><div class="wrap">
+<div class="section-access-card card"><h2>Under development</h2><p>Enter the access code to open the sections currently under development.</p>
+<form id="section-access-form" class="section-access-form" autocomplete="off"><label for="section-access-code">Access code</label><input id="section-access-code" type="password" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="6-digit code" autocomplete="off" required><button class="btn" type="submit">Unlock sections</button></form>
+<p id="section-access-status" class="section-access-status" role="status" aria-live="polite"></p></div>
+</div></section>
+
 <section id="assistant"><div class="wrap">
+<div class="section-placeholder card" data-section-placeholder><h2>Under development</h2><p>This section is under development. Enter the access code on the home screen to open it.</p><a class="btn o" href="#section-access">Enter access code</a></div>
+<div data-section-content hidden>
 <h2>Shop Assistant</h2><p class="sub">Compare current prices, ask follow-up questions, adjust item quantities, and manage the order builder below.</p>
 <div class="app" id="sa-app" aria-label="ZAX LM SHOP assistant">
 <div class="topbar"><img class="logo" src="logo.png" alt="ZAX LM SHOP logo"><div class="brand"><strong>ZAX LM SHOP · Assistant</strong><small><span class="status-dot"></span> Ready to help with the shop and your order</small></div><div class="top-actions"><a class="small-link" href="#order">Order builder</a><button type="button" class="iconbtn" id="sa-orderBtn" title="Show your shared shop order">Order <span id="sa-cartCount">0</span></button><button type="button" class="iconbtn closebtn" id="sa-closeBtn" title="Close shop assistant" aria-label="Close shop assistant" aria-controls="sa-app" aria-expanded="true">×</button></div></div>
@@ -321,15 +331,19 @@ html{overflow-anchor:none}
 <div class="footnote">Price sheet syncs when online; built-in prices are used offline. Your shared order is saved in this browser.</div>
 </div>
 <div class="assistant-reopen" id="sa-reopen" hidden role="region" aria-label="Shop assistant minimized"><p><strong>Assistant closed.</strong> Your conversation and shared order remain saved.</p><button type="button" id="sa-reopenBtn" aria-controls="sa-app" aria-expanded="false">Open assistant</button></div>
+</div>
 </div></section>
 
 <section id="resources"><div class="wrap">
+<div class="section-placeholder card" data-section-placeholder><h2>Under development</h2><p>This section is under development. Enter the access code on the home screen to open it.</p><a class="btn o" href="#section-access">Enter access code</a></div>
+<div data-section-content hidden>
 <div class="resources-head"><h2>Resource price list</h2><p class="sub">Trusted supply, best prices. Each bundle is a clear breakdown of what you get.</p></div>
 <div class="sc card" style="padding:0"><table><thead><tr><th><span class="resource-label">Bundle</span></th><th><span class="resource-icon">🌾</span><span class="resource-label">Food</span></th><th><span class="resource-icon">🪨</span><span class="resource-label">Stone</span></th><th><span class="resource-icon">🪵</span><span class="resource-label">Wood</span></th><th><span class="resource-icon">💎</span><span class="resource-label">Ore</span></th><th><span class="resource-icon">🪙</span><span class="resource-label">Gold</span></th><th><span class="resource-label">Price</span></th></tr></thead><tbody id="res"></tbody></table></div>
 <div class="badges">
 <div class="card"><span class="mm">Direct supply, no MM</span><br><small style="color:var(--mut)">No middleman between you and the seller</small></div>
 <div class="card">🛡️ 100% safe &amp; secure</div>
 <div class="card">⚡ Fast &amp; reliable supply</div>
+</div>
 </div>
 </div></section>
 <section id="calculator"><div class="wrap">
@@ -401,20 +415,25 @@ html{overflow-anchor:none}
 <div class="card"><h3>Leader attack</h3><div class="big">30</div><div>Leader attacks by bank bot</div><span class="price">$3.5</span><br><button class="btn" style="margin-top:14px" data-c="Bank bot attacks" data-i="0">Add to order</button></div>
 <div class="card"><h3>Customer attack</h3><div class="big">🎯</div><div>Customer attacks by bank bot</div><span class="price">$2</span><br><button class="btn" style="margin-top:14px" data-c="Bank bot attacks" data-i="1">Add to order</button></div>
 </div>
-<div class="promo"><b class="promo-title">YOUR LM NEEDS, ONE PLACE</b><span class="promo-sub">Resources • Bank Bot • T1 Killing Service</span></div>
+<div class="promo"><b class="promo-title">YOUR LM NEEDS, ONE PLACE</b><span class="promo-sub">Trusted services and supply for Lords Mobile</span></div>
 <div class="card stats">
 <div><span class="big">📦 44444</span><small>1–5 min to start</small></div>
 <div><span class="big" style="color:var(--gold)">$0.60</span><small>90 min to complete</small></div>
 </div>
 
+<div class="section-placeholder card" data-section-placeholder><h2>Under development</h2><p>This section is under development. Enter the access code on the home screen to open it.</p><a class="btn o" href="#section-access">Enter access code</a></div>
+<div data-section-content hidden>
 <h2 id="services" style="margin-top:40px">Bank bot subscription</h2>
 <div class="g2" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
 <div class="sc card" style="padding:0"><table><thead><tr><th>Duration</th><th>Company 2</th></tr></thead><tbody id="bots"></tbody></table></div>
 <div class="card" style="text-align:center"><h3>Extra benefit</h3><p>If you buy a bank bot from me:</p><div style="font-size:2.6rem">🎁</div><p><b>All the limited-time redeem codes are claimed in your accounts.</b></p></div>
 </div>
+</div>
 </div></section>
 
 <section id="t1-killing"><div class="wrap">
+<div class="section-placeholder card" data-section-placeholder><h2>Under development</h2><p>This section is under development. Enter the access code on the home screen to open it.</p><a class="btn o" href="#section-access">Enter access code</a></div>
+<div data-section-content hidden>
 <div class="t1-hero"><span class="sword" aria-hidden="true">⚔️</span><h2>T1 Killing Service</h2><p>Fast, trusted T1 kills for Lords Mobile, direct from the seller.</p></div>
 <div class="t1-grid">
 <div class="card t1-card"><h3>Tier 1 · 1–1,800 KD</h3><div class="big">$4</div><p class="sub">per 1B T1 kills</p><span class="price">$4</span><button class="btn" data-c="T1 killing service" data-i="0">Add to order</button></div>
@@ -422,6 +441,7 @@ html{overflow-anchor:none}
 <div class="card t1-card"><h3>Tier 3 · 1,970+ KD</h3><div class="big">🔥</div><p class="sub">Contact us for a custom price.</p><a class="btn" href="#contact">Get a quote</a></div>
 </div>
 <div class="card t1-extra"><h3>🔥 Other services available</h3><p class="sub" style="margin-bottom:0">✅ KVK Solo Points &nbsp; · &nbsp; ✅ KVK Guild Points</p></div>
+</div>
 </div></section>
 
 
@@ -473,8 +493,8 @@ html{overflow-anchor:none}
 </main>
 <div id="bd" class="bd"></div>
 <aside id="drw" class="drw" aria-hidden="true"><div class="dh"><div class="dl"><img class="lgs" src="logo.png" alt=""><div><a class="brand" href="#top">ZAX LM SHOP</a><small>Your trust, our service</small></div></div><button class="ic" id="mx" aria-label="Close menu">&#10005;</button></div><div id="dm"></div><div class="df"><a class="ic" href="https://wa.me/918797787737" target="_blank" rel="noopener" aria-label="WhatsApp" data-ic="wa"></a><a class="ic" href="https://t.me/JASH07X" target="_blank" rel="noopener" aria-label="Telegram @JASH07X" data-ic="tg"></a><a class="ic" href="tel:+918797787737" aria-label="Call" data-ic="tel"></a><span>Trusted supply · Best prices</span></div></aside>
-<div class="nb"><a href="#top"><em data-ic="home"></em>Home</a><a href="#services"><em data-ic="grid"></em>Subscription</a><a href="#order"><b class="cb"><em data-ic="cart"></em><i id="cc">0</i></b>Order</a><a href="#commands"><em data-ic="term"></em>Commands</a><a href="#contact"><em data-ic="chat"></em>Contact</a></div>
-<a class="sup" id="assistantLauncher" href="#assistant" aria-label="Open shop assistant" data-ic="chat"></a><div id="toast" class="toast" role="status"></div>
+<div class="nb"><a href="#top"><em data-ic="home"></em>Home</a><a href="#section-access" data-locked-nav><em data-ic="grid"></em>Under development</a><a href="#services" data-protected-nav hidden><em data-ic="grid"></em>Subscription</a><a href="#order"><b class="cb"><em data-ic="cart"></em><i id="cc">0</i></b>Order</a><a href="#commands"><em data-ic="term"></em>Commands</a><a href="#contact"><em data-ic="chat"></em>Contact</a></div>
+<a class="sup" id="assistantLauncher" href="#assistant" aria-label="Open protected sections" data-ic="chat" hidden></a><div id="toast" class="toast" role="status"></div>
 <footer>ZAX LM SHOP · Your trust, our service<div class="copyright-notice" style="margin:1rem auto 0;padding:1rem 1.25rem;border-top:1px solid rgba(160,160,160,.35);font-size:.78rem;line-height:1.55;text-align:center;opacity:.88;max-width:900px">
 <p style="margin:0 0 .35rem;font-weight:700">© 2026 JASH. All Rights Reserved.</p>
 <p style="margin:.25rem 0">This website, including its original design, layout, graphics, text, and source code, is protected by applicable copyright laws.</p>
@@ -819,7 +839,14 @@ M.splice(8,0,['#festival','Guild Festival','gem']);
 M.splice(9,0,['player-exp-calculator.html','Player EXP calculator','calc']);
 M.splice(10,0,['gems-wishlist.html','Gems Wishlist','gem']);
 M.splice(0,0,['#assistant','Shop assistant','chat']);
-$('#dm').innerHTML=M.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
+const protectedMenuHrefs=new Set(['#assistant','#resources','#services','#t1-killing']);
+function renderDrawerMenu(){
+ const locked=document.body.classList.contains('sections-locked');
+ const available=locked?M.filter(item=>!protectedMenuHrefs.has(item[0])):M;
+ const items=locked?[[ '#section-access','Under development','term'],...available]:available;
+ $('#dm').innerHTML=items.map(m=>`<a class="mi" href="${m[0]}"><i>${ic(I[m[2]])}</i>${m[1]}<em>›</em></a>`).join('');
+}
+renderDrawerMenu();window.refreshSectionDrawer=renderDrawerMenu;
 const dr=o=>{$('#drw').classList.toggle('on',o);$('#bd').classList.toggle('on',o);$('#drw').setAttribute('aria-hidden',!o)};
 $('#mb').onclick=()=>dr(true);
 $('#mx').onclick=$('#bd').onclick=()=>dr(false);
