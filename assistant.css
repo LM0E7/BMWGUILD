@@ -58,7 +58,7 @@
 #assistant .brand strong {
   display: block;
   color: var(--sa-ink);
-  font: 800 14px/1.25 Inter, system-ui, sans-serif;
+  font: 900 14px/1.25 'Montserrat', Inter, system-ui, sans-serif; letter-spacing: .04em;
 }
 #assistant .brand small {
   display: flex;
