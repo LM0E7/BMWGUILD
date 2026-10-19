@@ -87,7 +87,7 @@
   }
   function orderText(){
     const rows=currentLines();
-    return 'Hello BMW GUILD LORDS SERVICE, I want to order:\n'+rows.map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+
+    return 'Hello BMW GUILD, I want to order:\n'+rows.map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+
       '\nSubtotal: '+money(subtotal())+(discountSavings()?'\nRepeat savings: -'+money(discountSavings()):'')+
       '\nTotal: '+money(total())+' ('+inr(total())+')'+(repeatEnabled()?'\n(Repeat order after 3 days, 45% off eligible bank bot attacks)':'');
   }

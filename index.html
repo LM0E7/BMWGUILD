@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" type="image/png" href="logo.png">
-<title>BMW GUILD LORDS SERVICE – Lords Mobile Services</title>
+<title>BMW GUILD – Lords Mobile Services</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500..900&family=Inter:wght@400;600;800&family=Montserrat:wght@600;700;800;900&display=swap">
 <style>
 :root{--bg:#0b1220;--bg2:#1b2d4d;--card:#101a2e;--ink:#f3f1ea;--mut:#9fb0c6;--line:#5a4a22;--gold:#f4c542;--red:#8e2a22;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -288,14 +288,14 @@ html{overflow-anchor:none}
 </head>
 <body class="sections-locked">
 
-<header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="BMW GUILD LORDS SERVICE"><img src="logo.png" alt="Shop emblem"></a><a class="brand" href="#top">BMW GUILD LORDS SERVICE</a>
+<header><div class="wrap"><button class="hb" id="mb" aria-label="Open menu" data-ic="menu"></button><a class="lg" href="#top" aria-label="BMW GUILD"><img src="logo.png" alt="Shop emblem"></a><a class="brand" href="#top">BMW GUILD</a>
 <nav><a href="#services" data-protected-nav hidden>Bank bot subscription</a><a href="#resources" data-protected-nav hidden>Resource price list</a><a href="#assistant" data-protected-nav hidden>Shop assistant</a><a href="#t1-killing" data-protected-nav hidden>T1 killing service</a><a href="#calculator">Speedup calculator</a><a href="#gem-prediction">Gem prediction</a><a href="#training">Troop training</a><a href="#festival">Guild Festival</a><a href="#player-exp">Player EXP</a><a href="gems-wishlist.html">Gems Wishlist</a><a href="#order" data-protected-nav hidden>Order builder</a><a href="#commands">Guild bank commands</a><a href="#contact">Contact</a></nav><button class="th" id="th" aria-label="Switch light or dark theme">🌓</button><a class="gb" href="#order" aria-label="Order" data-ic="cart" data-protected-nav hidden></a><small class="tg">BMW GUILD ASSISTANT</small></div></header>
 
 <main id="top">
 <div class="wrap hero">
 
 <img class="lgh" src="logo.png" alt="Shop emblem">
-<h1>BMW GUILD LORDS SERVICE</h1>
+<h1>BMW GUILD</h1>
 <a class="btn o" href="#resources" data-protected-nav hidden>Resource price list</a>
 <a class="btn o" href="#calculator">Speedup calculator</a>
 <a class="btn o" href="#gem-prediction">Gem prediction</a>
@@ -465,10 +465,10 @@ html{overflow-anchor:none}
 </div></div></section>
 </main>
 <div id="bd" class="bd"></div>
-<aside id="drw" class="drw" aria-hidden="true"><div class="dh"><div class="dl"><img class="lgs" src="logo.png" alt=""><div><a class="brand" href="#top">BMW GUILD LORDS SERVICE</a><small>BMW GUILD ASSISTANT</small></div></div><button class="ic" id="mx" aria-label="Close menu">&#10005;</button></div><div id="dm"></div><div class="df"><a class="ic" href="tel:+918797787737" aria-label="Call" data-ic="tel"></a><span>Trusted supply · Best prices</span></div></aside>
+<aside id="drw" class="drw" aria-hidden="true"><div class="dh"><div class="dl"><img class="lgs" src="logo.png" alt=""><div><a class="brand" href="#top">BMW GUILD</a><small>BMW GUILD ASSISTANT</small></div></div><button class="ic" id="mx" aria-label="Close menu">&#10005;</button></div><div id="dm"></div><div class="df"><a class="ic" href="tel:+918797787737" aria-label="Call" data-ic="tel"></a><span>Trusted supply · Best prices</span></div></aside>
 <div class="nb"><a href="#top"><em data-ic="home"></em>Home</a><a href="#services" data-protected-nav hidden><em data-ic="grid"></em>Subscription</a><a href="#order" data-protected-nav hidden><b class="cb"><em data-ic="cart"></em><i id="cc">0</i></b>Order</a><a href="#commands"><em data-ic="term"></em>Commands</a><a href="#contact"><em data-ic="chat"></em>Contact</a></div>
 <a class="sup" id="assistantLauncher" href="#assistant" aria-label="Open protected sections" data-ic="chat" hidden></a><div id="toast" class="toast" role="status"></div>
-<footer>BMW GUILD LORDS SERVICE · BMW GUILD ASSISTANT<div class="copyright-notice" style="margin:1rem auto 0;padding:1rem 1.25rem;border-top:1px solid rgba(160,160,160,.35);font-size:.78rem;line-height:1.55;text-align:center;opacity:.88;max-width:900px">
+<footer>BMW GUILD · BMW GUILD ASSISTANT<div class="copyright-notice" style="margin:1rem auto 0;padding:1rem 1.25rem;border-top:1px solid rgba(160,160,160,.35);font-size:.78rem;line-height:1.55;text-align:center;opacity:.88;max-width:900px">
 <p style="margin:0 0 .35rem;font-weight:700">© 2026 JASH. All Rights Reserved.</p>
 <p style="margin:.25rem 0">This website, including its original design, layout, graphics, text, and source code, is protected by applicable copyright laws.</p>
 <p style="margin:.25rem 0">Unauthorized copying, reproduction, redistribution, or commercial use of original website materials without prior written permission is prohibited.</p>
@@ -603,7 +603,7 @@ let cart=[];try{cart=JSON.parse(localStorage.getItem('rls-cart'))||[]}catch(_){}
 const save=()=>{try{localStorage.setItem('rls-cart',JSON.stringify(cart))}catch(_){}};
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),1700)}
 function lines(){const r=$('#rep').checked;return cart.map(x=>({...x,u:x.a&&r?x.p*.55:x.p}))}
-function orderText(note=''){return 'Hello BMW GUILD LORDS SERVICE, I want to order:\n'+lines().map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+'\nTotal: '+$('#tot').textContent+($('#rep').checked?'\n(Repeat order after 3 days, 45% off bank bot attacks)':'')+(note?'\n'+note:'')}
+function orderText(note=''){return 'Hello BMW GUILD, I want to order:\n'+lines().map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+'\nTotal: '+$('#tot').textContent+($('#rep').checked?'\n(Repeat order after 3 days, 45% off bank bot attacks)':'')+(note?'\n'+note:'')}
 function renderCart(){
  const L=lines();
  $('#cart').innerHTML=L.length?L.map((x,i)=>`<div class="ci"><span>${x.n}</span><span class="qc"><button data-i="${i}" data-d="-1" aria-label="Less">−</button>${x.q}<button data-i="${i}" data-d="1" aria-label="More">+</button></span><b>${money(x.u*x.q)}</b><button data-i="${i}" data-d="0" aria-label="Remove">×</button></div>`).join(''):'<p class="sub">Your order is empty. Add an item with the form or the + buttons in the price tables.</p>';
