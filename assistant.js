@@ -1,4 +1,4 @@
-/* BMW GUILD ASSISTANT. Catalog facts are mirrored from index.html; current prices sync from its public shop sheet. */
+/* U|E GUILD ASSISTANT. Catalog facts are mirrored from index.html; current prices sync from its public shop sheet. */
 (() => {
   'use strict';
   const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1eXIIszAr9hC7v1PzLrcEUYla536ncidP275mTxndqgg/export?format=csv';
@@ -87,7 +87,7 @@
   }
   function orderText(){
     const rows=currentLines();
-    return 'Hello BMW GUILD, I want to order:\n'+rows.map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+
+    return 'Hello U|E GUILD, I want to order:\n'+rows.map(x=>'- '+x.n+' x'+x.q+' = '+money(x.u*x.q)).join('\n')+
       '\nSubtotal: '+money(subtotal())+(discountSavings()?'\nRepeat savings: -'+money(discountSavings()):'')+
       '\nTotal: '+money(total())+' ('+inr(total())+')'+(repeatEnabled()?'\n(Repeat order after 3 days, 45% off eligible bank bot attacks)':'');
   }
@@ -323,7 +323,7 @@
     if(intent==='damage')return result('Monster damage types and hero recommendations depend on the monster. Open the Monster Hunting page and choose the monster to see its lineup and damage details.',{actions:[{t:'link',label:'Open Monster Hunting',href:'hunting.html',primary:true}],chips:['Monster lineup','Contact']});
     if(intent==='energy')return result('Hunting uses Energy, which regenerates over time. Match your heroes to the monster’s weaknesses; the site’s Monster Hunting page contains the lineup details.',{actions:[{t:'link',label:'Open Monster Hunting',href:'hunting.html',primary:true}],chips:['Monster lineup']});
     if(intent==='repeat')return result('The website offers 45% off bank bot attacks for a repeat order after 3 days. Use the repeat-order checkbox above to apply it to eligible attacks; the seller confirms eligibility. It does not discount subscriptions, resource bundles or T1 services.',{chips:['My order','Bank bot subscription','Contact']});
-    if(intent==='bye')return result('You’re welcome. BMW GUILD ASSISTANT!',{chips:['Price list','My order']});
+    if(intent==='bye')return result('You’re welcome. U|E GUILD ASSISTANT!',{chips:['Price list','My order']});
     return result('I’m not sure I understood that yet. Try asking about “price list”, a bundle code like 44444, “bank bot subscription”, T1 kills, KVK points, payment, or “my order”.',{chips:['Price list','Bank bot subscription','T1 kills','Contact']});
   }
 
@@ -394,7 +394,7 @@
   });
   window.addEventListener('zax-cart-updated',()=>{updateCount();});
   updateCount();
-  bubble('Hi! I’m the BMW GUILD ASSISTANT. I can compare current prices, explain shop services, and help manage the same order cart used on the main website. Try “compare subscriptions”, “add the second one”, “44444”, or “my order”.','bot');
+  bubble('Hi! I’m the U|E GUILD ASSISTANT. I can compare current prices, explain shop services, and help manage the same order cart used on the main website. Try “compare subscriptions”, “add the second one”, “44444”, or “my order”.','bot');
   setChips(['Price list','Compare prices','Bank bot subscription','My order','Contact']);
 
   function parseCsv(csv){
